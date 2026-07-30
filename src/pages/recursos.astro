@@ -1,0 +1,55 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+
+const resources = [
+  ['Mantenimiento', 'Guía para diseñar un mantenimiento preventivo útil', 'Planificación, prioridades, periodicidades e indicadores sin complicar el trabajo diario.'],
+  ['Electricidad', 'Inspecciones BT y evidencias digitales', 'Cómo ordenar mediciones, fotografías, defectos y conclusiones técnicas.'],
+  ['Refrigeración', 'Diagnóstico con presión y temperatura', 'Conceptos prácticos para interpretar el comportamiento del circuito frigorífico.'],
+  ['Climatización', 'Mantenimiento de UTA y calidad del aire', 'Puntos de revisión, filtros, caudales, temperaturas y documentación.'],
+  ['PCI', 'Qué revisar y cómo documentarlo', 'Inventario, periodicidades, incidencias, pruebas y trazabilidad.'],
+  ['Digitalización', 'De la hoja de cálculo a una aplicación', 'Cuándo una tabla sigue siendo suficiente y cuándo conviene crear una herramienta.']
+];
+---
+
+<PageLayout title="Centro de conocimiento" description="Artículos, guías y recursos técnicos de mantenimiento en IsiVoltPro.">
+  <section class="page-hero">
+    <div class="container page-hero-grid">
+      <div class="reveal">
+        <span class="page-kicker">Información técnica útil</span>
+        <h1>Centro de <span class="accent">conocimiento</span></h1>
+        <p class="lead">IsiVoltPro no será solamente un catálogo de aplicaciones. También reunirá explicaciones, guías, normativa, casos prácticos y recursos para profesionales del mantenimiento.</p>
+        <div class="hero-actions"><a class="button button-primary" href="#recursos">Explorar recursos →</a><a class="button button-secondary" href="/ecosistema">Ver ecosistema</a></div>
+      </div>
+      <div class="page-visual reveal">
+        <div class="page-visual-grid">
+          <div class="page-visual-card"><span>Guías</span><strong>Procesos explicados paso a paso</strong></div>
+          <div class="page-visual-card"><span>Normativa</span><strong>Información técnica ordenada</strong></div>
+          <div class="page-visual-card"><span>Casos</span><strong>Problemas reales y soluciones</strong></div>
+          <div class="page-visual-card"><span>Plantillas</span><strong>Recursos listos para trabajar</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="recursos">
+    <div class="container">
+      <div class="catalog-toolbar reveal"><div><p class="eyebrow">Primeras líneas editoriales</p><h2>Aprender para mantener mejor</h2></div><p class="lead">Los artículos se publicarán con una estructura clara: problema, contexto, procedimiento, comprobaciones y conclusiones.</p></div>
+      <div class="resource-grid">
+        {resources.map((resource) => (
+          <article class="resource-card reveal"><span class="tag">{resource[0]}</span><h3>{resource[1]}</h3><p>{resource[2]}</p><a class="card-link" href="/contacto">Próximamente →</a></article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-split">
+      <div class="content-sticky reveal"><p class="eyebrow">Contenido fiable</p><h2>La IA ayudará, pero el criterio técnico será la base</h2><p class="lead">Los textos deben ser comprensibles, verificables y útiles para la práctica profesional.</p></div>
+      <div class="feature-list">
+        <article class="feature-row reveal"><span>Fuentes</span><h3>Normativa y documentación identificadas</h3><p>Las referencias importantes se indicarán de forma visible y se revisarán cuando cambien.</p></article>
+        <article class="feature-row reveal"><span>Fecha</span><h3>Contenido con vigencia clara</h3><p>Cada recurso mostrará cuándo se publicó y cuándo se revisó por última vez.</p></article>
+        <article class="feature-row reveal"><span>Aplicación</span><h3>De la explicación a la herramienta</h3><p>Cuando exista una calculadora o aplicación relacionada, el artículo enlazará directamente con ella.</p></article>
+      </div>
+    </div>
+  </section>
+</PageLayout>
