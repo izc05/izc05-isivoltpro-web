@@ -10,13 +10,14 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const fullTitle = `${title} · IsiVoltPro`;
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'IsiVoltPro',
-  url: Astro.site?.toString(),
+  url: new URL(base, Astro.site).toString(),
   description: 'Ecosistema de aplicaciones, herramientas y conocimiento para mantenimiento técnico e instalaciones.'
 };
 ---
@@ -30,7 +31,7 @@ const structuredData = {
     <meta name="theme-color" content="#071a33" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_ES" />
     <meta property="og:site_name" content="IsiVoltPro" />
