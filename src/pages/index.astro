@@ -1,9 +1,12 @@
 ---
 import '../styles/global.css';
 import '../styles/pages.css';
+import '../styles/visual.css';
 import Header from '../components/Header.astro';
-import DashboardMock from '../components/DashboardMock.astro';
+import HeroVisual from '../components/HeroVisual.astro';
+import VisualShowcase from '../components/VisualShowcase.astro';
 import OverviewSections from '../components/OverviewSections.astro';
+import UseCases from '../components/UseCases.astro';
 import ProductSections from '../components/ProductSections.astro';
 import Footer from '../components/Footer.astro';
 
@@ -43,27 +46,36 @@ const structuredData = {
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <Header />
     <main id="contenido">
-      <section class="hero" id="inicio">
+      <section class="hero hero-v2" id="inicio">
         <div class="container hero-grid">
           <div class="hero-copy reveal">
-            <p class="eyebrow">Ecosistema técnico y modular</p>
-            <h1>Explora el <span class="accent">ecosistema</span> digital del mantenimiento</h1>
-            <p class="lead">IsiVoltPro reúne mantenimiento, información técnica, aplicaciones especializadas, cálculos y herramientas de campo en una plataforma preparada para crecer contigo.</p>
+            <p class="eyebrow">Tecnología creada desde el mantenimiento real</p>
+            <h1>Todo tu trabajo técnico, <span class="accent">conectado</span> y bajo control</h1>
+            <p class="lead">IsiVoltPro reúne órdenes de trabajo, activos, inventario, inspecciones, cálculos y conocimiento en herramientas sencillas para oficina y campo.</p>
             <div class="hero-actions">
-              <a class="button button-primary" href="/ecosistema">Explorar ecosistema →</a>
-              <a class="button button-secondary" href="/aplicaciones">Ver aplicaciones</a>
+              <a class="button button-primary" href="/ecosistema">Explorar el ecosistema →</a>
+              <a class="button button-secondary" href="/#ot">Ver IsiVoltPro OT</a>
             </div>
             <div class="hero-points">
-              <div class="hero-point"><b>360°</b>Todo conectado</div>
-              <div class="hero-point"><b>DOC</b>Información técnica</div>
-              <div class="hero-point"><b>DB</b>Datos bajo control</div>
-              <div class="hero-point"><b>24/7</b>Acceso multiplataforma</div>
+              <div class="hero-point"><b>OT</b>Operaciones trazables</div>
+              <div class="hero-point"><b>QR</b>Activos identificados</div>
+              <div class="hero-point"><b>DATA</b>Información útil</div>
+              <div class="hero-point"><b>WEB</b>Acceso multiplataforma</div>
             </div>
           </div>
-          <DashboardMock />
+          <HeroVisual />
         </div>
       </section>
+
+      <div class="sector-ribbon" aria-label="Ámbitos de aplicación">
+        <div class="container sector-ribbon-inner">
+          <span>Hospitales</span><i></i><span>Industria</span><i></i><span>Edificios</span><i></i><span>Servicios técnicos</span><i></i><span>Instalaciones</span>
+        </div>
+      </div>
+
+      <VisualShowcase />
       <OverviewSections />
+      <UseCases />
       <ProductSections />
     </main>
     <Footer />
