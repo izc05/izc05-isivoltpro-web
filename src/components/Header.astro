@@ -1,15 +1,20 @@
+---
+const path = Astro.url.pathname;
+const active = (href: string) => href !== '/' && path.startsWith(href);
+---
+
 <header class="site-header">
   <div class="container navbar">
-    <a class="brand" href="/" aria-label="IsiVoltPro, inicio">
+    <a class="brand" href="/" aria-label="IsiVoltPro, inicio" aria-current={path === '/' ? 'page' : undefined}>
       <span class="brand-mark">I</span>IsiVolt<span class="accent">Pro</span>
     </a>
     <nav class="nav-links" id="main-nav" aria-label="Navegación principal">
-      <a href="/ecosistema">Ecosistema</a>
+      <a href="/ecosistema" aria-current={active('/ecosistema') ? 'page' : undefined}>Ecosistema</a>
       <a href="/#mantenimiento">Mantenimiento</a>
-      <a href="/aplicaciones">Aplicaciones</a>
-      <a href="/recursos">Recursos</a>
+      <a href="/aplicaciones" aria-current={active('/aplicaciones') ? 'page' : undefined}>Aplicaciones</a>
+      <a href="/recursos" aria-current={active('/recursos') ? 'page' : undefined}>Recursos</a>
       <a href="/#infraestructura">Servidor</a>
-      <a href="/contacto">Contacto</a>
+      <a href="/contacto" aria-current={active('/contacto') ? 'page' : undefined}>Contacto</a>
     </nav>
     <div class="nav-actions">
       <a class="button button-primary button-small" href="/contacto">Solicitar información →</a>
