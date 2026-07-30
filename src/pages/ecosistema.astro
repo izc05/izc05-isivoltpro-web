@@ -1,0 +1,67 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { ecosystemAreas } from '../data/catalog';
+---
+
+<PageLayout title="Explora el ecosistema" description="Descubre las áreas, aplicaciones y herramientas técnicas que forman el ecosistema IsiVoltPro.">
+  <section class="page-hero">
+    <div class="container page-hero-grid">
+      <div class="reveal">
+        <span class="page-kicker">Una marca · múltiples herramientas</span>
+        <h1>Explora el <span class="accent">ecosistema</span> IsiVoltPro</h1>
+        <p class="lead">Un catálogo modular para mantenimiento, instalaciones, inspecciones, inventario, cálculos y conocimiento técnico. Cada herramienta puede funcionar por separado y compartir información cuando sea necesario.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#catalogo">Ver todas las áreas →</a>
+          <a class="button button-secondary" href="/aplicaciones">Explorar aplicaciones</a>
+        </div>
+      </div>
+      <div class="page-visual reveal" aria-label="Representación del ecosistema IsiVoltPro">
+        <div class="page-visual-grid">
+          <div class="page-visual-card"><span>Operaciones</span><strong>OT y mantenimiento</strong></div>
+          <div class="page-visual-card"><span>Recursos</span><strong>Inventario y herramientas</strong></div>
+          <div class="page-visual-card"><span>Ingeniería</span><strong>Cálculos e inspecciones</strong></div>
+          <div class="page-visual-card"><span>Especialidades</span><strong>RITE, PCI y Legionella</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="catalogo">
+    <div class="container">
+      <div class="catalog-toolbar reveal">
+        <div>
+          <p class="eyebrow">Catálogo modular</p>
+          <h2>Encuentra la herramienta que necesitas</h2>
+        </div>
+        <p class="lead">La estructura está preparada para incorporar nuevas aplicaciones sin convertir la web en un listado desordenado.</p>
+      </div>
+      <div class="catalog-list">
+        {ecosystemAreas.map((area) => (
+          <article class="catalog-card reveal">
+            <span class:list={['status', { available: area.status === 'Disponible' }]}>{area.status}</span>
+            <div class="icon-box">{area.code}</div>
+            <h3>{area.name}</h3>
+            <p>{area.short}</p>
+            <a class="card-link" href={`/aplicaciones/${area.slug}`}>Explorar área →</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-split">
+      <div class="content-sticky reveal">
+        <p class="eyebrow">Una base compartida</p>
+        <h2>Aplicaciones distintas, una experiencia coherente</h2>
+        <p class="lead">Cada módulo tendrá su función, pero mantendrá la misma identidad, navegación, permisos y lógica de trabajo.</p>
+      </div>
+      <div class="feature-list">
+        <article class="feature-row reveal"><span>01 · Identidad</span><h3>Un mismo lenguaje visual</h3><p>Colores, componentes, iconos y patrones de interacción comunes para que el usuario no tenga que aprender cada aplicación desde cero.</p></article>
+        <article class="feature-row reveal"><span>02 · Datos</span><h3>Información conectada cuando aporte valor</h3><p>Activos, ubicaciones, técnicos y documentos podrán compartirse entre módulos sin obligar a centralizarlo todo desde el primer día.</p></article>
+        <article class="feature-row reveal"><span>03 · Crecimiento</span><h3>Empieza pequeño y amplía después</h3><p>IsiVoltPro OT será el primer módulo operativo. Inventario, herramientas, cálculos y especialidades se añadirán como productos independientes.</p></article>
+        <article class="feature-row reveal"><span>04 · Control</span><h3>Dominio y servidor propios</h3><p>La web pública y las aplicaciones se preparan para funcionar bajo la infraestructura y los subdominios de IsiVoltPro.</p></article>
+      </div>
+    </div>
+  </section>
+</PageLayout>
