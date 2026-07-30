@@ -1,0 +1,49 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout title="Contacto" description="Contacto y presentación del proyecto IsiVoltPro.">
+  <section class="page-hero">
+    <div class="container page-hero-grid">
+      <div class="reveal">
+        <span class="page-kicker">Hablemos del proyecto</span>
+        <h1>Construyamos herramientas que <span class="accent">resuelvan trabajo real</span></h1>
+        <p class="lead">IsiVoltPro está creciendo como un ecosistema de aplicaciones y conocimiento técnico. Esta página recogerá solicitudes, colaboración, demostraciones y acceso a futuras versiones.</p>
+      </div>
+      <div class="page-visual reveal">
+        <div class="page-visual-grid">
+          <div class="page-visual-card"><span>Proyecto</span><strong>Nuevas aplicaciones</strong></div>
+          <div class="page-visual-card"><span>Demostración</span><strong>IsiVoltPro OT</strong></div>
+          <div class="page-visual-card"><span>Contenido</span><strong>Ideas y casos técnicos</strong></div>
+          <div class="page-visual-card"><span>Infraestructura</span><strong>Servidor y dominio</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container contact-grid">
+      <div class="reveal">
+        <p class="eyebrow">Contacto directo</p>
+        <h2>Primer canal de comunicación</h2>
+        <p class="lead">Mientras se conecta un formulario real, la web utilizará un correo de contacto y accesos claros desde todas las páginas.</p>
+        <div class="contact-list">
+          <div><b>Correo</b><br /><a href="mailto:hola@isivoltpro.com">hola@isivoltpro.com</a></div>
+          <div><b>Proyecto</b><br />Ecosistema IsiVoltPro</div>
+          <div><b>Alojamiento previsto</b><br />Dominio propio y mini PC</div>
+        </div>
+      </div>
+      <div class="contact-card reveal">
+        <p class="eyebrow">Próxima integración</p>
+        <h2>Formulario conectado al servidor</h2>
+        <p>En la siguiente fase podremos guardar las solicitudes en PocketBase, enviar una notificación y gestionar su estado sin depender de servicios externos.</p>
+        <div class="feature-list">
+          <div class="feature-row"><span>01</span><h3>Solicitud de información</h3><p>Nombre, correo, empresa y área de interés.</p></div>
+          <div class="feature-row"><span>02</span><h3>Demostración de aplicaciones</h3><p>Selección del módulo y breve descripción de la necesidad.</p></div>
+          <div class="feature-row"><span>03</span><h3>Protección frente a spam</h3><p>Validación, límites y registro seguro en el servidor.</p></div>
+        </div>
+        <div class="hero-actions"><a class="button button-primary" href="mailto:hola@isivoltpro.com">Enviar correo →</a><a class="button button-secondary" href="/aplicaciones">Ver aplicaciones</a></div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
