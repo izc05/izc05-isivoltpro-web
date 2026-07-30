@@ -3,8 +3,10 @@ import '../styles/global.css';
 import '../styles/pages.css';
 import '../styles/visual.css';
 import '../styles/home-v2.css';
+import '../styles/sticky-story.css';
 import Header from '../components/Header.astro';
 import HeroVisual from '../components/HeroVisual.astro';
+import StickyStory from '../components/StickyStory.astro';
 import VisualShowcase from '../components/VisualShowcase.astro';
 import OverviewSections from '../components/OverviewSections.astro';
 import UseCases from '../components/UseCases.astro';
@@ -74,6 +76,7 @@ const structuredData = {
         </div>
       </div>
 
+      <StickyStory />
       <VisualShowcase />
       <OverviewSections />
       <UseCases />
