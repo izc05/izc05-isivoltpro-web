@@ -1,0 +1,65 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { ecosystemAreas } from '../../data/catalog';
+---
+
+<PageLayout title="Aplicaciones" description="Catálogo de aplicaciones y herramientas del ecosistema IsiVoltPro.">
+  <section class="page-hero">
+    <div class="container page-hero-grid">
+      <div class="reveal">
+        <span class="page-kicker">Catálogo de productos</span>
+        <h1>Herramientas creadas para el <span class="accent">trabajo técnico real</span></h1>
+        <p class="lead">Aplicaciones especializadas para resolver tareas concretas: gestionar mantenimiento, controlar equipos, inspeccionar, calcular, documentar y tomar mejores decisiones.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#aplicaciones">Ver aplicaciones →</a>
+          <a class="button button-secondary" href="/ecosistema">Cómo encajan en el ecosistema</a>
+        </div>
+      </div>
+      <div class="page-visual reveal">
+        <div class="page-visual-grid">
+          <div class="page-visual-card"><span>Disponible</span><strong>IsiVoltPro OT</strong></div>
+          <div class="page-visual-card"><span>En desarrollo</span><strong>Inventario y herramientas</strong></div>
+          <div class="page-visual-card"><span>Planificado</span><strong>Cálculos técnicos</strong></div>
+          <div class="page-visual-card"><span>Planificado</span><strong>Aplicaciones normativas</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="aplicaciones">
+    <div class="container">
+      <div class="catalog-toolbar reveal">
+        <div><p class="eyebrow">Modular y escalable</p><h2>Aplicaciones de IsiVoltPro</h2></div>
+        <p class="lead">No todas las ideas se convertirán en una gran aplicación. Algunas serán módulos completos y otras utilidades rápidas enfocadas en una sola tarea.</p>
+      </div>
+      <div class="catalog-list">
+        {ecosystemAreas.map((area, index) => (
+          <article class:list={['catalog-card', 'reveal', { featured: index === 0 }]}>
+            <span class:list={['status', { available: area.status === 'Disponible' }]}>{area.status}</span>
+            <div class="icon-box">{area.code}</div>
+            <h3>{area.name}</h3>
+            <p>{area.description}</p>
+            <a class="card-link" href={`/aplicaciones/${area.slug}`}>Ver aplicación →</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Principios del producto</p>
+        <h2>Qué debe tener cualquier aplicación IsiVoltPro</h2>
+        <p class="lead">Una experiencia profesional, simple en campo y preparada para crecer.</p>
+      </div>
+      <div class="maintenance-grid">
+        <article class="maintenance-item reveal"><div class="icon-box">UX</div><h3>Fácil de usar</h3><p>Menos pasos y decisiones claras.</p></article>
+        <article class="maintenance-item reveal"><div class="icon-box">M</div><h3>Móvil primero</h3><p>Diseñada para trabajar en campo.</p></article>
+        <article class="maintenance-item reveal"><div class="icon-box">↺</div><h3>Trazable</h3><p>Histórico y evidencias cuando importan.</p></article>
+        <article class="maintenance-item reveal"><div class="icon-box">🔒</div><h3>Controlada</h3><p>Permisos, seguridad y datos propios.</p></article>
+        <article class="maintenance-item reveal"><div class="icon-box">+</div><h3>Ampliable</h3><p>Nuevos módulos sin rehacer lo anterior.</p></article>
+      </div>
+    </div>
+  </section>
+</PageLayout>
