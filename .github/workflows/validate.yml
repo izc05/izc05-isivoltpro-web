@@ -5,14 +5,14 @@ on:
   push:
     branches:
       - main
-      - agent/portada-ecosistema
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 8
     steps:
       - name: Descargar repositorio
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Configurar Node.js
         uses: actions/setup-node@v4
@@ -20,7 +20,7 @@ jobs:
           node-version: '22'
 
       - name: Instalar dependencias
-        run: npm install
+        run: npm install --no-audit --no-fund --prefer-offline
 
       - name: Construir sitio estático
         run: npm run build
