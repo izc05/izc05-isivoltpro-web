@@ -1,0 +1,83 @@
+---
+import { ecosystem, maintenance, steps, articles } from '../data/site';
+---
+
+<section class="section section-soft" id="ecosistema">
+  <div class="container">
+    <div class="section-heading reveal">
+      <p class="eyebrow">Una marca, muchas soluciones</p>
+      <h2>Explora el ecosistema IsiVoltPro</h2>
+      <p class="lead">Aplicaciones independientes y conectadas para cubrir cualquier parte del mantenimiento técnico.</p>
+    </div>
+    <div class="card-grid">
+      {ecosystem.map((item) => (
+        <article class="ecosystem-card reveal">
+          <div class="icon-box">{item[0]}</div>
+          <h3>{item[1]}</h3>
+          <p>{item[2]}</p>
+          <a class="card-link" href="#aplicaciones">Explorar →</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="mantenimiento">
+  <div class="container">
+    <div class="section-heading reveal">
+      <p class="eyebrow">Conocimiento transversal</p>
+      <h2>Todo lo que abarca el mantenimiento</h2>
+      <p class="lead">Procesos, especialidades e instalaciones que necesitan información fiable y herramientas adaptadas.</p>
+    </div>
+    <div class="maintenance-grid">
+      {maintenance.map((item) => (
+        <article class="maintenance-item reveal">
+          <div class="icon-box">{item[0]}</div>
+          <h3>{item[1]}</h3>
+          <p>{item[2]}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section section-soft">
+  <div class="container">
+    <div class="section-heading reveal">
+      <p class="eyebrow">Un ciclo continuo</p>
+      <h2>Cómo funciona IsiVoltPro</h2>
+      <p class="lead">Del problema inicial a la mejora continua, manteniendo toda la trazabilidad.</p>
+    </div>
+    <div class="process">
+      {steps.map((step, index) => (
+        <article class="process-step reveal">
+          <span class="process-number">{index + 1}</span>
+          <h3>{step[0]}</h3>
+          <p>{step[1]}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="conocimiento">
+  <div class="container">
+    <div class="section-heading reveal">
+      <p class="eyebrow">Aprender para mantener mejor</p>
+      <h2>Centro de conocimiento</h2>
+      <p class="lead">Artículos, guías, normativa, casos prácticos y recursos para profesionales.</p>
+    </div>
+    <div class="article-grid">
+      {articles.map((article) => (
+        <article class="article-card reveal">
+          <div class="article-image">{article[0]}</div>
+          <div class="article-body">
+            <span class="tag">{article[1]}</span>
+            <h3>{article[2]}</h3>
+            <span class="article-meta">{article[3]} de lectura</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
