@@ -1,0 +1,18 @@
+{
+  "name": "izc05-isivoltpro-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0",
+    "build": "astro build",
+    "preview": "astro preview --host 0.0.0.0",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "7.1.4"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

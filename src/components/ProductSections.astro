@@ -1,0 +1,105 @@
+---
+import { apps } from '../data/site';
+---
+
+<section class="section section-soft" id="aplicaciones">
+  <div class="container">
+    <div class="section-heading reveal">
+      <p class="eyebrow">Módulos que crecen contigo</p>
+      <h2>Aplicaciones del ecosistema</h2>
+      <p class="lead">Utiliza cada herramienta por separado o conéctalas para construir una solución completa.</p>
+    </div>
+    <div class="apps-grid">
+      {apps.map((app, index) => (
+        <article class:list={['app-card', 'reveal', { featured: index === 0 }]}> 
+          {index === 0 && <span class="featured-label">Primera aplicación</span>}
+          <div class="icon-box">{app[0]}</div>
+          <h3>{app[1]}</h3>
+          <p>{app[2]}</p>
+          <a class="card-link" href={index === 0 ? '#ot' : '#contacto'}>Saber más →</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="ot">
+  <div class="container">
+    <div class="ot-panel reveal">
+      <div class="ot-grid">
+        <div class="ot-copy">
+          <p class="eyebrow">Módulo destacado</p>
+          <h2>IsiVoltPro OT</h2>
+          <p>La primera aplicación del ecosistema: mantenimiento y órdenes de trabajo desde la oficina y el campo.</p>
+          <ul>
+            <li>Órdenes preventivas y correctivas</li>
+            <li>Asignación y seguimiento de técnicos</li>
+            <li>Checklists, fotografías y firmas</li>
+            <li>Instalaciones, activos y ubicaciones</li>
+            <li>Informes, histórico y auditoría</li>
+          </ul>
+          <a class="button button-primary" href="#contacto">Conocer IsiVoltPro OT →</a>
+        </div>
+        <div class="ot-preview">
+          <div class="ot-screen">
+            <div class="dashboard">
+              <aside class="dashboard-side">
+                <div class="dashboard-logo">IsiVoltPro OT</div>
+                <div class="dashboard-link active">Órdenes</div>
+                <div class="dashboard-link">Calendario</div>
+                <div class="dashboard-link">Instalaciones</div>
+                <div class="dashboard-link">Técnicos</div>
+                <div class="dashboard-link">Informes</div>
+              </aside>
+              <div class="dashboard-main">
+                <div class="dashboard-title"><span>Órdenes de trabajo</span><span>+ Nueva OT</span></div>
+                <div class="stats">
+                  <div class="stat"><span>Pendientes</span><strong>12</strong></div>
+                  <div class="stat"><span>En curso</span><strong>8</strong></div>
+                  <div class="stat"><span>Finalizadas</span><strong>142</strong></div>
+                  <div class="stat"><span>Urgentes</span><strong class="accent">3</strong></div>
+                </div>
+                <div class="panel" style="margin-top:10px;min-height:220px">
+                  <div class="panel-title">OT recientes</div>
+                  <div class="activity">
+                    <div class="activity-row"><span class="activity-dot"></span><b>OT-2026-0155</b> · Revisión cuadro · En curso</div>
+                    <div class="activity-row"><span class="activity-dot"></span><b>OT-2026-0154</b> · UTA-03 · Asignada</div>
+                    <div class="activity-row"><span class="activity-dot"></span><b>OT-2026-0153</b> · Inspección PCI · Finalizada</div>
+                    <div class="activity-row"><span class="activity-dot"></span><b>OT-2026-0152</b> · Circuito ACS · Pendiente</div>
+                  </div>
+                  <div class="map" style="min-height:110px"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-soft" id="infraestructura">
+  <div class="container infrastructure">
+    <div class="reveal"><div class="mini-pc" aria-label="Representación de un mini PC IsiVoltPro"></div></div>
+    <div class="reveal">
+      <p class="eyebrow">Tu infraestructura, tus datos</p>
+      <h2>Tu plataforma, en tu dominio y en tu mini PC</h2>
+      <p class="lead">La web y las aplicaciones podrán alojarse en infraestructura propia, manteniendo independencia y control.</p>
+      <div class="infrastructure-points">
+        <div class="infrastructure-point"><b>Dominio propio</b><p>Una dirección profesional para toda la marca.</p></div>
+        <div class="infrastructure-point"><b>Datos en tu servidor</b><p>La información permanece bajo tu control.</p></div>
+        <div class="infrastructure-point"><b>Seguridad</b><p>Accesos, copias y servicios separados.</p></div>
+        <div class="infrastructure-point"><b>Escalabilidad</b><p>Nuevas aplicaciones sin rehacer la web.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contacto">
+  <div class="container">
+    <div class="cta reveal">
+      <div><h2>Empecemos a construir el ecosistema</h2><p>Primero la web principal. Después, cada aplicación especializada.</p></div>
+      <a class="button button-dark" href="mailto:hola@isivoltpro.com">Contactar →</a>
+    </div>
+  </div>
+</section>
