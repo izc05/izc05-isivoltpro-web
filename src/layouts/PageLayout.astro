@@ -10,6 +10,15 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const fullTitle = `${title} · IsiVoltPro`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'IsiVoltPro',
+  url: Astro.site?.toString(),
+  description: 'Ecosistema de aplicaciones, herramientas y conocimiento para mantenimiento técnico e instalaciones.'
+};
 ---
 
 <!doctype html>
@@ -19,11 +28,25 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#071a33" />
-    <title>{title} · IsiVoltPro</title>
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="IsiVoltPro" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <title>{fullTitle}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <Header />
-    <main><slot /></main>
+    <main id="contenido"><slot /></main>
     <Footer />
     <script is:inline>
       const toggle = document.querySelector('.menu-toggle');
