@@ -1,0 +1,65 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { ecosystemAreas, type EcosystemArea } from '../../data/catalog';
+
+export function getStaticPaths() {
+  return ecosystemAreas.map((area) => ({ params: { slug: area.slug }, props: { area } }));
+}
+
+interface Props { area: EcosystemArea; }
+const { area } = Astro.props;
+---
+
+<PageLayout title={area.name} description={area.description}>
+  <section class="detail-hero">
+    <div class="container detail-grid">
+      <div class="reveal">
+        <span class="page-kicker">{area.code} · Ecosistema IsiVoltPro</span>
+        <h1>{area.name}</h1>
+        <p class="lead">{area.description}</p>
+        <div class="detail-meta">
+          <span class="detail-chip">Estado: {area.status}</span>
+          <span class="detail-chip">Para: {area.audience}</span>
+        </div>
+        <div class="hero-actions">
+          {area.slug === 'mantenimiento-ot' ? (
+            <a class="button button-primary" href="/#ot">Ver IsiVoltPro OT →</a>
+          ) : (
+            <a class="button button-primary" href="/contacto">Seguir su desarrollo →</a>
+          )}
+          <a class="button button-secondary" href="/aplicaciones">Volver al catálogo</a>
+        </div>
+      </div>
+      <aside class="detail-panel reveal">
+        <p class="eyebrow">Funciones principales</p>
+        <h2>Diseñada para resolver tareas concretas</h2>
+        <ul>{area.highlights.map((highlight) => <li>{highlight}</li>)}</ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-split">
+      <div class="content-sticky reveal">
+        <p class="eyebrow">Enfoque de producto</p>
+        <h2>Del problema técnico a una herramienta sencilla</h2>
+        <p class="lead">La aplicación se construirá a partir de situaciones reales, reduciendo pasos y mostrando solamente la información necesaria en cada momento.</p>
+      </div>
+      <div class="feature-list">
+        <article class="feature-row reveal"><span>01 · Descubrir</span><h3>Entender el trabajo actual</h3><p>Analizamos quién utiliza la herramienta, dónde trabaja, qué información necesita y qué errores queremos evitar.</p></article>
+        <article class="feature-row reveal"><span>02 · Simplificar</span><h3>Diseñar el flujo mínimo</h3><p>El objetivo no es digitalizar formularios complicados, sino reducir pasos y hacer más clara cada decisión.</p></article>
+        <article class="feature-row reveal"><span>03 · Validar</span><h3>Probar antes de ampliar</h3><p>Primero se construye un recorrido completo y útil. Después se añaden automatizaciones, informes e integraciones.</p></article>
+        <article class="feature-row reveal"><span>04 · Conectar</span><h3>Integrarse con el ecosistema</h3><p>Cuando aporte valor, podrá compartir técnicos, ubicaciones, activos, documentos y permisos con otros módulos IsiVoltPro.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="cta reveal">
+        <div><h2>{area.status === 'Disponible' ? 'Conoce el primer módulo operativo' : 'Esta herramienta forma parte del roadmap'}</h2><p>El catálogo crecerá de forma progresiva, manteniendo una experiencia común y una arquitectura ordenada.</p></div>
+        <a class="button button-dark" href="/ecosistema">Explorar ecosistema →</a>
+      </div>
+    </div>
+  </section>
+</PageLayout>

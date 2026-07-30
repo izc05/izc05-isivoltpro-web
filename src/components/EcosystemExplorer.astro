@@ -1,0 +1,116 @@
+---
+import type { EcosystemArea } from '../data/catalog';
+
+interface Props {
+  areas: EcosystemArea[];
+}
+
+const { areas } = Astro.props;
+const families = ['Todas', ...Array.from(new Set(areas.map((area) => area.family)))];
+---
+
+<div class="ecosystem-explorer reveal" data-ecosystem-explorer>
+  <div class="explorer-filters" aria-label="Filtrar áreas del ecosistema">
+    {families.map((family, index) => (
+      <button class:list={['explorer-filter', { active: index === 0 }]} type="button" data-family={family} aria-pressed={index === 0 ? 'true' : 'false'}>
+        {family}
+      </button>
+    ))}
+  </div>
+
+  <div class="explorer-layout">
+    <div class="explorer-menu" role="list">
+      {areas.map((area, index) => (
+        <button
+          class:list={['explorer-item', { active: index === 0 }]}
+          type="button"
+          data-area={area.slug}
+          data-family={area.family}
+          aria-selected={index === 0 ? 'true' : 'false'}
+          role="listitem"
+        >
+          <span class="explorer-code">{area.code}</span>
+          <span class="explorer-item-copy">
+            <strong>{area.name}</strong>
+            <small>{area.short}</small>
+          </span>
+          <span class="explorer-arrow" aria-hidden="true">→</span>
+        </button>
+      ))}
+    </div>
+
+    <div class="explorer-stage" aria-live="polite">
+      {areas.map((area, index) => (
+        <article class:list={['explorer-preview', { active: index === 0 }]} data-preview={area.slug}>
+          <div class="explorer-preview-top">
+            <div>
+              <span class="page-kicker">{area.family} · {area.status}</span>
+              <h3>{area.name}</h3>
+              <p>{area.description}</p>
+            </div>
+            <div class="explorer-metric">
+              <span>{area.previewLabel}</span>
+              <strong>{area.previewValue}</strong>
+            </div>
+          </div>
+
+          <div class="explorer-dashboard">
+            <div class="explorer-chart" aria-hidden="true">
+              <span style="height:42%"></span>
+              <span style="height:68%"></span>
+              <span style="height:54%"></span>
+              <span style="height:88%"></span>
+              <span style="height:72%"></span>
+              <span style="height:96%"></span>
+            </div>
+            <div class="explorer-summary">
+              {area.previewItems.map((item) => <div><span></span>{item}</div>)}
+            </div>
+          </div>
+
+          <div class="explorer-actions">
+            <div class="explorer-highlights">
+              {area.highlights.slice(0, 3).map((highlight) => <span>✓ {highlight}</span>)}
+            </div>
+            <a class="button button-primary button-small" href={`/aplicaciones/${area.slug}`}>Abrir ficha →</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  document.querySelectorAll('[data-ecosystem-explorer]').forEach((explorer) => {
+    const filters = Array.from(explorer.querySelectorAll('[data-family]')).filter((element) => element.classList.contains('explorer-filter'));
+    const items = Array.from(explorer.querySelectorAll('[data-area]'));
+    const previews = Array.from(explorer.querySelectorAll('[data-preview]'));
+
+    const activate = (slug) => {
+      items.forEach((item) => {
+        const active = item.dataset.area === slug;
+        item.classList.toggle('active', active);
+        item.setAttribute('aria-selected', String(active));
+      });
+      previews.forEach((preview) => preview.classList.toggle('active', preview.dataset.preview === slug));
+    };
+
+    items.forEach((item) => item.addEventListener('click', () => activate(item.dataset.area)));
+
+    filters.forEach((filter) => filter.addEventListener('click', () => {
+      const family = filter.dataset.family;
+      filters.forEach((button) => {
+        const active = button === filter;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+
+      items.forEach((item) => {
+        item.hidden = family !== 'Todas' && item.dataset.family !== family;
+      });
+
+      const firstVisible = items.find((item) => !item.hidden);
+      if (firstVisible) activate(firstVisible.dataset.area);
+    }));
+  });
+</script>

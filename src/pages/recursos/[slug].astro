@@ -1,0 +1,52 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { resourceArticles, type ResourceArticle } from '../../data/resources';
+
+export function getStaticPaths() {
+  return resourceArticles.map((article) => ({ params: { slug: article.slug }, props: { article } }));
+}
+
+interface Props { article: ResourceArticle; }
+const { article } = Astro.props;
+---
+
+<PageLayout title={article.title} description={article.summary}>
+  <article>
+    <header class="article-hero">
+      <div class="container article-hero-inner reveal">
+        <a class="article-back" href="/recursos">← Centro de conocimiento</a>
+        <span class="page-kicker">{article.category} · {article.readTime} de lectura</span>
+        <h1>{article.title}</h1>
+        <p class="lead">{article.summary}</p>
+        <div class="article-byline"><span>IsiVoltPro</span><span>Revisado: {article.updated}</span></div>
+      </div>
+    </header>
+
+    <section class="section article-section">
+      <div class="container article-layout">
+        <aside class="article-aside reveal">
+          <p class="eyebrow">En este recurso</p>
+          <nav aria-label="Contenido del artículo">
+            {article.sections.map((section, index) => <a href={`#seccion-${index + 1}`}>{index + 1}. {section.title}</a>)}
+          </nav>
+          <a class="button button-secondary button-small" href={`/aplicaciones/${article.relatedArea}`}>Ver herramienta relacionada →</a>
+        </aside>
+
+        <div class="article-content">
+          <p class="article-intro reveal">{article.intro}</p>
+          {article.sections.map((section, index) => (
+            <section class="article-block reveal" id={`seccion-${index + 1}`}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h2>{section.title}</h2>
+              <p>{section.body}</p>
+            </section>
+          ))}
+          <div class="article-note reveal">
+            <strong>Nota editorial</strong>
+            <p>Este contenido constituye una base informativa inicial. Antes de publicarlo como guía técnica definitiva se incorporarán referencias normativas, fuentes y revisión especializada.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+</PageLayout>

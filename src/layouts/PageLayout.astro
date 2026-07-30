@@ -2,20 +2,23 @@
 import '../styles/global.css';
 import '../styles/pages.css';
 import Header from '../components/Header.astro';
-import DashboardMock from '../components/DashboardMock.astro';
-import OverviewSections from '../components/OverviewSections.astro';
-import ProductSections from '../components/ProductSections.astro';
 import Footer from '../components/Footer.astro';
 
-const description = 'IsiVoltPro es un ecosistema de aplicaciones, herramientas y conocimiento para mantenimiento técnico, instalaciones y trabajo de campo.';
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
-const canonical = new URL(base, Astro.site);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const fullTitle = `${title} · IsiVoltPro`;
 const structuredData = {
   '@context': 'https://schema.org',
-  '@type': 'WebSite',
+  '@type': 'Organization',
   name: 'IsiVoltPro',
-  url: canonical.toString(),
-  description
+  url: new URL(base, Astro.site).toString(),
+  description: 'Ecosistema de aplicaciones, herramientas y conocimiento para mantenimiento técnico e instalaciones.'
 };
 ---
 
@@ -32,42 +35,20 @@ const structuredData = {
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_ES" />
     <meta property="og:site_name" content="IsiVoltPro" />
-    <meta property="og:title" content="IsiVoltPro · Ecosistema digital del mantenimiento" />
+    <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
-    <title>IsiVoltPro · Ecosistema digital del mantenimiento</title>
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <title>{fullTitle}</title>
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <Header />
-    <main id="contenido">
-      <section class="hero" id="inicio">
-        <div class="container hero-grid">
-          <div class="hero-copy reveal">
-            <p class="eyebrow">Ecosistema técnico y modular</p>
-            <h1>Explora el <span class="accent">ecosistema</span> digital del mantenimiento</h1>
-            <p class="lead">IsiVoltPro reúne mantenimiento, información técnica, aplicaciones especializadas, cálculos y herramientas de campo en una plataforma preparada para crecer contigo.</p>
-            <div class="hero-actions">
-              <a class="button button-primary" href="/ecosistema">Explorar ecosistema →</a>
-              <a class="button button-secondary" href="/aplicaciones">Ver aplicaciones</a>
-            </div>
-            <div class="hero-points">
-              <div class="hero-point"><b>360°</b>Todo conectado</div>
-              <div class="hero-point"><b>DOC</b>Información técnica</div>
-              <div class="hero-point"><b>DB</b>Datos bajo control</div>
-              <div class="hero-point"><b>24/7</b>Acceso multiplataforma</div>
-            </div>
-          </div>
-          <DashboardMock />
-        </div>
-      </section>
-      <OverviewSections />
-      <ProductSections />
-    </main>
+    <main id="contenido"><slot /></main>
     <Footer />
-
     <script is:inline>
       const toggle = document.querySelector('.menu-toggle');
       const nav = document.querySelector('.nav-links');
@@ -79,7 +60,6 @@ const structuredData = {
         nav.classList.remove('open');
         toggle?.setAttribute('aria-expanded', 'false');
       }));
-
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -87,7 +67,7 @@ const structuredData = {
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.12 });
+      }, { threshold: 0.1 });
       document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
     </script>
   </body>

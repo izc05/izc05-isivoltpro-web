@@ -16,9 +16,12 @@ import { apps } from '../data/site';
           <div class="icon-box">{app[0]}</div>
           <h3>{app[1]}</h3>
           <p>{app[2]}</p>
-          <a class="card-link" href={index === 0 ? '#ot' : '#contacto'}>Saber más →</a>
+          <a class="card-link" href={index === 0 ? '/aplicaciones/mantenimiento-ot' : '/aplicaciones'}>Saber más →</a>
         </article>
       ))}
+    </div>
+    <div class="hero-actions" style="justify-content:center;margin-top:32px">
+      <a class="button button-primary" href="/aplicaciones">Ver todas las aplicaciones →</a>
     </div>
   </div>
 </section>
@@ -38,7 +41,7 @@ import { apps } from '../data/site';
             <li>Instalaciones, activos y ubicaciones</li>
             <li>Informes, histórico y auditoría</li>
           </ul>
-          <a class="button button-primary" href="#contacto">Conocer IsiVoltPro OT →</a>
+          <a class="button button-primary" href="/aplicaciones/mantenimiento-ot">Conocer IsiVoltPro OT →</a>
         </div>
         <div class="ot-preview">
           <div class="ot-screen">
@@ -99,7 +102,7 @@ import { apps } from '../data/site';
   <div class="container">
     <div class="cta reveal">
       <div><h2>Empecemos a construir el ecosistema</h2><p>Primero la web principal. Después, cada aplicación especializada.</p></div>
-      <a class="button button-dark" href="mailto:hola@isivoltpro.com">Contactar →</a>
+      <a class="button button-dark" href="/contacto">Contactar →</a>
     </div>
   </div>
 </section>
