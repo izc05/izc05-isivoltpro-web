@@ -1,7 +1,9 @@
 import { ecosystemAreas } from '../data/catalog';
 import { resourceArticles } from '../data/resources';
 
-const baseUrl = 'https://isivoltpro.com';
+const baseUrl = process.env.GITHUB_ACTIONS === 'true'
+  ? 'https://izc05.github.io/izc05-isivoltpro-web'
+  : 'https://isivoltpro.com';
 
 export function GET() {
   const paths = [
