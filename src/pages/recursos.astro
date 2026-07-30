@@ -1,18 +1,10 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
-
-const resources = [
-  ['Mantenimiento', 'Guía para diseñar un mantenimiento preventivo útil', 'Planificación, prioridades, periodicidades e indicadores sin complicar el trabajo diario.'],
-  ['Electricidad', 'Inspecciones BT y evidencias digitales', 'Cómo ordenar mediciones, fotografías, defectos y conclusiones técnicas.'],
-  ['Refrigeración', 'Diagnóstico con presión y temperatura', 'Conceptos prácticos para interpretar el comportamiento del circuito frigorífico.'],
-  ['Climatización', 'Mantenimiento de UTA y calidad del aire', 'Puntos de revisión, filtros, caudales, temperaturas y documentación.'],
-  ['PCI', 'Qué revisar y cómo documentarlo', 'Inventario, periodicidades, incidencias, pruebas y trazabilidad.'],
-  ['Digitalización', 'De la hoja de cálculo a una aplicación', 'Cuándo una tabla sigue siendo suficiente y cuándo conviene crear una herramienta.']
-];
+import { resourceArticles } from '../data/resources';
 ---
 
 <PageLayout title="Centro de conocimiento" description="Artículos, guías y recursos técnicos de mantenimiento en IsiVoltPro.">
-  <section class="page-hero">
+  <section class="page-hero resources-hero">
     <div class="container page-hero-grid">
       <div class="reveal">
         <span class="page-kicker">Información técnica útil</span>
@@ -33,10 +25,15 @@ const resources = [
 
   <section class="section" id="recursos">
     <div class="container">
-      <div class="catalog-toolbar reveal"><div><p class="eyebrow">Primeras líneas editoriales</p><h2>Aprender para mantener mejor</h2></div><p class="lead">Los artículos se publicarán con una estructura clara: problema, contexto, procedimiento, comprobaciones y conclusiones.</p></div>
+      <div class="catalog-toolbar reveal"><div><p class="eyebrow">Primeras líneas editoriales</p><h2>Aprender para mantener mejor</h2></div><p class="lead">Cada artículo tendrá una estructura clara: problema, contexto, procedimiento, comprobaciones, fuentes y conclusiones.</p></div>
       <div class="resource-grid">
-        {resources.map((resource) => (
-          <article class="resource-card reveal"><span class="tag">{resource[0]}</span><h3>{resource[1]}</h3><p>{resource[2]}</p><a class="card-link" href="/contacto">Próximamente →</a></article>
+        {resourceArticles.map((resource) => (
+          <article class="resource-card reveal">
+            <div class="resource-card-top"><span class="tag">{resource.category}</span><span>{resource.readTime}</span></div>
+            <h3>{resource.title}</h3>
+            <p>{resource.summary}</p>
+            <a class="card-link" href={`/recursos/${resource.slug}`}>Leer recurso →</a>
+          </article>
         ))}
       </div>
     </div>
