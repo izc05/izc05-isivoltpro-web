@@ -1,10 +1,21 @@
 ---
 import '../styles/global.css';
+import '../styles/pages.css';
 import Header from '../components/Header.astro';
 import DashboardMock from '../components/DashboardMock.astro';
 import OverviewSections from '../components/OverviewSections.astro';
 import ProductSections from '../components/ProductSections.astro';
 import Footer from '../components/Footer.astro';
+
+const description = 'IsiVoltPro es un ecosistema de aplicaciones, herramientas y conocimiento para mantenimiento técnico, instalaciones y trabajo de campo.';
+const canonical = new URL('/', Astro.site);
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'IsiVoltPro',
+  url: canonical.toString(),
+  description
+};
 ---
 
 <!doctype html>
@@ -12,13 +23,25 @@ import Footer from '../components/Footer.astro';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="IsiVoltPro es un ecosistema de aplicaciones, herramientas y conocimiento para mantenimiento técnico, instalaciones y trabajo de campo." />
+    <meta name="description" content={description} />
     <meta name="theme-color" content="#071a33" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="IsiVoltPro" />
+    <meta property="og:title" content="IsiVoltPro · Ecosistema digital del mantenimiento" />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
     <title>IsiVoltPro · Ecosistema digital del mantenimiento</title>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <Header />
-    <main>
+    <main id="contenido">
       <section class="hero" id="inicio">
         <div class="container hero-grid">
           <div class="hero-copy reveal">
@@ -26,8 +49,8 @@ import Footer from '../components/Footer.astro';
             <h1>Explora el <span class="accent">ecosistema</span> digital del mantenimiento</h1>
             <p class="lead">IsiVoltPro reúne mantenimiento, información técnica, aplicaciones especializadas, cálculos y herramientas de campo en una plataforma preparada para crecer contigo.</p>
             <div class="hero-actions">
-              <a class="button button-primary" href="#ecosistema">Explorar ecosistema →</a>
-              <a class="button button-secondary" href="#aplicaciones">Ver aplicaciones</a>
+              <a class="button button-primary" href="/ecosistema">Explorar ecosistema →</a>
+              <a class="button button-secondary" href="/aplicaciones">Ver aplicaciones</a>
             </div>
             <div class="hero-points">
               <div class="hero-point"><b>360°</b>Todo conectado</div>
