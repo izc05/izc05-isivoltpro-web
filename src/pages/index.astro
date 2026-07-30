@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import DashboardMock from '../components/DashboardMock.astro';
+import OverviewSections from '../components/OverviewSections.astro';
+import ProductSections from '../components/ProductSections.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="IsiVoltPro es un ecosistema de aplicaciones, herramientas y conocimiento para mantenimiento técnico, instalaciones y trabajo de campo." />
+    <meta name="theme-color" content="#071a33" />
+    <title>IsiVoltPro · Ecosistema digital del mantenimiento</title>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section class="hero" id="inicio">
+        <div class="container hero-grid">
+          <div class="hero-copy reveal">
+            <p class="eyebrow">Ecosistema técnico y modular</p>
+            <h1>Explora el <span class="accent">ecosistema</span> digital del mantenimiento</h1>
+            <p class="lead">IsiVoltPro reúne mantenimiento, información técnica, aplicaciones especializadas, cálculos y herramientas de campo en una plataforma preparada para crecer contigo.</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#ecosistema">Explorar ecosistema →</a>
+              <a class="button button-secondary" href="#aplicaciones">Ver aplicaciones</a>
+            </div>
+            <div class="hero-points">
+              <div class="hero-point"><b>360°</b>Todo conectado</div>
+              <div class="hero-point"><b>DOC</b>Información técnica</div>
+              <div class="hero-point"><b>DB</b>Datos bajo control</div>
+              <div class="hero-point"><b>24/7</b>Acceso multiplataforma</div>
+            </div>
+          </div>
+          <DashboardMock />
+        </div>
+      </section>
+      <OverviewSections />
+      <ProductSections />
+    </main>
+    <Footer />
+
+    <script is:inline>
+      const toggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('.nav-links');
+      toggle?.addEventListener('click', () => {
+        const open = nav?.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(Boolean(open)));
+      });
+      nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        toggle?.setAttribute('aria-expanded', 'false');
+      }));
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+    </script>
+  </body>
+</html>
