@@ -1,24 +1,43 @@
 ---
-const path = Astro.url.pathname;
-const active = (href: string) => href !== '/' && path.startsWith(href);
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const currentPath = Astro.url.pathname.startsWith(base)
+  ? `/${Astro.url.pathname.slice(base.length)}`
+  : Astro.url.pathname;
+const active = (href: string) => href !== '/' && currentPath.startsWith(href);
+const withBase = (href: string) => {
+  if (href === '/') return base;
+  const [pathname, hash] = href.split('#');
+  const resolved = `${base}${pathname.replace(/^\/+/, '')}`;
+  return hash === undefined ? resolved : `${resolved}#${hash}`;
+};
 ---
 
 <header class="site-header">
   <div class="container navbar">
-    <a class="brand" href="/" aria-label="IsiVoltPro, inicio" aria-current={path === '/' ? 'page' : undefined}>
+    <a class="brand" href={withBase('/')} aria-label="IsiVoltPro, inicio" aria-current={currentPath === '/' ? 'page' : undefined}>
       <span class="brand-mark">I</span>IsiVolt<span class="accent">Pro</span>
     </a>
     <nav class="nav-links" id="main-nav" aria-label="Navegación principal">
-      <a href="/ecosistema" aria-current={active('/ecosistema') ? 'page' : undefined}>Ecosistema</a>
-      <a href="/#mantenimiento">Mantenimiento</a>
-      <a href="/aplicaciones" aria-current={active('/aplicaciones') ? 'page' : undefined}>Aplicaciones</a>
-      <a href="/recursos" aria-current={active('/recursos') ? 'page' : undefined}>Recursos</a>
-      <a href="/#infraestructura">Servidor</a>
-      <a href="/contacto" aria-current={active('/contacto') ? 'page' : undefined}>Contacto</a>
+      <a href={withBase('/ecosistema')} aria-current={active('/ecosistema') ? 'page' : undefined}>Ecosistema</a>
+      <a href={withBase('/#mantenimiento')}>Mantenimiento</a>
+      <a href={withBase('/aplicaciones')} aria-current={active('/aplicaciones') ? 'page' : undefined}>Aplicaciones</a>
+      <a href={withBase('/recursos')} aria-current={active('/recursos') ? 'page' : undefined}>Recursos</a>
+      <a href={withBase('/#infraestructura')}>Servidor</a>
+      <a href={withBase('/contacto')} aria-current={active('/contacto') ? 'page' : undefined}>Contacto</a>
     </nav>
     <div class="nav-actions">
-      <a class="button button-primary button-small" href="/contacto">Solicitar información →</a>
+      <a class="button button-primary button-small" href={withBase('/contacto')}>Solicitar información →</a>
       <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-controls="main-nav" aria-expanded="false">☰</button>
     </div>
   </div>
 </header>
+
+<script is:inline define:vars={{ base }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[href^="/"]').forEach((link) => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('//') || href.startsWith(base)) return;
+      link.setAttribute('href', href === '/' ? base : `${base}${href.slice(1)}`);
+    });
+  });
+</script>
