@@ -1,21 +1,38 @@
 ---
 const videoUrl = 'https://videos.pexels.com/video-files/28886877/12504681_1920_1080_30fps.mp4';
+const heroPoster = 'https://images.pexels.com/photos/32845694/pexels-photo-32845694.jpeg?auto=compress&cs=tinysrgb&w=1200';
 ---
 
 <div class="real-hero-media reveal" data-real-hero-media aria-label="Trabajo técnico y vista operativa de IsiVoltPro">
   <figure class="real-hero-photo">
     <img
-      src="https://images.pexels.com/photos/32845694/pexels-photo-32845694.jpeg?auto=compress&cs=tinysrgb&w=1200"
+      src={heroPoster}
       alt="Profesional de mantenimiento con casco y tableta en una instalación industrial"
       width="1200"
       height="800"
       fetchpriority="high"
       decoding="async"
     />
+    <video
+      class="real-hero-loop"
+      muted
+      loop
+      playsinline
+      preload="none"
+      poster={heroPoster}
+      aria-hidden="true"
+      data-hero-loop
+    >
+      <source data-src={videoUrl} type="video/mp4" />
+    </video>
+    <div class="real-hero-film" aria-hidden="true"></div>
     <figcaption>
       <span class="real-live-dot"></span>
       Información disponible en oficina y campo
     </figcaption>
+    <button class="hero-video-toggle" type="button" data-toggle-hero-video aria-label="Pausar vídeo del hero" aria-pressed="false" hidden>
+      <span aria-hidden="true">Ⅱ</span>
+    </button>
   </figure>
 
   <section class="real-operations-card" aria-label="Ejemplo conceptual de una orden de trabajo">
@@ -73,7 +90,7 @@ const videoUrl = 'https://videos.pexels.com/video-files/28886877/12504681_1920_1
 <dialog class="media-dialog" data-video-dialog aria-label="Vídeo de trabajo técnico">
   <button class="media-dialog-close" type="button" data-close-video aria-label="Cerrar vídeo">×</button>
   <div class="media-dialog-frame">
-    <video controls playsinline preload="none" loading="lazy" data-field-video poster="https://images.pexels.com/photos/33694019/pexels-photo-33694019.jpeg?auto=compress&cs=tinysrgb&w=1280">
+    <video controls playsinline preload="none" data-field-video poster="https://images.pexels.com/photos/33694019/pexels-photo-33694019.jpeg?auto=compress&cs=tinysrgb&w=1280">
       <source data-src={videoUrl} type="video/mp4" />
       Tu navegador no puede reproducir este vídeo.
     </video>
@@ -88,21 +105,27 @@ const videoUrl = 'https://videos.pexels.com/video-files/28886877/12504681_1920_1
   const openButton = document.querySelector('[data-open-video]');
   const closeButton = document.querySelector('[data-close-video]');
   const dialog = document.querySelector('[data-video-dialog]');
-  const video = document.querySelector('[data-field-video]');
-  const source = video?.querySelector('source[data-src]');
+  const fieldVideo = document.querySelector('[data-field-video]');
+  const fieldSource = fieldVideo?.querySelector('source[data-src]');
   const mediaRoot = document.querySelector('[data-real-hero-media]');
+  const heroLoop = mediaRoot?.querySelector('[data-hero-loop]');
+  const heroSource = heroLoop?.querySelector('source[data-src]');
+  const heroToggle = mediaRoot?.querySelector('[data-toggle-hero-video]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const slowConnection = connection?.saveData || ['slow-2g', '2g'].includes(connection?.effectiveType || '');
+  const canUseHeroVideo = !reduceMotion && !slowConnection && window.innerWidth >= 760;
 
   openButton?.addEventListener('click', () => {
-    if (source && !source.getAttribute('src')) {
-      source.setAttribute('src', source.dataset.src || '');
-      video?.load();
+    if (fieldSource && !fieldSource.getAttribute('src')) {
+      fieldSource.setAttribute('src', fieldSource.dataset.src || '');
+      fieldVideo?.load();
     }
     dialog?.showModal();
   });
 
   const closeVideo = () => {
-    video?.pause();
+    fieldVideo?.pause();
     dialog?.close();
   };
 
@@ -120,6 +143,46 @@ const videoUrl = 'https://videos.pexels.com/video-files/28886877/12504681_1920_1
         }
       });
     }, { threshold: .3 }).observe(mediaRoot);
+  }
+
+  if (canUseHeroVideo && mediaRoot && heroLoop && heroSource) {
+    let loaded = false;
+    const heroObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (!loaded) {
+            heroSource.setAttribute('src', heroSource.dataset.src || '');
+            heroLoop.load();
+            loaded = true;
+          }
+          heroLoop.play().catch(() => {});
+        } else {
+          heroLoop.pause();
+        }
+      });
+    }, { threshold: .18 });
+
+    heroObserver.observe(mediaRoot);
+
+    heroLoop.addEventListener('canplay', () => {
+      mediaRoot.classList.add('has-live-video');
+      if (heroToggle) heroToggle.hidden = false;
+    }, { once: true });
+
+    heroToggle?.addEventListener('click', () => {
+      const paused = heroLoop.paused;
+      if (paused) {
+        heroLoop.play().catch(() => {});
+        heroToggle.setAttribute('aria-pressed', 'false');
+        heroToggle.setAttribute('aria-label', 'Pausar vídeo del hero');
+        heroToggle.querySelector('span').textContent = 'Ⅱ';
+      } else {
+        heroLoop.pause();
+        heroToggle.setAttribute('aria-pressed', 'true');
+        heroToggle.setAttribute('aria-label', 'Reproducir vídeo del hero');
+        heroToggle.querySelector('span').textContent = '▶';
+      }
+    });
   }
 
   if (mediaRoot && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
