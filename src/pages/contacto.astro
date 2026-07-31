@@ -1,21 +1,27 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { brand, contactMailto } from '../data/brand';
 ---
 
-<PageLayout title="Contacto" description="Contacto y presentación del proyecto IsiVoltPro.">
+<PageLayout title="Contacto" description="Contacta con IsiVoltPro para hablar de mantenimiento, órdenes de trabajo, inspecciones técnicas y herramientas digitales.">
   <section class="page-hero">
     <div class="container page-hero-grid">
       <div class="reveal">
-        <span class="page-kicker">Hablemos del proyecto</span>
-        <h1>Construyamos herramientas que <span class="accent">resuelvan trabajo real</span></h1>
-        <p class="lead">IsiVoltPro está creciendo como un ecosistema de aplicaciones y conocimiento técnico. Esta página recogerá solicitudes, colaboración, demostraciones y acceso a futuras versiones.</p>
+        <span class="page-kicker">Contacto directo</span>
+        <h1>Cuéntame el problema técnico. <span class="accent">Buscamos una solución útil.</span></h1>
+        <p class="lead">IsiVoltPro nace de necesidades reales de mantenimiento, coordinación, inspección y trabajo de campo. Puedes escribir para valorar una aplicación, una demostración o una idea concreta.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href={contactMailto}>Escribir a IsiVoltPro →</a>
+          <a class="button button-secondary" href="/aplicaciones">Explorar aplicaciones</a>
+        </div>
       </div>
       <div class="page-visual reveal">
         <div class="page-visual-grid">
-          <div class="page-visual-card"><span>Proyecto</span><strong>Nuevas aplicaciones</strong></div>
-          <div class="page-visual-card"><span>Demostración</span><strong>IsiVoltPro OT</strong></div>
-          <div class="page-visual-card"><span>Contenido</span><strong>Ideas y casos técnicos</strong></div>
-          <div class="page-visual-card"><span>Infraestructura</span><strong>Servidor y dominio</strong></div>
+          <div class="page-visual-card"><span>Operaciones</span><strong>OT y mantenimiento</strong></div>
+          <div class="page-visual-card"><span>Recursos</span><strong>Almacén y herramientas</strong></div>
+          <div class="page-visual-card"><span>Ingeniería</span><strong>Inspecciones y cálculos</strong></div>
+          <div class="page-visual-card"><span>Especialidades</span><strong>RITE, PCI y agua</strong></div>
         </div>
       </div>
     </div>
@@ -24,25 +30,44 @@ import PageLayout from '../layouts/PageLayout.astro';
   <section class="section">
     <div class="container contact-grid">
       <div class="reveal">
-        <p class="eyebrow">Contacto directo</p>
-        <h2>Primer canal de comunicación</h2>
-        <p class="lead">Mientras se conecta un formulario real, la web utilizará un correo de contacto y accesos claros desde todas las páginas.</p>
+        <p class="eyebrow">Datos reales del proyecto</p>
+        <h2>IsiVoltPro ya tiene dominio propio</h2>
+        <p class="lead">La web continúa en evolución, pero la identidad y el canal de contacto ya están definidos.</p>
+
         <div class="contact-list">
-          <div><b>Correo</b><br /><a href="mailto:hola@isivoltpro.com">hola@isivoltpro.com</a></div>
-          <div><b>Proyecto</b><br />Ecosistema IsiVoltPro</div>
-          <div><b>Alojamiento previsto</b><br />Dominio propio y mini PC</div>
+          <div><b>Correo</b><br /><a class="brand-email" href={`mailto:${brand.email}`}>{brand.email}</a></div>
+          <div><b>Dominio</b><br /><a href={brand.url}>{brand.domain}</a></div>
+          <div><b>Ámbito</b><br />Mantenimiento, instalaciones e inspecciones técnicas</div>
+          <div><b>Ubicación</b><br />{brand.location}</div>
+        </div>
+
+        <div class="contact-domain-card">
+          <span class="contact-domain-mark">IP</span>
+          <div><small>Identidad digital registrada</small><strong>{brand.domain}</strong></div>
         </div>
       </div>
-      <div class="contact-card reveal">
-        <p class="eyebrow">Próxima integración</p>
-        <h2>Formulario conectado al servidor</h2>
-        <p>En la siguiente fase podremos guardar las solicitudes en PocketBase, enviar una notificación y gestionar su estado sin depender de servicios externos.</p>
-        <div class="feature-list">
-          <div class="feature-row"><span>01</span><h3>Solicitud de información</h3><p>Nombre, correo, empresa y área de interés.</p></div>
-          <div class="feature-row"><span>02</span><h3>Demostración de aplicaciones</h3><p>Selección del módulo y breve descripción de la necesidad.</p></div>
-          <div class="feature-row"><span>03</span><h3>Protección frente a spam</h3><p>Validación, límites y registro seguro en el servidor.</p></div>
-        </div>
-        <div class="hero-actions"><a class="button button-primary" href="mailto:hola@isivoltpro.com">Enviar correo →</a><a class="button button-secondary" href="/aplicaciones">Ver aplicaciones</a></div>
+
+      <div class="reveal">
+        <p class="eyebrow">Preparar consulta</p>
+        <h2>Describe la necesidad</h2>
+        <p>El formulario no guarda información: prepara un correo en tu dispositivo para que puedas revisarlo antes de enviarlo.</p>
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Qué puedes plantear</p>
+        <h2>Desde una incidencia concreta hasta una aplicación completa</h2>
+        <p class="lead">La idea es entender primero el flujo real y después decidir qué merece digitalizarse.</p>
+      </div>
+      <div class="feature-list">
+        <div class="feature-row reveal"><span>01</span><h3>Gestión de mantenimiento</h3><p>Avisos, OT, técnicos, instalaciones, prioridades, evidencias e informes.</p></div>
+        <div class="feature-row reveal"><span>02</span><h3>Inspecciones y revisiones</h3><p>Checklists, mediciones, defectos, fotografías, resultados y documentación final.</p></div>
+        <div class="feature-row reveal"><span>03</span><h3>Recursos técnicos</h3><p>Inventario, repuestos, herramientas, maletines, equipos de medida y trazabilidad.</p></div>
+        <div class="feature-row reveal"><span>04</span><h3>Utilidades especializadas</h3><p>Cálculos, plantillas, asistentes y herramientas para electricidad, RITE, PCI, agua o refrigeración.</p></div>
       </div>
     </div>
   </section>
