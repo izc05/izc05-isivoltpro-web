@@ -1,15 +1,16 @@
 ---
 const videoUrl = 'https://videos.pexels.com/video-files/28886877/12504681_1920_1080_30fps.mp4';
-const heroPoster = 'https://images.pexels.com/photos/32845694/pexels-photo-32845694.jpeg?auto=compress&cs=tinysrgb&w=1200';
+const heroPoster = 'https://images.pexels.com/photos/32845694/pexels-photo-32845694.jpeg?auto=compress&cs=tinysrgb&w=1400';
+const modalPoster = 'https://images.pexels.com/photos/33694019/pexels-photo-33694019.jpeg?auto=compress&cs=tinysrgb&w=1280';
 ---
 
-<div class="real-hero-media reveal" data-real-hero-media aria-label="Trabajo técnico y vista operativa de IsiVoltPro">
+<div class="real-hero-media reveal" data-real-hero-media aria-label="Trabajo técnico y orden de trabajo de IsiVoltPro">
   <figure class="real-hero-photo">
     <img
       src={heroPoster}
-      alt="Profesional de mantenimiento con casco y tableta en una instalación industrial"
-      width="1200"
-      height="800"
+      alt="Técnico realizando una comprobación en una instalación eléctrica"
+      width="1400"
+      height="900"
       fetchpriority="high"
       decoding="async"
     />
@@ -28,7 +29,7 @@ const heroPoster = 'https://images.pexels.com/photos/32845694/pexels-photo-32845
     <div class="real-hero-film" aria-hidden="true"></div>
     <figcaption>
       <span class="real-live-dot"></span>
-      Información disponible en oficina y campo
+      Intervención documentada desde campo
     </figcaption>
     <button class="hero-video-toggle" type="button" data-toggle-hero-video aria-label="Pausar vídeo del hero" aria-pressed="false" hidden>
       <span aria-hidden="true">Ⅱ</span>
@@ -38,19 +39,13 @@ const heroPoster = 'https://images.pexels.com/photos/32845694/pexels-photo-32845
   <section class="real-operations-card" aria-label="Ejemplo conceptual de una orden de trabajo">
     <div class="real-operations-head">
       <div>
-        <small>Trabajo en curso</small>
+        <small>Orden en curso</small>
         <strong>OT-2026-0148</strong>
       </div>
       <span>Prioridad alta</span>
     </div>
 
     <p class="real-location">Planta 2 · Pasillo de quirófanos</p>
-
-    <div class="real-kpis">
-      <article><small>Avisos hoy</small><strong>12</strong><em>3 urgentes</em></article>
-      <article><small>OT en curso</small><strong>8</strong><em>2 demoradas</em></article>
-      <article><small>Preventivos</small><strong>23</strong><em>Esta semana</em></article>
-    </div>
 
     <div class="real-work-detail">
       <div><small>Técnico</small><strong>Equipo eléctrico</strong></div>
@@ -60,43 +55,35 @@ const heroPoster = 'https://images.pexels.com/photos/32845694/pexels-photo-32845
     </div>
 
     <div class="real-progress-row">
-      <span>Progreso de la intervención</span><b>60 %</b>
+      <span>Intervención</span><b>60 %</b>
     </div>
     <div class="real-progress"><span></span></div>
 
     <div class="real-activity">
-      <div><i></i><span>09:15</span><p>OT iniciada desde el móvil</p></div>
+      <div><i></i><span>09:15</span><p>Trabajo iniciado desde el móvil</p></div>
       <div><i></i><span>09:24</span><p>Activo identificado y revisado</p></div>
-      <div><i></i><span>09:42</span><p>Pruebas de funcionamiento</p></div>
     </div>
   </section>
 
   <button class="real-video-preview" type="button" data-open-video aria-haspopup="dialog">
     <span class="real-video-thumb">
-      <img
-        src="https://images.pexels.com/photos/33694019/pexels-photo-33694019.jpeg?auto=compress&cs=tinysrgb&w=520"
-        alt=""
-        width="520"
-        height="340"
-        loading="lazy"
-        decoding="async"
-      />
+      <img src={modalPoster} alt="" width="520" height="340" loading="lazy" decoding="async" />
       <i aria-hidden="true">▶</i>
     </span>
-    <span><strong>Ver el trabajo en campo</strong><small>Vídeo corto · carga bajo demanda</small></span>
+    <span><strong>Ver intervención real</strong><small>Vídeo corto · sin sonido</small></span>
   </button>
 </div>
 
 <dialog class="media-dialog" data-video-dialog aria-label="Vídeo de trabajo técnico">
   <button class="media-dialog-close" type="button" data-close-video aria-label="Cerrar vídeo">×</button>
   <div class="media-dialog-frame">
-    <video controls playsinline preload="none" data-field-video poster="https://images.pexels.com/photos/33694019/pexels-photo-33694019.jpeg?auto=compress&cs=tinysrgb&w=1280">
+    <video controls playsinline preload="none" data-field-video poster={modalPoster}>
       <source data-src={videoUrl} type="video/mp4" />
       Tu navegador no puede reproducir este vídeo.
     </video>
     <div class="media-dialog-copy">
       <strong>Intervención técnica en un cuadro de control</strong>
-      <span>Imagen de apoyo para representar el trabajo diario. El producto mostrado en la web es IsiVoltPro.</span>
+      <span>Vídeo de apoyo para representar el trabajo diario. La interfaz mostrada corresponde a una demostración de IsiVoltPro.</span>
     </div>
   </div>
 </dialog>
@@ -188,21 +175,18 @@ const heroPoster = 'https://images.pexels.com/photos/32845694/pexels-photo-32845
   if (mediaRoot && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
     const photo = mediaRoot.querySelector('.real-hero-photo');
     const operationCard = mediaRoot.querySelector('.real-operations-card');
-    const videoPreview = mediaRoot.querySelector('.real-video-preview');
 
     mediaRoot.addEventListener('pointermove', (event) => {
       const rect = mediaRoot.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width - .5) * 18;
-      const y = ((event.clientY - rect.top) / rect.height - .5) * 14;
-      if (photo) photo.style.transform = `translate3d(${-x * .45}px, ${-y * .35}px, 0)`;
-      if (operationCard) operationCard.style.transform = `translate3d(${x * .55}px, ${y * .5}px, 24px)`;
-      if (videoPreview) videoPreview.style.transform = `translate3d(${-x * .35}px, ${y * .5}px, 36px)`;
+      const x = ((event.clientX - rect.left) / rect.width - .5) * 10;
+      const y = ((event.clientY - rect.top) / rect.height - .5) * 8;
+      if (photo) photo.style.transform = `translate3d(${-x * .2}px, ${-y * .18}px, 0)`;
+      if (operationCard) operationCard.style.transform = `translate3d(${x * .35}px, ${y * .32}px, 20px)`;
     });
 
     mediaRoot.addEventListener('pointerleave', () => {
       if (photo) photo.style.transform = 'translate3d(0,0,0)';
-      if (operationCard) operationCard.style.transform = 'translate3d(0,0,24px)';
-      if (videoPreview) videoPreview.style.transform = 'translate3d(0,0,36px)';
+      if (operationCard) operationCard.style.transform = 'translate3d(0,0,20px)';
     });
   }
 </script>
