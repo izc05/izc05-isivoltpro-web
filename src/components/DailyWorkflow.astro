@@ -38,24 +38,29 @@ const steps = [
     title: 'Se documenta y se cierra',
     text: 'Fotografías, checklist, firma, informe e histórico para la siguiente actuación.',
     type: 'photo',
-    image: 'https://images.pexels.com/photos/3856118/pexels-photo-3856118.jpeg?auto=compress&cs=tinysrgb&w=760'
+    image: 'https://images.pexels.com/photos/32845694/pexels-photo-32845694.jpeg?auto=compress&cs=tinysrgb&w=760'
   }
 ];
 ---
 
-<section class="daily-workflow" aria-labelledby="daily-workflow-title">
+<section class="daily-workflow" aria-labelledby="daily-workflow-title" data-daily-workflow>
   <div class="container">
     <div class="daily-workflow-heading reveal">
       <div>
         <p class="eyebrow">Una jornada conectada</p>
-        <h2 id="daily-workflow-title">Así se trabaja cada día</h2>
+        <h2 id="daily-workflow-title">Así se mueve una OT durante la mañana</h2>
       </div>
-      <p class="lead">No se trata solo de abrir y cerrar órdenes. IsiVoltPro conserva el contexto desde que entra el aviso hasta que la actuación queda documentada.</p>
+      <p class="lead">El aviso no desaparece al asignarlo. Su contexto acompaña al equipo, al activo, a la intervención y al informe final.</p>
     </div>
 
-    <div class="daily-workflow-track">
-      {steps.map((step) => (
-        <article class="daily-step reveal">
+    <div class="daily-workflow-track" data-daily-track>
+      <span class="daily-track-progress" data-daily-progress aria-hidden="true"></span>
+      {steps.map((step, index) => (
+        <article
+          class:list={["daily-step", index === 0 && "is-active"]}
+          data-daily-step={index}
+          aria-current={index === 0 ? 'step' : undefined}
+        >
           <header>
             <span>{step.number}</span>
             <time>{step.time}</time>
@@ -92,3 +97,37 @@ const steps = [
     </div>
   </div>
 </section>
+
+<script>
+  document.querySelectorAll('[data-daily-workflow]').forEach((section) => {
+    const steps = [...section.querySelectorAll('[data-daily-step]')];
+    const track = section.querySelector('[data-daily-track]');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const activate = (index) => {
+      steps.forEach((step, stepIndex) => {
+        const active = stepIndex === index;
+        step.classList.toggle('is-active', active);
+        step.classList.toggle('is-past', stepIndex < index);
+        if (active) step.setAttribute('aria-current', 'step');
+        else step.removeAttribute('aria-current');
+      });
+      const progress = steps.length > 1 ? (index / (steps.length - 1)) * 91.6 : 0;
+      track?.style.setProperty('--daily-progress', `${progress}%`);
+    };
+
+    if (reduceMotion || matchMedia('(max-width: 760px)').matches) {
+      steps.forEach((step) => step.classList.add('is-past'));
+      track?.style.setProperty('--daily-progress', '91.6%');
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) activate(Number(entry.target.getAttribute('data-daily-step')));
+      });
+    }, { rootMargin: '-34% 0px -46% 0px', threshold: 0 });
+
+    steps.forEach((step) => observer.observe(step));
+  });
+</script>
