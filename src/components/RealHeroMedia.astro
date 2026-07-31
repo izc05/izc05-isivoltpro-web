@@ -6,38 +6,47 @@ const scenes = [
     detail: 'Cuadros y maniobra',
     title: 'Intervención en cuadro eléctrico',
     video: 'https://videos.pexels.com/video-files/28886877/12504681_1920_1080_30fps.mp4',
-    poster: 'https://images.pexels.com/photos/33694019/pexels-photo-33694019.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    poster: 'https://images.pexels.com/photos/33694019/pexels-photo-33694019.jpeg?auto=compress&cs=tinysrgb&w=1600',
     alt: 'Técnico trabajando en un cuadro eléctrico industrial'
   },
   {
     id: 'field',
     label: 'Trabajo en campo',
     detail: 'Órdenes y evidencias',
-    title: 'Información técnica en una tableta',
+    title: 'Técnico consultando información en una tableta',
     video: 'https://videos.pexels.com/video-files/3195703/3195703-uhd_3840_2160_25fps.mp4',
-    poster: 'https://images.pexels.com/photos/3856118/pexels-photo-3856118.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    poster: 'https://images.pexels.com/photos/3856118/pexels-photo-3856118.jpeg?auto=compress&cs=tinysrgb&w=1600',
     alt: 'Profesional consultando información técnica durante una intervención'
   },
   {
-    id: 'equipment',
-    label: 'Instalaciones',
-    detail: 'Energía y equipos',
-    title: 'Mantenimiento de infraestructura técnica',
+    id: 'inventory',
+    label: 'Almacén',
+    detail: 'Stock y materiales',
+    title: 'Control de inventario desde una tableta',
+    video: 'https://videos.pexels.com/video-files/4292901/4292901-uhd_3840_2160_25fps.mp4',
+    poster: 'https://images.pexels.com/photos/6195875/pexels-photo-6195875.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    alt: 'Profesional comprobando materiales e inventario en un almacén'
+  },
+  {
+    id: 'energy',
+    label: 'Energía industrial',
+    detail: 'Equipos y mantenimiento',
+    title: 'Mantenimiento de una instalación energética',
     video: 'https://videos.pexels.com/video-files/36167827/15338269_3840_2160_23fps.mp4',
-    poster: 'https://images.pexels.com/photos/32845695/pexels-photo-32845695.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    poster: 'https://images.pexels.com/photos/32845695/pexels-photo-32845695.jpeg?auto=compress&cs=tinysrgb&w=1600',
     alt: 'Técnico realizando mantenimiento en una instalación industrial'
   }
 ];
 const firstScene = scenes[0];
 ---
 
-<div class="hero-media-v5 reveal" data-hero-gallery aria-label="Escenas de mantenimiento y orden de trabajo IsiVoltPro">
-  <div class="hero-stage-v5">
-    <figure class="hero-video-v5">
+<div class="hero-media-v6 reveal" data-hero-gallery aria-label="Escenas reales de mantenimiento e información operativa de IsiVoltPro">
+  <div class="hero-stage-v6">
+    <figure class="hero-video-v6">
       <img
         src={firstScene.poster}
         alt={firstScene.alt}
-        width="1400"
+        width="1600"
         height="900"
         fetchpriority="high"
         decoding="async"
@@ -61,50 +70,53 @@ const firstScene = scenes[0];
         <span aria-hidden="true">Ⅱ</span>
       </button>
     </figure>
-
-    <section class="hero-ot-v5" aria-label="Ejemplo conceptual de una orden de trabajo">
-      <header>
-        <div><small>Orden en curso</small><strong>OT-2026-0148</strong></div>
-        <span>Prioridad alta</span>
-      </header>
-      <p class="hero-ot-location">Planta 2 · Pasillo de quirófanos</p>
-      <div class="hero-ot-grid">
-        <div><small>Técnico</small><strong>Equipo eléctrico</strong></div>
-        <div><small>Estado</small><strong class="status-running">En curso</strong></div>
-        <div><small>Activo</small><strong>CL-02 · Cuadro iluminación</strong></div>
-        <div><small>Inicio</small><strong>Hoy · 09:15</strong></div>
-      </div>
-      <div class="hero-ot-progress-head"><span>Intervención</span><b>60 %</b></div>
-      <div class="hero-ot-progress"><span></span></div>
-      <div class="hero-ot-events">
-        <div><i></i><time>09:15</time><span>Trabajo iniciado desde el móvil</span></div>
-        <div><i></i><time>09:24</time><span>Activo identificado y revisado</span></div>
-        <div><i></i><time>09:42</time><span>Pruebas de funcionamiento</span></div>
-      </div>
-    </section>
   </div>
 
-  <div class="hero-scenes-v5" role="tablist" aria-label="Elegir una escena de mantenimiento">
-    <span class="hero-scenes-label">Elige una escena</span>
-    {scenes.map((scene, index) => (
-      <button
-        class:list={['hero-scene-v5', index === 0 && 'active']}
-        type="button"
-        role="tab"
-        aria-selected={index === 0 ? 'true' : 'false'}
-        data-scene-button
-        data-video={scene.video}
-        data-poster={scene.poster}
-        data-title={scene.title}
-        data-alt={scene.alt}
-      >
-        <span class="hero-scene-thumb">
-          <img src={scene.poster} alt="" width="360" height="220" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
-          {index === 0 && <i aria-hidden="true">▶</i>}
-        </span>
-        <span><strong>{scene.label}</strong><small>{scene.detail}</small></span>
-      </button>
-    ))}
+  <section class="hero-ot-strip-v6" aria-label="Ejemplo conceptual de una orden de trabajo">
+    <div class="hero-ot-id-v6">
+      <span>Orden en curso</span>
+      <strong>OT-2026-0148</strong>
+      <small>Planta 2 · Pasillo de quirófanos</small>
+    </div>
+    <div class="hero-ot-fact-v6">
+      <span>Técnico</span>
+      <strong>Equipo eléctrico</strong>
+    </div>
+    <div class="hero-ot-fact-v6">
+      <span>Activo</span>
+      <strong>CL-02 · Cuadro iluminación</strong>
+    </div>
+    <div class="hero-ot-status-v6">
+      <span>En curso · 60 %</span>
+      <div><i></i></div>
+      <small>Actualizado a las 09:42</small>
+    </div>
+    <a href="/aplicaciones/mantenimiento-ot">Ver OT →</a>
+  </section>
+
+  <div class="hero-scenes-v6" role="tablist" aria-label="Elegir una escena de mantenimiento">
+    <span class="hero-scenes-label-v6">Escenas reales</span>
+    <div class="hero-scenes-track-v6">
+      {scenes.map((scene, index) => (
+        <button
+          class:list={['hero-scene-v6', index === 0 && 'active']}
+          type="button"
+          role="tab"
+          aria-selected={index === 0 ? 'true' : 'false'}
+          data-scene-button
+          data-video={scene.video}
+          data-poster={scene.poster}
+          data-title={scene.title}
+          data-alt={scene.alt}
+        >
+          <span class="hero-scene-thumb-v6">
+            <img src={scene.poster} alt="" width="360" height="220" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
+            {index === 0 && <i aria-hidden="true">▶</i>}
+          </span>
+          <span><strong>{scene.label}</strong><small>{scene.detail}</small></span>
+        </button>
+      ))}
+    </div>
   </div>
 </div>
 
@@ -162,6 +174,15 @@ const firstScene = scenes[0];
       const active = item === button;
       item.classList.toggle('active', active);
       item.setAttribute('aria-selected', String(active));
+      const marker = item.querySelector('.hero-scene-thumb-v6 i');
+      if (active && !marker) {
+        const nextMarker = document.createElement('i');
+        nextMarker.setAttribute('aria-hidden', 'true');
+        nextMarker.textContent = '▶';
+        item.querySelector('.hero-scene-thumb-v6')?.append(nextMarker);
+      } else if (!active && marker) {
+        marker.remove();
+      }
     });
 
     if (posterImage) {
@@ -198,7 +219,7 @@ const firstScene = scenes[0];
     mainVideo.addEventListener('canplay', () => {
       gallery.classList.add('has-video');
       if (videoToggle) videoToggle.hidden = false;
-    }, { once: true });
+    });
   }
 
   videoToggle?.addEventListener('click', () => {
