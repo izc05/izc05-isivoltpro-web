@@ -9,6 +9,7 @@ import '../styles/real-media.css';
 import '../styles/premium-v2.css';
 import '../styles/cinematic-v3.css';
 import '../styles/mobile-hero-fix.css';
+import '../styles/hero-clean-v4.css';
 import Header from '../components/Header.astro';
 import RealHeroMedia from '../components/RealHeroMedia.astro';
 import CinematicRail from '../components/CinematicRail.astro';
@@ -64,25 +65,25 @@ const structuredData = {
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <Header />
     <main id="contenido">
-      <section class="hero hero-real" id="inicio">
+      <section class="hero hero-real hero-clean" id="inicio">
         <div class="container hero-grid">
           <div class="hero-copy reveal">
-            <p class="eyebrow">Tecnología para instalaciones que no pueden parar</p>
+            <p class="eyebrow">Mantenimiento real conectado de principio a fin</p>
             <h1>
-              <span class="hero-title-line">Del aviso al informe.</span>
-              <span class="hero-title-line">El mantenimiento</span>
-              <span class="hero-title-line"><span class="accent">más claro.</span></span>
+              <span class="hero-title-line">Del aviso al cierre.</span>
+              <span class="hero-title-line">El mantenimiento,</span>
+              <span class="hero-title-line"><span class="accent">todo conectado.</span></span>
             </h1>
-            <p class="lead">Órdenes de trabajo, técnicos, activos, inventario, inspecciones y evidencias. Todo conectado para que oficina y campo trabajen con la misma información.</p>
+            <p class="lead">Avisos, técnicos, activos, materiales, inspecciones y evidencias en un mismo flujo para que oficina y campo trabajen con el mismo contexto.</p>
             <div class="hero-actions">
               <a class="button button-primary" href="/ecosistema">Explorar el ecosistema →</a>
               <a class="button button-secondary" href="/aplicaciones/mantenimiento-ot">Ver IsiVoltPro OT</a>
             </div>
-            <div class="hero-points">
-              <div class="hero-point"><b>OT</b>Avisos y trabajos</div>
-              <div class="hero-point"><b>QR</b>Activos e historial</div>
-              <div class="hero-point"><b>MAT</b>Material utilizado</div>
-              <div class="hero-point"><b>DOC</b>Cierre e informe</div>
+            <div class="hero-points" aria-label="Funciones principales">
+              <div class="hero-point"><b>OT</b><span>Avisos y trabajo</span></div>
+              <div class="hero-point"><b>QR</b><span>Activos e historial</span></div>
+              <div class="hero-point"><b>MAT</b><span>Material usado</span></div>
+              <div class="hero-point"><b>DOC</b><span>Cierre e informe</span></div>
             </div>
             <p class="hero-domain"><i></i>{brand.domain}</p>
           </div>
