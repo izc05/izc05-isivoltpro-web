@@ -1,192 +1,238 @@
 ---
-const videoUrl = 'https://videos.pexels.com/video-files/28886877/12504681_1920_1080_30fps.mp4';
-const heroPoster = 'https://images.pexels.com/photos/32845694/pexels-photo-32845694.jpeg?auto=compress&cs=tinysrgb&w=1400';
-const modalPoster = 'https://images.pexels.com/photos/33694019/pexels-photo-33694019.jpeg?auto=compress&cs=tinysrgb&w=1280';
+const scenes = [
+  {
+    id: 'electrical',
+    label: 'Electricidad',
+    detail: 'Cuadros y maniobra',
+    title: 'Intervención en cuadro eléctrico',
+    video: 'https://videos.pexels.com/video-files/28886877/12504681_1920_1080_30fps.mp4',
+    poster: 'https://images.pexels.com/photos/33694019/pexels-photo-33694019.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    alt: 'Técnico trabajando en un cuadro eléctrico industrial'
+  },
+  {
+    id: 'field',
+    label: 'Trabajo en campo',
+    detail: 'Órdenes y evidencias',
+    title: 'Información técnica en una tableta',
+    video: 'https://videos.pexels.com/video-files/3195703/3195703-uhd_3840_2160_25fps.mp4',
+    poster: 'https://images.pexels.com/photos/3856118/pexels-photo-3856118.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    alt: 'Profesional consultando información técnica durante una intervención'
+  },
+  {
+    id: 'equipment',
+    label: 'Instalaciones',
+    detail: 'Energía y equipos',
+    title: 'Mantenimiento de infraestructura técnica',
+    video: 'https://videos.pexels.com/video-files/36167827/15338269_3840_2160_23fps.mp4',
+    poster: 'https://images.pexels.com/photos/32845695/pexels-photo-32845695.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    alt: 'Técnico realizando mantenimiento en una instalación industrial'
+  }
+];
+const firstScene = scenes[0];
 ---
 
-<div class="real-hero-media reveal" data-real-hero-media aria-label="Trabajo técnico y orden de trabajo de IsiVoltPro">
-  <figure class="real-hero-photo">
-    <img
-      src={heroPoster}
-      alt="Técnico realizando una comprobación en una instalación eléctrica"
-      width="1400"
-      height="900"
-      fetchpriority="high"
-      decoding="async"
-    />
-    <video
-      class="real-hero-loop"
-      muted
-      loop
-      playsinline
-      preload="none"
-      poster={heroPoster}
-      aria-hidden="true"
-      data-hero-loop
-    >
-      <source data-src={videoUrl} type="video/mp4" />
-    </video>
-    <div class="real-hero-film" aria-hidden="true"></div>
-    <figcaption>
-      <span class="real-live-dot"></span>
-      Intervención documentada desde campo
-    </figcaption>
-    <button class="hero-video-toggle" type="button" data-toggle-hero-video aria-label="Pausar vídeo del hero" aria-pressed="false" hidden>
-      <span aria-hidden="true">Ⅱ</span>
-    </button>
-  </figure>
+<div class="hero-media-v5 reveal" data-hero-gallery aria-label="Escenas de mantenimiento y orden de trabajo IsiVoltPro">
+  <div class="hero-stage-v5">
+    <figure class="hero-video-v5">
+      <img
+        src={firstScene.poster}
+        alt={firstScene.alt}
+        width="1400"
+        height="900"
+        fetchpriority="high"
+        decoding="async"
+        data-hero-poster
+      />
+      <video muted loop playsinline preload="none" poster={firstScene.poster} data-hero-main-video>
+        <source data-src={firstScene.video} type="video/mp4" />
+      </video>
+      <div class="hero-video-shade" aria-hidden="true"></div>
 
-  <section class="real-operations-card" aria-label="Ejemplo conceptual de una orden de trabajo">
-    <div class="real-operations-head">
-      <div>
-        <small>Orden en curso</small>
-        <strong>OT-2026-0148</strong>
+      <button class="hero-main-play" type="button" data-open-gallery-video aria-label="Abrir vídeo de intervención">
+        <span aria-hidden="true">▶</span>
+      </button>
+
+      <div class="hero-live-caption">
+        <i aria-hidden="true"></i>
+        <span><strong data-scene-title>{firstScene.title}</strong><small>Vídeo corto · sin sonido</small></span>
       </div>
-      <span>Prioridad alta</span>
-    </div>
 
-    <p class="real-location">Planta 2 · Pasillo de quirófanos</p>
+      <button class="hero-video-toggle" type="button" data-toggle-gallery-video aria-label="Pausar vídeo" aria-pressed="false" hidden>
+        <span aria-hidden="true">Ⅱ</span>
+      </button>
+    </figure>
 
-    <div class="real-work-detail">
-      <div><small>Técnico</small><strong>Equipo eléctrico</strong></div>
-      <div><small>Estado</small><strong class="status-running">En curso</strong></div>
-      <div><small>Activo</small><strong>CL-02 · Cuadro iluminación</strong></div>
-      <div><small>Inicio</small><strong>Hoy · 09:15</strong></div>
-    </div>
+    <section class="hero-ot-v5" aria-label="Ejemplo conceptual de una orden de trabajo">
+      <header>
+        <div><small>Orden en curso</small><strong>OT-2026-0148</strong></div>
+        <span>Prioridad alta</span>
+      </header>
+      <p class="hero-ot-location">Planta 2 · Pasillo de quirófanos</p>
+      <div class="hero-ot-grid">
+        <div><small>Técnico</small><strong>Equipo eléctrico</strong></div>
+        <div><small>Estado</small><strong class="status-running">En curso</strong></div>
+        <div><small>Activo</small><strong>CL-02 · Cuadro iluminación</strong></div>
+        <div><small>Inicio</small><strong>Hoy · 09:15</strong></div>
+      </div>
+      <div class="hero-ot-progress-head"><span>Intervención</span><b>60 %</b></div>
+      <div class="hero-ot-progress"><span></span></div>
+      <div class="hero-ot-events">
+        <div><i></i><time>09:15</time><span>Trabajo iniciado desde el móvil</span></div>
+        <div><i></i><time>09:24</time><span>Activo identificado y revisado</span></div>
+        <div><i></i><time>09:42</time><span>Pruebas de funcionamiento</span></div>
+      </div>
+    </section>
+  </div>
 
-    <div class="real-progress-row">
-      <span>Intervención</span><b>60 %</b>
-    </div>
-    <div class="real-progress"><span></span></div>
-
-    <div class="real-activity">
-      <div><i></i><span>09:15</span><p>Trabajo iniciado desde el móvil</p></div>
-      <div><i></i><span>09:24</span><p>Activo identificado y revisado</p></div>
-    </div>
-  </section>
-
-  <button class="real-video-preview" type="button" data-open-video aria-haspopup="dialog">
-    <span class="real-video-thumb">
-      <img src={modalPoster} alt="" width="520" height="340" loading="lazy" decoding="async" />
-      <i aria-hidden="true">▶</i>
-    </span>
-    <span><strong>Ver intervención real</strong><small>Vídeo corto · sin sonido</small></span>
-  </button>
+  <div class="hero-scenes-v5" role="tablist" aria-label="Elegir una escena de mantenimiento">
+    <span class="hero-scenes-label">Elige una escena</span>
+    {scenes.map((scene, index) => (
+      <button
+        class:list={['hero-scene-v5', index === 0 && 'active']}
+        type="button"
+        role="tab"
+        aria-selected={index === 0 ? 'true' : 'false'}
+        data-scene-button
+        data-video={scene.video}
+        data-poster={scene.poster}
+        data-title={scene.title}
+        data-alt={scene.alt}
+      >
+        <span class="hero-scene-thumb">
+          <img src={scene.poster} alt="" width="360" height="220" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
+          {index === 0 && <i aria-hidden="true">▶</i>}
+        </span>
+        <span><strong>{scene.label}</strong><small>{scene.detail}</small></span>
+      </button>
+    ))}
+  </div>
 </div>
 
-<dialog class="media-dialog" data-video-dialog aria-label="Vídeo de trabajo técnico">
-  <button class="media-dialog-close" type="button" data-close-video aria-label="Cerrar vídeo">×</button>
-  <div class="media-dialog-frame">
-    <video controls playsinline preload="none" data-field-video poster={modalPoster}>
-      <source data-src={videoUrl} type="video/mp4" />
+<dialog class="hero-gallery-dialog" data-gallery-dialog aria-label="Vídeos de mantenimiento">
+  <button class="hero-gallery-close" type="button" data-close-gallery aria-label="Cerrar vídeo">×</button>
+  <div class="hero-gallery-frame">
+    <video controls playsinline preload="none" poster={firstScene.poster} data-gallery-video>
+      <source data-src={firstScene.video} type="video/mp4" />
       Tu navegador no puede reproducir este vídeo.
     </video>
-    <div class="media-dialog-copy">
-      <strong>Intervención técnica en un cuadro de control</strong>
-      <span>Vídeo de apoyo para representar el trabajo diario. La interfaz mostrada corresponde a una demostración de IsiVoltPro.</span>
+    <div class="hero-gallery-copy">
+      <strong data-gallery-title>{firstScene.title}</strong>
+      <span>Material visual de apoyo para representar el trabajo diario. No corresponde a un cliente ni instalación real de IsiVoltPro.</span>
     </div>
   </div>
 </dialog>
 
 <script is:inline>
-  const openButton = document.querySelector('[data-open-video]');
-  const closeButton = document.querySelector('[data-close-video]');
-  const dialog = document.querySelector('[data-video-dialog]');
-  const fieldVideo = document.querySelector('[data-field-video]');
-  const fieldSource = fieldVideo?.querySelector('source[data-src]');
-  const mediaRoot = document.querySelector('[data-real-hero-media]');
-  const heroLoop = mediaRoot?.querySelector('[data-hero-loop]');
-  const heroSource = heroLoop?.querySelector('source[data-src]');
-  const heroToggle = mediaRoot?.querySelector('[data-toggle-hero-video]');
+  const gallery = document.querySelector('[data-hero-gallery]');
+  const mainVideo = gallery?.querySelector('[data-hero-main-video]');
+  const mainSource = mainVideo?.querySelector('source[data-src]');
+  const posterImage = gallery?.querySelector('[data-hero-poster]');
+  const sceneTitle = gallery?.querySelector('[data-scene-title]');
+  const sceneButtons = [...(gallery?.querySelectorAll('[data-scene-button]') || [])];
+  const videoToggle = gallery?.querySelector('[data-toggle-gallery-video]');
+  const openDialogButton = gallery?.querySelector('[data-open-gallery-video]');
+  const dialog = document.querySelector('[data-gallery-dialog]');
+  const closeDialogButton = dialog?.querySelector('[data-close-gallery]');
+  const dialogVideo = dialog?.querySelector('[data-gallery-video]');
+  const dialogSource = dialogVideo?.querySelector('source[data-src]');
+  const dialogTitle = dialog?.querySelector('[data-gallery-title]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   const slowConnection = connection?.saveData || ['slow-2g', '2g'].includes(connection?.effectiveType || '');
-  const canUseHeroVideo = !reduceMotion && !slowConnection && window.innerWidth >= 760;
+  const canAutoplay = !reduceMotion && !slowConnection && window.innerWidth >= 760;
+  let selectedVideo = mainSource?.dataset.src || '';
+  let selectedPoster = mainVideo?.getAttribute('poster') || '';
+  let selectedTitle = sceneTitle?.textContent || '';
+  let mainLoaded = false;
 
-  openButton?.addEventListener('click', () => {
-    if (fieldSource && !fieldSource.getAttribute('src')) {
-      fieldSource.setAttribute('src', fieldSource.dataset.src || '');
-      fieldVideo?.load();
+  const loadMainVideo = () => {
+    if (!mainVideo || !mainSource || !selectedVideo) return;
+    mainSource.setAttribute('src', selectedVideo);
+    mainVideo.setAttribute('poster', selectedPoster);
+    mainVideo.load();
+    mainLoaded = true;
+  };
+
+  const updateScene = (button) => {
+    selectedVideo = button.dataset.video || selectedVideo;
+    selectedPoster = button.dataset.poster || selectedPoster;
+    selectedTitle = button.dataset.title || selectedTitle;
+
+    sceneButtons.forEach((item) => {
+      const active = item === button;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-selected', String(active));
+    });
+
+    if (posterImage) {
+      posterImage.src = selectedPoster;
+      posterImage.alt = button.dataset.alt || '';
     }
+    if (sceneTitle) sceneTitle.textContent = selectedTitle;
+    if (dialogTitle) dialogTitle.textContent = selectedTitle;
+
+    if (mainVideo && mainSource && mainLoaded) {
+      mainVideo.pause();
+      mainSource.setAttribute('src', selectedVideo);
+      mainVideo.setAttribute('poster', selectedPoster);
+      mainVideo.load();
+      if (canAutoplay) mainVideo.play().catch(() => {});
+    }
+  };
+
+  sceneButtons.forEach((button) => button.addEventListener('click', () => updateScene(button)));
+
+  if (gallery && mainVideo && mainSource && canAutoplay) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (!mainLoaded) loadMainVideo();
+          mainVideo.play().catch(() => {});
+        } else {
+          mainVideo.pause();
+        }
+      });
+    }, { threshold: .2 });
+    observer.observe(gallery);
+
+    mainVideo.addEventListener('canplay', () => {
+      gallery.classList.add('has-video');
+      if (videoToggle) videoToggle.hidden = false;
+    }, { once: true });
+  }
+
+  videoToggle?.addEventListener('click', () => {
+    if (!mainVideo) return;
+    if (mainVideo.paused) {
+      if (!mainLoaded) loadMainVideo();
+      mainVideo.play().catch(() => {});
+      videoToggle.setAttribute('aria-pressed', 'false');
+      videoToggle.setAttribute('aria-label', 'Pausar vídeo');
+      videoToggle.querySelector('span').textContent = 'Ⅱ';
+    } else {
+      mainVideo.pause();
+      videoToggle.setAttribute('aria-pressed', 'true');
+      videoToggle.setAttribute('aria-label', 'Reproducir vídeo');
+      videoToggle.querySelector('span').textContent = '▶';
+    }
+  });
+
+  openDialogButton?.addEventListener('click', () => {
+    if (dialogVideo && dialogSource) {
+      dialogSource.setAttribute('src', selectedVideo);
+      dialogVideo.setAttribute('poster', selectedPoster);
+      dialogVideo.load();
+    }
+    if (dialogTitle) dialogTitle.textContent = selectedTitle;
     dialog?.showModal();
   });
 
-  const closeVideo = () => {
-    fieldVideo?.pause();
+  const closeDialog = () => {
+    dialogVideo?.pause();
     dialog?.close();
   };
-
-  closeButton?.addEventListener('click', closeVideo);
+  closeDialogButton?.addEventListener('click', closeDialog);
   dialog?.addEventListener('click', (event) => {
-    if (event.target === dialog) closeVideo();
+    if (event.target === dialog) closeDialog();
   });
-
-  if (mediaRoot) {
-    new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-in-view');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: .3 }).observe(mediaRoot);
-  }
-
-  if (canUseHeroVideo && mediaRoot && heroLoop && heroSource) {
-    let loaded = false;
-    const heroObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (!loaded) {
-            heroSource.setAttribute('src', heroSource.dataset.src || '');
-            heroLoop.load();
-            loaded = true;
-          }
-          heroLoop.play().catch(() => {});
-        } else {
-          heroLoop.pause();
-        }
-      });
-    }, { threshold: .18 });
-
-    heroObserver.observe(mediaRoot);
-
-    heroLoop.addEventListener('canplay', () => {
-      mediaRoot.classList.add('has-live-video');
-      if (heroToggle) heroToggle.hidden = false;
-    }, { once: true });
-
-    heroToggle?.addEventListener('click', () => {
-      const paused = heroLoop.paused;
-      if (paused) {
-        heroLoop.play().catch(() => {});
-        heroToggle.setAttribute('aria-pressed', 'false');
-        heroToggle.setAttribute('aria-label', 'Pausar vídeo del hero');
-        heroToggle.querySelector('span').textContent = 'Ⅱ';
-      } else {
-        heroLoop.pause();
-        heroToggle.setAttribute('aria-pressed', 'true');
-        heroToggle.setAttribute('aria-label', 'Reproducir vídeo del hero');
-        heroToggle.querySelector('span').textContent = '▶';
-      }
-    });
-  }
-
-  if (mediaRoot && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
-    const photo = mediaRoot.querySelector('.real-hero-photo');
-    const operationCard = mediaRoot.querySelector('.real-operations-card');
-
-    mediaRoot.addEventListener('pointermove', (event) => {
-      const rect = mediaRoot.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width - .5) * 10;
-      const y = ((event.clientY - rect.top) / rect.height - .5) * 8;
-      if (photo) photo.style.transform = `translate3d(${-x * .2}px, ${-y * .18}px, 0)`;
-      if (operationCard) operationCard.style.transform = `translate3d(${x * .35}px, ${y * .32}px, 20px)`;
-    });
-
-    mediaRoot.addEventListener('pointerleave', () => {
-      if (photo) photo.style.transform = 'translate3d(0,0,0)';
-      if (operationCard) operationCard.style.transform = 'translate3d(0,0,20px)';
-    });
-  }
 </script>

@@ -1,0 +1,69 @@
+---
+const products = [
+  {
+    code: 'OT',
+    title: 'Operaciones y órdenes de trabajo',
+    text: 'Avisos, asignación, intervención móvil, evidencias, cierre e informe.',
+    href: '/aplicaciones/mantenimiento-ot',
+    status: 'Demo operativa'
+  },
+  {
+    code: 'QR',
+    title: 'Activos QR y NFC',
+    text: 'Identificación, ubicación, historial, documentación y próximos preventivos.',
+    href: '/aplicaciones',
+    status: 'En desarrollo'
+  },
+  {
+    code: 'MAT',
+    title: 'Inventario y herramientas',
+    text: 'Stock, consumos, entregas, maletines y material vinculado a cada actuación.',
+    href: '/aplicaciones',
+    status: 'En desarrollo'
+  },
+  {
+    code: 'BT',
+    title: 'Inspecciones e informes',
+    text: 'Checklist, mediciones, defectos, fotografías y generación de documentación.',
+    href: '/aplicaciones/inspecciones-bt',
+    status: 'En desarrollo'
+  }
+];
+---
+
+<section class="home-products" id="aplicaciones" aria-labelledby="home-products-title">
+  <div class="container">
+    <header class="home-products-heading reveal">
+      <div>
+        <p class="eyebrow">Aplicaciones que comparten información</p>
+        <h2 id="home-products-title">El ecosistema, resumido en cuatro áreas clave</h2>
+      </div>
+      <div>
+        <p class="lead">La portada enseña lo esencial. Cada aplicación dispone de su propia ficha con el flujo, las pantallas y el estado real del desarrollo.</p>
+        <a class="button button-secondary" href="/aplicaciones">Ver todas las aplicaciones →</a>
+      </div>
+    </header>
+
+    <div class="home-products-grid">
+      {products.map((product, index) => (
+        <a class:list={['home-product-card', index === 0 && 'featured', 'reveal']} href={product.href}>
+          <div class="home-product-top">
+            <span class="home-product-code">{product.code}</span>
+            <small>{product.status}</small>
+          </div>
+          <h3>{product.title}</h3>
+          <p>{product.text}</p>
+          <strong>Conocer el módulo →</strong>
+        </a>
+      ))}
+    </div>
+
+    <div class="home-final-cta reveal">
+      <div>
+        <span>www.isivoltpro.com</span>
+        <h2>Una web clara para un ecosistema que seguirá creciendo.</h2>
+      </div>
+      <a class="button button-primary" href="/contacto">Solicitar información →</a>
+    </div>
+  </div>
+</section>
