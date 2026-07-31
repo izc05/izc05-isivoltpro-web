@@ -123,16 +123,23 @@ const videoUrl = 'https://videos.pexels.com/video-files/28886877/12504681_1920_1
   }
 
   if (mediaRoot && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+    const photo = mediaRoot.querySelector('.real-hero-photo');
+    const operationCard = mediaRoot.querySelector('.real-operations-card');
+    const videoPreview = mediaRoot.querySelector('.real-video-preview');
+
     mediaRoot.addEventListener('pointermove', (event) => {
       const rect = mediaRoot.getBoundingClientRect();
       const x = ((event.clientX - rect.left) / rect.width - .5) * 18;
       const y = ((event.clientY - rect.top) / rect.height - .5) * 14;
-      mediaRoot.style.setProperty('--media-x', `${x}px`);
-      mediaRoot.style.setProperty('--media-y', `${y}px`);
+      if (photo) photo.style.transform = `translate3d(${-x * .45}px, ${-y * .35}px, 0)`;
+      if (operationCard) operationCard.style.transform = `translate3d(${x * .55}px, ${y * .5}px, 24px)`;
+      if (videoPreview) videoPreview.style.transform = `translate3d(${-x * .35}px, ${y * .5}px, 36px)`;
     });
+
     mediaRoot.addEventListener('pointerleave', () => {
-      mediaRoot.style.setProperty('--media-x', '0px');
-      mediaRoot.style.setProperty('--media-y', '0px');
+      if (photo) photo.style.transform = 'translate3d(0,0,0)';
+      if (operationCard) operationCard.style.transform = 'translate3d(0,0,24px)';
+      if (videoPreview) videoPreview.style.transform = 'translate3d(0,0,36px)';
     });
   }
 </script>
