@@ -1,38 +1,150 @@
 ---
+import '../styles/brand-ecosystem-v9.css';
 import PageLayout from '../layouts/PageLayout.astro';
 import EcosystemExplorer from '../components/EcosystemExplorer.astro';
 import { ecosystemAreas } from '../data/catalog';
+import { brand } from '../data/brand';
+
+const families = [
+  { kicker: 'Operaciones', status: 'Demo operativa', title: 'Avisos, OT y coordinación', copy: 'Organiza incidencias, prioridades, técnicos, estados, tiempos y evidencias desde que entra el aviso hasta el cierre.', footer: 'Primer núcleo operativo del ecosistema' },
+  { kicker: 'Activos', status: 'En desarrollo', title: 'QR, NFC e historial técnico', copy: 'Cada equipo o instalación abre su contexto: ubicación, documentos, preventivos, averías y actuaciones anteriores.', footer: 'La instalación física obtiene identidad digital' },
+  { kicker: 'Recursos', status: 'En desarrollo', title: 'Inventario, almacén y herramientas', copy: 'Relaciona stock, consumos, maletines, herramientas y movimientos con el trabajo que realmente los utiliza.', footer: 'El material deja de estar aislado de la OT' },
+  { kicker: 'Inspecciones', status: 'En desarrollo', title: 'Mediciones, defectos e informes', copy: 'Convierte la revisión de campo en un expediente ordenado, verificable y preparado para generar documentación clara.', footer: 'Del dato técnico al informe' },
+  { kicker: 'Especialidades', status: 'Planificado', title: 'BT, RITE, refrigeración, PCI y agua', copy: 'Flujos adaptados a instalaciones eléctricas, climatización, seguridad contra incendios, legionella y mantenimiento especializado.', footer: 'Una lógica común con criterios específicos' },
+  { kicker: 'Conocimiento', status: 'Base editorial', title: 'Documentación y criterio reutilizable', copy: 'Recursos, históricos, checklists y conclusiones que permiten que cada intervención ayude a preparar la siguiente.', footer: 'La experiencia no se pierde al cerrar el trabajo' }
+];
 ---
 
-<PageLayout title="Explora el ecosistema" description="Descubre las áreas, aplicaciones y herramientas técnicas que forman el ecosistema IsiVoltPro.">
-  <section class="page-hero ecosystem-page-hero">
+<PageLayout title="Qué es IsiVoltPro y cómo funciona su ecosistema" description={brand.mission}>
+  <section class="page-hero brand-ecosystem-hero">
     <div class="container page-hero-grid">
       <div class="reveal">
-        <span class="page-kicker">Una marca · múltiples herramientas</span>
-        <h1>Explora el <span class="accent">ecosistema</span> IsiVoltPro</h1>
-        <p class="lead">Un catálogo modular para mantenimiento, instalaciones, inspecciones, inventario, cálculos y conocimiento técnico. Cada herramienta puede funcionar por separado y compartir información cuando sea necesario.</p>
+        <span class="page-kicker">Una marca técnica · múltiples herramientas</span>
+        <h1>IsiVoltPro conecta el trabajo real con la <span class="accent">información que permite decidir</span>.</h1>
+        <p class="lead">No es solo una aplicación de órdenes de trabajo. Es una marca y un ecosistema modular para mantener, identificar, inspeccionar y comprender instalaciones técnicas con una experiencia común.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#explorador">Explorar por áreas →</a>
-          <a class="button button-secondary" href="/aplicaciones">Ver catálogo completo</a>
+          <a class="button button-primary" href="#que-es">Entender la marca →</a>
+          <a class="button button-secondary" href="#explorador">Explorar las herramientas</a>
         </div>
-        <div class="ecosystem-stat-strip" aria-label="Resumen del ecosistema">
+        <div class="ecosystem-stat-strip" aria-label="Resumen de IsiVoltPro">
+          <div><strong>1</strong><span>marca técnica</span></div>
+          <div><strong>6</strong><span>núcleos conectados</span></div>
           <div><strong>12</strong><span>áreas iniciales</span></div>
-          <div><strong>5</strong><span>familias técnicas</span></div>
-          <div><strong>1</strong><span>identidad común</span></div>
         </div>
       </div>
-      <div class="page-visual reveal" aria-label="Representación del ecosistema IsiVoltPro">
-        <div class="page-visual-grid">
-          <div class="page-visual-card"><span>Operaciones</span><strong>OT, activos y mantenimiento</strong></div>
-          <div class="page-visual-card"><span>Recursos</span><strong>Inventario, almacén y herramientas</strong></div>
-          <div class="page-visual-card"><span>Ingeniería</span><strong>Cálculos, inspecciones y diagnóstico</strong></div>
-          <div class="page-visual-card"><span>Especialidades</span><strong>RITE, refrigeración, PCI y agua</strong></div>
+
+      <div class="ecosystem-hero-visual reveal" aria-label="Del trabajo físico a la información técnica">
+        <div class="ecosystem-hero-system">
+          <div>
+            <span>Instalación física</span>
+            <strong>Equipos, personas y trabajo</strong>
+            <small>Avisos, activos, herramientas, mediciones y actuaciones de campo.</small>
+          </div>
+          <i aria-hidden="true"></i>
+          <div>
+            <span>IsiVoltPro</span>
+            <strong>Contexto, trazabilidad y conocimiento</strong>
+            <small>La información acompaña al trabajo y queda preparada para el informe y la siguiente decisión.</small>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="explorador">
+  <section class="brand-definition-section" id="que-es">
+    <div class="container">
+      <div class="brand-definition-intro reveal">
+        <div>
+          <p class="eyebrow">Qué es la marca</p>
+          <h2>Una identidad común para resolver problemas técnicos concretos.</h2>
+        </div>
+        <p class="lead">IsiVoltPro nace del mantenimiento, la coordinación, la inspección y el trabajo de campo. Su función es convertir actividades dispersas en un flujo entendible y trazable.</p>
+      </div>
+
+      <div class="brand-definition-grid">
+        <article class="brand-definition-card reveal">
+          <span>01 · Marca</span>
+          <h3>Un lenguaje técnico reconocible</h3>
+          <p>Una misma identidad visual, una forma coherente de registrar información y una promesa común: facilitar el trabajo sin alejarse de la realidad de la instalación.</p>
+          <footer>Claridad · contexto · rigor</footer>
+        </article>
+        <article class="brand-definition-card reveal">
+          <span>02 · Ecosistema</span>
+          <h3>Herramientas independientes que pueden colaborar</h3>
+          <p>Cada módulo resuelve una necesidad —OT, activos, inventario o inspecciones— y puede compartir ubicaciones, técnicos, documentos o históricos cuando resulta útil.</p>
+          <footer>Modularidad · integración progresiva</footer>
+        </article>
+        <article class="brand-definition-card reveal">
+          <span>03 · Propósito</span>
+          <h3>Convertir actuaciones en conocimiento técnico</h3>
+          <p>El valor no termina cuando se cierra una orden. Fotografías, mediciones, materiales y conclusiones deben quedar disponibles para prevenir, justificar y decidir mejor.</p>
+          <footer>Del dato aislado al criterio reutilizable</footer>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="brand-name-section">
+    <div class="container brand-name-layout">
+      <div class="reveal">
+        <p class="eyebrow">La identidad</p>
+        <h2>El nombre resume el origen y la ambición de la marca.</h2>
+        <p class="lead">IsiVoltPro combina una firma propia, el mundo de la energía y las instalaciones, y una orientación claramente profesional.</p>
+        <blockquote class="brand-promise">
+          <span>Promesa de marca</span>
+          <strong>{brand.claim}</strong>
+        </blockquote>
+      </div>
+
+      <div class="brand-name-tokens reveal">
+        <article class="brand-name-token"><b>Isi</b><span>Origen personal</span><p>Representa una forma propia de entender el mantenimiento: práctica, cercana al técnico y construida desde la experiencia real.</p></article>
+        <article class="brand-name-token"><b>Volt</b><span>Instalaciones y tecnología</span><p>Evoca energía, electricidad y sistemas técnicos, pero se amplía a climatización, fontanería, PCI, seguridad y telecomunicaciones.</p></article>
+        <article class="brand-name-token"><b>Pro</b><span>Uso profesional</span><p>Expresa la intención de crear herramientas útiles para trabajar, documentar, coordinar e inspeccionar con más claridad y criterio.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ecosystem-system-section">
+    <div class="container">
+      <div class="ecosystem-system-heading reveal">
+        <div>
+          <p class="eyebrow">Cómo funciona el ecosistema</p>
+          <h2>La información avanza junto a la intervención.</h2>
+        </div>
+        <p class="lead">El ecosistema no obliga a empezar con todo. Puede crecer por etapas, pero mantiene una lógica común desde el equipo físico hasta el histórico técnico.</p>
+      </div>
+
+      <div class="ecosystem-flow-v9" aria-label="Flujo de información de IsiVoltPro">
+        <article class="ecosystem-flow-step reveal"><i>01</i><h3>Instalación</h3><p>Espacios, cuadros, UTAs, equipos, redes, herramientas y elementos físicos que deben mantenerse o inspeccionarse.</p></article>
+        <article class="ecosystem-flow-step reveal"><i>02</i><h3>Identidad</h3><p>El activo se relaciona con una ubicación, un código, QR o NFC, documentación e historial técnico.</p></article>
+        <article class="ecosystem-flow-step reveal"><i>03</i><h3>Operación</h3><p>Entran avisos, se asignan técnicos, se reservan recursos y se registra lo realizado durante la intervención.</p></article>
+        <article class="ecosystem-flow-step reveal"><i>04</i><h3>Verificación</h3><p>Checklists, fotografías, mediciones, observaciones y firmas permiten justificar el resultado del trabajo.</p></article>
+        <article class="ecosystem-flow-step reveal"><i>05</i><h3>Conocimiento</h3><p>La actuación termina en un informe, un histórico y una base útil para preventivos y decisiones futuras.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ecosystem-family-section">
+    <div class="container">
+      <div class="ecosystem-family-heading reveal">
+        <p class="eyebrow">Los seis núcleos</p>
+        <h2>Una misma instalación vista desde distintas necesidades.</h2>
+        <p class="lead">Los módulos no compiten entre sí. Cada uno completa una parte del contexto técnico y puede evolucionar a su propio ritmo.</p>
+      </div>
+      <div class="ecosystem-family-grid">
+        {families.map((family) => (
+          <article class="ecosystem-family-card reveal">
+            <header><span>{family.kicker}</span><b>{family.status}</b></header>
+            <h3>{family.title}</h3>
+            <p>{family.copy}</p>
+            <footer>{family.footer}</footer>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft" id="explorador">
     <div class="container">
       <div class="catalog-toolbar reveal">
         <div>
@@ -45,28 +157,32 @@ import { ecosystemAreas } from '../data/catalog';
     </div>
   </section>
 
-  <section class="section section-soft">
-    <div class="container content-split">
-      <div class="content-sticky reveal">
-        <p class="eyebrow">Una base compartida</p>
-        <h2>Aplicaciones distintas, una experiencia coherente</h2>
-        <p class="lead">Cada módulo tendrá su función, pero mantendrá la misma identidad, navegación, permisos y lógica de trabajo.</p>
-        <a class="button button-secondary" href="/aplicaciones">Consultar todas las fichas</a>
+  <section class="brand-manifesto-section">
+    <div class="container brand-manifesto-layout">
+      <div class="reveal">
+        <p class="eyebrow">Principios IsiVoltPro</p>
+        <h2>Una marca se reconoce también por las decisiones que repite.</h2>
+        <p class="lead">Estos principios guían el diseño de cada módulo, incluso cuando las aplicaciones y especialidades sean diferentes.</p>
       </div>
-      <div class="feature-list">
-        <article class="feature-row reveal"><span>01 · Identidad</span><h3>Un mismo lenguaje visual</h3><p>Colores, componentes, iconos y patrones de interacción comunes para que el usuario no tenga que aprender cada aplicación desde cero.</p></article>
-        <article class="feature-row reveal"><span>02 · Datos</span><h3>Información conectada cuando aporte valor</h3><p>Activos, ubicaciones, técnicos y documentos podrán compartirse entre módulos sin obligar a centralizarlo todo desde el primer día.</p></article>
-        <article class="feature-row reveal"><span>03 · Crecimiento</span><h3>Empieza pequeño y amplía después</h3><p>IsiVoltPro OT será el primer módulo operativo. Inventario, herramientas, cálculos y especialidades se añadirán como productos independientes.</p></article>
-        <article class="feature-row reveal"><span>04 · Control</span><h3>Dominio y servidor propios</h3><p>La web pública y las aplicaciones se preparan para funcionar bajo la infraestructura y los subdominios de IsiVoltPro.</p></article>
-      </div>
+      <ol class="brand-manifesto-list reveal">
+        <li>El aviso no debe perder contexto cuando cambia de persona o de estado.</li>
+        <li>El activo debe contar su historia sin obligar a buscar en carpetas dispersas.</li>
+        <li>El material y las herramientas deben quedar relacionados con el trabajo realizado.</li>
+        <li>La inspección debe terminar en una conclusión clara, verificable y documentada.</li>
+        <li>Cada actuación debe facilitar la siguiente, no empezar de cero otra vez.</li>
+      </ol>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
       <div class="cta reveal">
-        <div><p class="eyebrow">Ecosistema vivo</p><h2>Las nuevas herramientas tendrán su lugar desde el primer día</h2><p>La arquitectura está preparada para ampliar categorías, aplicaciones y recursos sin rehacer la web.</p></div>
-        <a class="button button-dark" href="/contacto">Proponer una herramienta →</a>
+        <div>
+          <p class="eyebrow">Un ecosistema que crecerá por etapas</p>
+          <h2>La primera pieza es IsiVoltPro OT. La visión es conectar toda la operación técnica.</h2>
+          <p>El desarrollo se plantea de forma progresiva: productos útiles por separado, una identidad común y conexiones solo cuando mejoren el trabajo.</p>
+        </div>
+        <a class="button button-dark" href="/aplicaciones">Ver aplicaciones →</a>
       </div>
     </div>
   </section>
