@@ -1,0 +1,18 @@
+.explorer-demo-label {
+  display: inline-flex;
+  width: max-content;
+  margin-bottom: 5px;
+  padding: 4px 7px;
+  border-radius: 999px;
+  color: #6b7890;
+  background: #eef2f7;
+  font-size: .55rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.status.available {
+  color: #0f6f4f;
+  background: #e9f8f1;
+}

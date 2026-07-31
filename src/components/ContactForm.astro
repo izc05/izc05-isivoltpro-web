@@ -1,0 +1,76 @@
+---
+import { brand } from '../data/brand';
+---
+
+<form class="contact-form" id="contact-form" data-email={brand.email}>
+  <div class="contact-form-grid">
+    <label>
+      <span>Nombre</span>
+      <input type="text" name="name" autocomplete="name" placeholder="Tu nombre" required />
+    </label>
+    <label>
+      <span>Correo</span>
+      <input type="email" name="email" autocomplete="email" placeholder="nombre@empresa.com" required />
+    </label>
+  </div>
+
+  <label>
+    <span>Área de interés</span>
+    <select name="area" required>
+      <option value="">Selecciona una opción</option>
+      <option>IsiVoltPro OT y mantenimiento</option>
+      <option>Inventario, almacén y herramientas</option>
+      <option>Activos QR/NFC</option>
+      <option>Inspecciones eléctricas BT</option>
+      <option>Climatización, RITE o refrigeración</option>
+      <option>PCI, legionella o instalaciones</option>
+      <option>Otra propuesta o colaboración</option>
+    </select>
+  </label>
+
+  <label>
+    <span>Cuéntame qué necesitas</span>
+    <textarea name="message" rows="6" placeholder="Describe el problema, el tipo de instalación o la idea que quieres valorar." required></textarea>
+  </label>
+
+  <div class="contact-form-footer">
+    <p>Al pulsar el botón se abrirá tu aplicación de correo con el mensaje preparado. La web no guarda estos datos.</p>
+    <button class="button button-primary" type="submit">Preparar correo →</button>
+  </div>
+  <p class="contact-form-status" id="contact-form-status" role="status" aria-live="polite"></p>
+</form>
+
+<script is:inline>
+  const contactForm = document.querySelector('#contact-form');
+  const status = document.querySelector('#contact-form-status');
+
+  contactForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const form = new FormData(contactForm);
+    const destination = contactForm.dataset.email;
+    const name = String(form.get('name') || '').trim();
+    const email = String(form.get('email') || '').trim();
+    const area = String(form.get('area') || '').trim();
+    const message = String(form.get('message') || '').trim();
+
+    if (!destination || !name || !email || !area || !message) {
+      if (status) status.textContent = 'Completa todos los campos antes de continuar.';
+      return;
+    }
+
+    const subject = `Consulta IsiVoltPro · ${area}`;
+    const body = [
+      `Nombre: ${name}`,
+      `Correo de contacto: ${email}`,
+      `Área: ${area}`,
+      '',
+      'Necesidad o propuesta:',
+      message,
+      '',
+      'Mensaje preparado desde isivoltpro.com'
+    ].join('\n');
+
+    if (status) status.textContent = 'Abriendo tu aplicación de correo…';
+    window.location.href = `mailto:${destination}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+</script>
