@@ -1,0 +1,175 @@
+---
+const modules = [
+  {
+    key: 'operaciones',
+    kicker: 'Operaciones',
+    title: 'Avisos, OT y coordinación',
+    copy: 'Recibe la incidencia, prioriza, asigna el equipo y conserva la trazabilidad hasta el cierre.',
+    status: 'Demo operativa',
+    href: '/aplicaciones/mantenimiento-ot',
+    items: 'Avisos|Técnicos|Planificación',
+    x: 50,
+    y: 9
+  },
+  {
+    key: 'activos',
+    kicker: 'Activos',
+    title: 'QR, NFC e historial técnico',
+    copy: 'Cada equipo abre su ficha, documentación, actuaciones anteriores y próximos preventivos.',
+    status: 'En desarrollo',
+    href: '/aplicaciones/activos-qr-nfc',
+    items: 'Identificación|Historial|Documentos',
+    x: 87,
+    y: 31
+  },
+  {
+    key: 'recursos',
+    kicker: 'Recursos',
+    title: 'Inventario, almacén y herramientas',
+    copy: 'Relaciona stock, consumos, maletines y movimientos con el trabajo que los necesita.',
+    status: 'En desarrollo',
+    href: '/aplicaciones/inventario-almacen',
+    items: 'Stock|Consumos|Herramientas',
+    x: 84,
+    y: 76
+  },
+  {
+    key: 'inspecciones',
+    kicker: 'Inspecciones',
+    title: 'Mediciones, defectos e informes',
+    copy: 'Convierte la revisión de campo en un expediente técnico ordenado, verificable y exportable.',
+    status: 'En desarrollo',
+    href: '/aplicaciones/inspecciones-electricas',
+    items: 'Checklist|Mediciones|PDF',
+    x: 50,
+    y: 93
+  },
+  {
+    key: 'especialidades',
+    kicker: 'Especialidades',
+    title: 'BT, RITE, PCI y legionella',
+    copy: 'Flujos adaptados a instalaciones críticas, mantenimiento reglamentario y trabajo especializado.',
+    status: 'Planificado',
+    href: '/ecosistema',
+    items: 'Electricidad|Climatización|Seguridad',
+    x: 16,
+    y: 76
+  },
+  {
+    key: 'conocimiento',
+    kicker: 'Conocimiento',
+    title: 'Documentación y criterio técnico',
+    copy: 'Los informes, históricos y recursos convierten cada actuación en información reutilizable.',
+    status: 'Base editorial',
+    href: '/recursos',
+    items: 'Informes|Históricos|Recursos',
+    x: 13,
+    y: 31
+  }
+];
+---
+
+<section class="ecosystem-map-section" aria-labelledby="ecosystem-map-title">
+  <div class="container">
+    <div class="ecosystem-map-heading reveal">
+      <div>
+        <p class="eyebrow">Un ecosistema, una misma información</p>
+        <h2 id="ecosystem-map-title">Cada módulo trabaja por separado. Juntos explican toda la instalación.</h2>
+      </div>
+      <p class="lead">IsiVoltPro une operación, activos, recursos, inspecciones y conocimiento alrededor de una base común. La información no se copia: acompaña al trabajo.</p>
+    </div>
+
+    <div class="ecosystem-map-layout reveal" data-ecosystem-map>
+      <div class="ecosystem-radar" aria-label="Mapa interactivo de módulos IsiVoltPro">
+        <span class="ecosystem-ring ecosystem-ring-one" aria-hidden="true"></span>
+        <span class="ecosystem-ring ecosystem-ring-two" aria-hidden="true"></span>
+        <span class="ecosystem-sweep" aria-hidden="true"></span>
+
+        <div class="ecosystem-core">
+          <span>IsiVoltPro</span>
+          <strong>Base técnica común</strong>
+          <small>Oficina · campo · informe</small>
+        </div>
+
+        {modules.map((module, index) => (
+          <button
+            class:list={["ecosystem-node", index === 0 && "is-active"]}
+            type="button"
+            style={`--node-x:${module.x}%;--node-y:${module.y}%;--node-delay:${index * -0.55}s`}
+            data-ecosystem-node
+            data-kicker={module.kicker}
+            data-title={module.title}
+            data-copy={module.copy}
+            data-status={module.status}
+            data-href={module.href}
+            data-items={module.items}
+            aria-pressed={index === 0 ? 'true' : 'false'}
+          >
+            <i aria-hidden="true"></i>
+            <span>{module.kicker}</span>
+            <small>{module.title}</small>
+          </button>
+        ))}
+      </div>
+
+      <aside class="ecosystem-detail" aria-live="polite">
+        <div class="ecosystem-detail-top">
+          <span data-ecosystem-kicker>Operaciones</span>
+          <b data-ecosystem-status>Demo operativa</b>
+        </div>
+        <h3 data-ecosystem-title>Avisos, OT y coordinación</h3>
+        <p data-ecosystem-copy>Recibe la incidencia, prioriza, asigna el equipo y conserva la trazabilidad hasta el cierre.</p>
+        <div class="ecosystem-detail-items" data-ecosystem-items>
+          <span>Avisos</span><span>Técnicos</span><span>Planificación</span>
+        </div>
+        <a class="ecosystem-detail-link" href="/aplicaciones/mantenimiento-ot" data-ecosystem-link>Explorar este módulo →</a>
+
+        <div class="ecosystem-detail-flow" aria-hidden="true">
+          <div><small>Entrada</small><strong>Aviso</strong></div>
+          <i></i>
+          <div><small>Trabajo</small><strong>OT</strong></div>
+          <i></i>
+          <div><small>Resultado</small><strong>Histórico</strong></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-ecosystem-map]').forEach((root) => {
+    const nodes = [...root.querySelectorAll('[data-ecosystem-node]')];
+    const kicker = root.querySelector('[data-ecosystem-kicker]');
+    const title = root.querySelector('[data-ecosystem-title]');
+    const copy = root.querySelector('[data-ecosystem-copy]');
+    const status = root.querySelector('[data-ecosystem-status]');
+    const link = root.querySelector('[data-ecosystem-link]');
+    const items = root.querySelector('[data-ecosystem-items]');
+
+    const activate = (node) => {
+      nodes.forEach((item) => {
+        const active = item === node;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-pressed', String(active));
+      });
+      if (kicker) kicker.textContent = node.dataset.kicker || '';
+      if (title) title.textContent = node.dataset.title || '';
+      if (copy) copy.textContent = node.dataset.copy || '';
+      if (status) status.textContent = node.dataset.status || '';
+      if (link) link.setAttribute('href', node.dataset.href || '/ecosistema');
+      if (items) {
+        items.replaceChildren(...(node.dataset.items || '').split('|').map((label) => {
+          const element = document.createElement('span');
+          element.textContent = label;
+          return element;
+        }));
+      }
+    };
+
+    nodes.forEach((node) => {
+      node.addEventListener('click', () => activate(node));
+      node.addEventListener('mouseenter', () => activate(node));
+      node.addEventListener('focus', () => activate(node));
+    });
+  });
+</script>
