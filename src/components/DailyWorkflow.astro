@@ -59,6 +59,7 @@ const steps = [
         <article
           class:list={["daily-step", index === 0 && "is-active"]}
           data-daily-step={index}
+          tabindex="0"
           aria-current={index === 0 ? 'step' : undefined}
         >
           <header>
@@ -103,31 +104,73 @@ const steps = [
     const steps = [...section.querySelectorAll('[data-daily-step]')];
     const track = section.querySelector('[data-daily-track]');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mobile = window.matchMedia('(max-width: 760px)').matches;
+    const scheduled = [];
+    let currentIndex = 0;
+    let hasPlayed = false;
+    let userInteracted = false;
 
-    const activate = (index) => {
+    const activate = (index, { scroll = false } = {}) => {
+      currentIndex = Math.max(0, Math.min(index, steps.length - 1));
       steps.forEach((step, stepIndex) => {
-        const active = stepIndex === index;
+        const active = stepIndex === currentIndex;
         step.classList.toggle('is-active', active);
-        step.classList.toggle('is-past', stepIndex < index);
+        step.classList.toggle('is-past', stepIndex < currentIndex);
         if (active) step.setAttribute('aria-current', 'step');
         else step.removeAttribute('aria-current');
       });
-      const progress = steps.length > 1 ? (index / (steps.length - 1)) * 91.6 : 0;
+      const progress = steps.length > 1 ? (currentIndex / (steps.length - 1)) * 91.6 : 0;
       track?.style.setProperty('--daily-progress', `${progress}%`);
+      if (scroll && mobile && !userInteracted) {
+        steps[currentIndex]?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
+      }
     };
 
-    if (reduceMotion || matchMedia('(max-width: 760px)').matches) {
+    const cancelSequence = () => {
+      userInteracted = true;
+      scheduled.splice(0).forEach((timer) => window.clearTimeout(timer));
+    };
+
+    if (reduceMotion) {
       steps.forEach((step) => step.classList.add('is-past'));
       track?.style.setProperty('--daily-progress', '91.6%');
       return;
     }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) activate(Number(entry.target.getAttribute('data-daily-step')));
+    const playSequence = () => {
+      if (hasPlayed) return;
+      hasPlayed = true;
+      steps.forEach((_, index) => {
+        scheduled.push(window.setTimeout(() => activate(index, { scroll: true }), index * 1050));
       });
-    }, { rootMargin: '-34% 0px -46% 0px', threshold: 0 });
+    };
 
-    steps.forEach((step) => observer.observe(step));
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) playSequence();
+      });
+    }, { threshold: mobile ? .34 : .48 });
+    sectionObserver.observe(section);
+
+    steps.forEach((step, index) => {
+      step.addEventListener('mouseenter', () => activate(index));
+      step.addEventListener('focus', () => activate(index));
+      step.addEventListener('click', () => activate(index));
+    });
+
+    if (mobile && track) {
+      const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && userInteracted) {
+            activate(Number(entry.target.getAttribute('data-daily-step')));
+          }
+        });
+      }, { root: track, threshold: .68 });
+      steps.forEach((step) => cardObserver.observe(step));
+
+      track.addEventListener('pointerdown', cancelSequence, { passive: true });
+      track.addEventListener('touchstart', cancelSequence, { passive: true });
+      track.addEventListener('wheel', cancelSequence, { passive: true });
+    }
   });
 </script>
