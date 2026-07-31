@@ -9,7 +9,7 @@ import { ecosystemAreas } from '../../data/catalog';
       <div class="reveal">
         <span class="page-kicker">Catálogo de productos</span>
         <h1>Herramientas creadas para el <span class="accent">trabajo técnico real</span></h1>
-        <p class="lead">Aplicaciones especializadas para resolver tareas concretas: gestionar mantenimiento, controlar equipos, inspeccionar, calcular, documentar y tomar mejores decisiones.</p>
+        <p class="lead">Aplicaciones especializadas para gestionar mantenimiento, controlar recursos, inspeccionar, calcular, documentar y tomar mejores decisiones.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#aplicaciones">Ver aplicaciones →</a>
           <a class="button button-secondary" href="/ecosistema">Cómo encajan en el ecosistema</a>
@@ -17,10 +17,10 @@ import { ecosystemAreas } from '../../data/catalog';
       </div>
       <div class="page-visual reveal">
         <div class="page-visual-grid">
-          <div class="page-visual-card"><span>Disponible</span><strong>IsiVoltPro OT</strong></div>
+          <div class="page-visual-card"><span>Demo operativa</span><strong>IsiVoltPro OT</strong></div>
           <div class="page-visual-card"><span>En desarrollo</span><strong>Inventario y herramientas</strong></div>
-          <div class="page-visual-card"><span>Planificado</span><strong>Cálculos técnicos</strong></div>
-          <div class="page-visual-card"><span>Planificado</span><strong>Aplicaciones normativas</strong></div>
+          <div class="page-visual-card"><span>En desarrollo</span><strong>Inspecciones BT</strong></div>
+          <div class="page-visual-card"><span>Planificado</span><strong>Especialidades técnicas</strong></div>
         </div>
       </div>
     </div>
@@ -30,12 +30,12 @@ import { ecosystemAreas } from '../../data/catalog';
     <div class="container">
       <div class="catalog-toolbar reveal">
         <div><p class="eyebrow">Modular y escalable</p><h2>Aplicaciones de IsiVoltPro</h2></div>
-        <p class="lead">No todas las ideas se convertirán en una gran aplicación. Algunas serán módulos completos y otras utilidades rápidas enfocadas en una sola tarea.</p>
+        <p class="lead">Los estados muestran la situación real de cada idea: demo operativa, desarrollo activo o planificación. Las cifras de las vistas son ejemplos visuales.</p>
       </div>
       <div class="catalog-list">
         {ecosystemAreas.map((area, index) => (
           <article class:list={['catalog-card', 'reveal', { featured: index === 0 }]}>
-            <span class:list={['status', { available: area.status === 'Disponible' }]}>{area.status}</span>
+            <span class:list={['status', { available: area.slug === 'mantenimiento-ot' }]}>{area.status}</span>
             <div class="icon-box">{area.code}</div>
             <h3>{area.name}</h3>
             <p>{area.description}</p>
