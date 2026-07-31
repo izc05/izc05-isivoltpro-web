@@ -10,37 +10,46 @@ const scenes = [
     alt: 'Técnico trabajando en un cuadro eléctrico industrial'
   },
   {
-    id: 'field',
-    label: 'Trabajo en campo',
-    detail: 'Órdenes y evidencias',
-    title: 'Técnico consultando información en una tableta',
-    video: 'https://videos.pexels.com/video-files/3195703/3195703-uhd_3840_2160_25fps.mp4',
-    poster: 'https://images.pexels.com/photos/3856118/pexels-photo-3856118.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    alt: 'Profesional consultando información técnica durante una intervención'
+    id: 'plumbing',
+    label: 'Fontanería',
+    detail: 'Válvulas y tuberías',
+    title: 'Revisión de una instalación de fontanería',
+    video: 'https://videos.pexels.com/video-files/7584762/7584762-uhd_3840_2160_25fps.mp4',
+    poster: 'https://images.pexels.com/videos/7584762/pexels-photo-7584762.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    alt: 'Profesional ajustando conexiones y válvulas de una instalación de agua'
   },
   {
-    id: 'inventory',
-    label: 'Almacén',
-    detail: 'Stock y materiales',
-    title: 'Control de inventario desde una tableta',
-    video: 'https://videos.pexels.com/video-files/4292901/4292901-uhd_3840_2160_25fps.mp4',
-    poster: 'https://images.pexels.com/photos/6195875/pexels-photo-6195875.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    alt: 'Profesional comprobando materiales e inventario en un almacén'
+    id: 'fire-protection',
+    label: 'PCI',
+    detail: 'Protección contra incendios',
+    title: 'Equipos de protección contra incendios',
+    video: 'https://videos.pexels.com/video-files/34775765/14743018_1920_1080_30fps.mp4',
+    poster: 'https://images.pexels.com/videos/34775765/pexels-photo-34775765.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    alt: 'Equipos de protección contra incendios en una instalación industrial'
   },
   {
-    id: 'energy',
-    label: 'Energía industrial',
-    detail: 'Equipos y mantenimiento',
-    title: 'Mantenimiento de una instalación energética',
-    video: 'https://videos.pexels.com/video-files/36167827/15338269_3840_2160_23fps.mp4',
-    poster: 'https://images.pexels.com/photos/32845695/pexels-photo-32845695.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    alt: 'Técnico realizando mantenimiento en una instalación industrial'
+    id: 'security',
+    label: 'Seguridad',
+    detail: 'CCTV y supervisión',
+    title: 'Supervisión de sistemas de seguridad',
+    video: 'https://videos.pexels.com/video-files/7255101/7255101-uhd_4096_2160_30fps.mp4',
+    poster: 'https://images.pexels.com/videos/7255101/cybersecurity-man-office-people-7255101.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    alt: 'Equipo supervisando cámaras y sistemas de seguridad desde una sala de control'
+  },
+  {
+    id: 'telecom',
+    label: 'Telecomunicaciones',
+    detail: 'Redes y racks',
+    title: 'Infraestructura de red y telecomunicaciones',
+    video: 'https://videos.pexels.com/video-files/5028622/5028622-uhd_3840_2160_25fps.mp4',
+    poster: 'https://images.pexels.com/videos/5028622/pexels-photo-5028622.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    alt: 'Racks de comunicaciones y equipos de red en una sala técnica'
   }
 ];
 const firstScene = scenes[0];
 ---
 
-<div class="hero-media-v6 reveal" data-hero-gallery aria-label="Escenas reales de mantenimiento e información operativa de IsiVoltPro">
+<div class="hero-media-v6 hero-media-v7 reveal" data-hero-gallery aria-label="Secuencia automática de especialidades de mantenimiento e información operativa de IsiVoltPro">
   <div class="hero-stage-v6">
     <figure class="hero-video-v6">
       <img
@@ -52,18 +61,34 @@ const firstScene = scenes[0];
         decoding="async"
         data-hero-poster
       />
-      <video muted loop playsinline preload="none" poster={firstScene.poster} data-hero-main-video>
+      <video muted playsinline preload="metadata" poster={firstScene.poster} data-hero-main-video>
         <source data-src={firstScene.video} type="video/mp4" />
       </video>
       <div class="hero-video-shade" aria-hidden="true"></div>
 
-      <button class="hero-main-play" type="button" data-open-gallery-video aria-label="Abrir vídeo de intervención">
+      <button class="hero-main-play" type="button" data-start-playlist aria-label="Reproducir secuencia de vídeos de mantenimiento">
         <span aria-hidden="true">▶</span>
       </button>
 
       <div class="hero-live-caption">
         <i aria-hidden="true"></i>
-        <span><strong data-scene-title>{firstScene.title}</strong><small>Vídeo corto · sin sonido</small></span>
+        <span>
+          <strong data-scene-title>{firstScene.title}</strong>
+          <small>Secuencia automática · sin sonido</small>
+        </span>
+        <button type="button" data-open-gallery-video>Ver en grande</button>
+      </div>
+
+      <div class="hero-playlist-progress" aria-label="Progreso de la secuencia">
+        {scenes.map((scene, index) => (
+          <button
+            class:list={[index === 0 && 'active']}
+            type="button"
+            aria-label={`Reproducir ${scene.label}`}
+            data-progress-button
+            data-index={index}
+          ><span></span></button>
+        ))}
       </div>
 
       <button class="hero-video-toggle" type="button" data-toggle-gallery-video aria-label="Pausar vídeo" aria-pressed="false" hidden>
@@ -94,8 +119,8 @@ const firstScene = scenes[0];
     <a href="/aplicaciones/mantenimiento-ot">Ver OT →</a>
   </section>
 
-  <div class="hero-scenes-v6" role="tablist" aria-label="Elegir una escena de mantenimiento">
-    <span class="hero-scenes-label-v6">Escenas reales</span>
+  <div class="hero-scenes-v6" role="tablist" aria-label="Elegir una especialidad de mantenimiento">
+    <span class="hero-scenes-label-v6">Especialidades</span>
     <div class="hero-scenes-track-v6">
       {scenes.map((scene, index) => (
         <button
@@ -104,6 +129,7 @@ const firstScene = scenes[0];
           role="tab"
           aria-selected={index === 0 ? 'true' : 'false'}
           data-scene-button
+          data-index={index}
           data-video={scene.video}
           data-poster={scene.poster}
           data-title={scene.title}
@@ -120,7 +146,7 @@ const firstScene = scenes[0];
   </div>
 </div>
 
-<dialog class="hero-gallery-dialog" data-gallery-dialog aria-label="Vídeos de mantenimiento">
+<dialog class="hero-gallery-dialog" data-gallery-dialog aria-label="Vídeos de especialidades de mantenimiento">
   <button class="hero-gallery-close" type="button" data-close-gallery aria-label="Cerrar vídeo">×</button>
   <div class="hero-gallery-frame">
     <video controls playsinline preload="none" poster={firstScene.poster} data-gallery-video>
@@ -129,7 +155,7 @@ const firstScene = scenes[0];
     </video>
     <div class="hero-gallery-copy">
       <strong data-gallery-title>{firstScene.title}</strong>
-      <span>Material visual de apoyo para representar el trabajo diario. No corresponde a un cliente ni instalación real de IsiVoltPro.</span>
+      <span>Material visual gratuito de apoyo para representar distintas especialidades. No corresponde a un cliente ni instalación real de IsiVoltPro.</span>
     </div>
   </div>
 </dialog>
@@ -141,7 +167,9 @@ const firstScene = scenes[0];
   const posterImage = gallery?.querySelector('[data-hero-poster]');
   const sceneTitle = gallery?.querySelector('[data-scene-title]');
   const sceneButtons = [...(gallery?.querySelectorAll('[data-scene-button]') || [])];
+  const progressButtons = [...(gallery?.querySelectorAll('[data-progress-button]') || [])];
   const videoToggle = gallery?.querySelector('[data-toggle-gallery-video]');
+  const startButton = gallery?.querySelector('[data-start-playlist]');
   const openDialogButton = gallery?.querySelector('[data-open-gallery-video]');
   const dialog = document.querySelector('[data-gallery-dialog]');
   const closeDialogButton = dialog?.querySelector('[data-close-gallery]');
@@ -150,28 +178,19 @@ const firstScene = scenes[0];
   const dialogTitle = dialog?.querySelector('[data-gallery-title]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  const slowConnection = connection?.saveData || ['slow-2g', '2g'].includes(connection?.effectiveType || '');
-  const canAutoplay = !reduceMotion && !slowConnection && window.innerWidth >= 760;
-  let selectedVideo = mainSource?.dataset.src || '';
-  let selectedPoster = mainVideo?.getAttribute('poster') || '';
-  let selectedTitle = sceneTitle?.textContent || '';
+  const saveData = Boolean(connection?.saveData);
+  const canAutoplay = !reduceMotion && !saveData;
+  const clipSeconds = 7;
+  let currentIndex = 0;
   let mainLoaded = false;
+  let inView = false;
+  let userPaused = false;
 
-  const loadMainVideo = () => {
-    if (!mainVideo || !mainSource || !selectedVideo) return;
-    mainSource.setAttribute('src', selectedVideo);
-    mainVideo.setAttribute('poster', selectedPoster);
-    mainVideo.load();
-    mainLoaded = true;
-  };
+  const currentButton = () => sceneButtons[currentIndex];
 
-  const updateScene = (button) => {
-    selectedVideo = button.dataset.video || selectedVideo;
-    selectedPoster = button.dataset.poster || selectedPoster;
-    selectedTitle = button.dataset.title || selectedTitle;
-
-    sceneButtons.forEach((item) => {
-      const active = item === button;
+  const syncActiveState = () => {
+    sceneButtons.forEach((item, index) => {
+      const active = index === currentIndex;
       item.classList.toggle('active', active);
       item.setAttribute('aria-selected', String(active));
       const marker = item.querySelector('.hero-scene-thumb-v6 i');
@@ -184,53 +203,104 @@ const firstScene = scenes[0];
         marker.remove();
       }
     });
+    progressButtons.forEach((item, index) => item.classList.toggle('active', index === currentIndex));
+    currentButton()?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'nearest' });
+  };
+
+  const loadCurrentScene = ({ play = false } = {}) => {
+    const button = currentButton();
+    if (!button || !mainVideo || !mainSource) return;
+    const video = button.dataset.video || '';
+    const poster = button.dataset.poster || '';
+    const title = button.dataset.title || '';
+
+    mainVideo.pause();
+    mainSource.setAttribute('src', video);
+    mainVideo.setAttribute('poster', poster);
+    mainVideo.currentTime = 0;
+    mainVideo.load();
+    mainLoaded = true;
 
     if (posterImage) {
-      posterImage.src = selectedPoster;
+      posterImage.src = poster;
       posterImage.alt = button.dataset.alt || '';
     }
-    if (sceneTitle) sceneTitle.textContent = selectedTitle;
-    if (dialogTitle) dialogTitle.textContent = selectedTitle;
+    if (sceneTitle) sceneTitle.textContent = title;
+    if (dialogTitle) dialogTitle.textContent = title;
+    syncActiveState();
 
-    if (mainVideo && mainSource && mainLoaded) {
-      mainVideo.pause();
-      mainSource.setAttribute('src', selectedVideo);
-      mainVideo.setAttribute('poster', selectedPoster);
-      mainVideo.load();
-      if (canAutoplay) mainVideo.play().catch(() => {});
+    if (play && inView && !userPaused) {
+      mainVideo.play().then(() => gallery?.classList.add('is-playing')).catch(() => gallery?.classList.remove('is-playing'));
     }
   };
 
-  sceneButtons.forEach((button) => button.addEventListener('click', () => updateScene(button)));
+  const selectScene = (index, { play = true } = {}) => {
+    currentIndex = (index + sceneButtons.length) % sceneButtons.length;
+    loadCurrentScene({ play });
+  };
 
-  if (gallery && mainVideo && mainSource && canAutoplay) {
+  const advanceScene = () => selectScene(currentIndex + 1, { play: true });
+
+  sceneButtons.forEach((button, index) => button.addEventListener('click', () => {
+    userPaused = false;
+    selectScene(index, { play: true });
+  }));
+
+  progressButtons.forEach((button, index) => button.addEventListener('click', () => {
+    userPaused = false;
+    selectScene(index, { play: true });
+  }));
+
+  startButton?.addEventListener('click', () => {
+    userPaused = false;
+    if (!mainLoaded) loadCurrentScene();
+    mainVideo?.play().then(() => gallery?.classList.add('is-playing')).catch(() => gallery?.classList.remove('is-playing'));
+  });
+
+  if (gallery && mainVideo && mainSource) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (!mainLoaded) loadMainVideo();
-          mainVideo.play().catch(() => {});
+        inView = entry.isIntersecting;
+        if (inView) {
+          if (!mainLoaded) loadCurrentScene();
+          if (canAutoplay && !userPaused) {
+            mainVideo.play().then(() => gallery.classList.add('is-playing')).catch(() => gallery.classList.remove('is-playing'));
+          }
         } else {
           mainVideo.pause();
         }
       });
-    }, { threshold: .2 });
+    }, { threshold: .18 });
     observer.observe(gallery);
 
     mainVideo.addEventListener('canplay', () => {
       gallery.classList.add('has-video');
       if (videoToggle) videoToggle.hidden = false;
     });
+
+    mainVideo.addEventListener('playing', () => gallery.classList.add('is-playing'));
+    mainVideo.addEventListener('pause', () => {
+      if (inView && !mainVideo.ended) gallery.classList.remove('is-playing');
+    });
+    mainVideo.addEventListener('ended', advanceScene);
+    mainVideo.addEventListener('timeupdate', () => {
+      if (mainVideo.duration && mainVideo.currentTime >= Math.min(clipSeconds, Math.max(1, mainVideo.duration - .25))) {
+        advanceScene();
+      }
+    });
   }
 
   videoToggle?.addEventListener('click', () => {
     if (!mainVideo) return;
     if (mainVideo.paused) {
-      if (!mainLoaded) loadMainVideo();
+      userPaused = false;
+      if (!mainLoaded) loadCurrentScene();
       mainVideo.play().catch(() => {});
       videoToggle.setAttribute('aria-pressed', 'false');
       videoToggle.setAttribute('aria-label', 'Pausar vídeo');
       videoToggle.querySelector('span').textContent = 'Ⅱ';
     } else {
+      userPaused = true;
       mainVideo.pause();
       videoToggle.setAttribute('aria-pressed', 'true');
       videoToggle.setAttribute('aria-label', 'Reproducir vídeo');
@@ -239,12 +309,13 @@ const firstScene = scenes[0];
   });
 
   openDialogButton?.addEventListener('click', () => {
-    if (dialogVideo && dialogSource) {
-      dialogSource.setAttribute('src', selectedVideo);
-      dialogVideo.setAttribute('poster', selectedPoster);
+    const button = currentButton();
+    if (dialogVideo && dialogSource && button) {
+      dialogSource.setAttribute('src', button.dataset.video || '');
+      dialogVideo.setAttribute('poster', button.dataset.poster || '');
       dialogVideo.load();
     }
-    if (dialogTitle) dialogTitle.textContent = selectedTitle;
+    if (dialogTitle) dialogTitle.textContent = button?.dataset.title || '';
     dialog?.showModal();
   });
 
