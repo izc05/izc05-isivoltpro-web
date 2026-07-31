@@ -4,24 +4,32 @@ import '../styles/pages.css';
 import '../styles/visual.css';
 import '../styles/home-v2.css';
 import '../styles/sticky-story.css';
+import '../styles/brand-refinements.css';
 import Header from '../components/Header.astro';
 import HeroVisual from '../components/HeroVisual.astro';
 import StickyStory from '../components/StickyStory.astro';
 import VisualShowcase from '../components/VisualShowcase.astro';
+import FieldPrinciples from '../components/FieldPrinciples.astro';
 import OverviewSections from '../components/OverviewSections.astro';
 import UseCases from '../components/UseCases.astro';
 import ProductSections from '../components/ProductSections.astro';
 import Footer from '../components/Footer.astro';
+import { brand } from '../data/brand';
 
-const description = 'IsiVoltPro es un ecosistema de aplicaciones, herramientas y conocimiento para mantenimiento técnico, instalaciones y trabajo de campo.';
+const description = brand.description;
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const canonical = new URL(base, Astro.site);
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'IsiVoltPro',
+  name: brand.name,
   url: canonical.toString(),
-  description
+  description,
+  publisher: {
+    '@type': 'Organization',
+    name: brand.name,
+    email: brand.email
+  }
 };
 ---
 
@@ -37,7 +45,7 @@ const structuredData = {
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_ES" />
-    <meta property="og:site_name" content="IsiVoltPro" />
+    <meta property="og:site_name" content={brand.name} />
     <meta property="og:title" content="IsiVoltPro · Ecosistema digital del mantenimiento" />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -53,17 +61,17 @@ const structuredData = {
         <div class="container hero-grid">
           <div class="hero-copy reveal">
             <p class="eyebrow">Tecnología creada desde el mantenimiento real</p>
-            <h1>Todo tu trabajo técnico, <span class="accent">conectado</span> y bajo control</h1>
-            <p class="lead">IsiVoltPro reúne órdenes de trabajo, activos, inventario, inspecciones, cálculos y conocimiento en herramientas sencillas para oficina y campo.</p>
+            <h1>Mantenimiento real, <span class="accent">datos útiles</span> y decisiones claras</h1>
+            <p class="lead">IsiVoltPro conecta órdenes de trabajo, activos, inventario, inspecciones, cálculos y conocimiento para que la información acompañe al técnico desde el aviso hasta el informe.</p>
             <div class="hero-actions">
               <a class="button button-primary" href="/ecosistema">Explorar el ecosistema →</a>
-              <a class="button button-secondary" href="/#ot">Ver IsiVoltPro OT</a>
+              <a class="button button-secondary" href="/aplicaciones/mantenimiento-ot">Ver IsiVoltPro OT</a>
             </div>
             <div class="hero-points">
               <div class="hero-point"><b>OT</b>Operaciones trazables</div>
               <div class="hero-point"><b>QR</b>Activos identificados</div>
-              <div class="hero-point"><b>DATA</b>Información útil</div>
-              <div class="hero-point"><b>WEB</b>Acceso multiplataforma</div>
+              <div class="hero-point"><b>BT</b>Inspecciones técnicas</div>
+              <div class="hero-point"><b>DOC</b>Evidencias e informes</div>
             </div>
           </div>
           <HeroVisual />
@@ -78,6 +86,7 @@ const structuredData = {
 
       <StickyStory />
       <VisualShowcase />
+      <FieldPrinciples />
       <OverviewSections />
       <UseCases />
       <ProductSections />
