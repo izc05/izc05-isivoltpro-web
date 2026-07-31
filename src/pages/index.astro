@@ -10,17 +10,13 @@ import '../styles/premium-v2.css';
 import '../styles/cinematic-v3.css';
 import '../styles/mobile-hero-fix.css';
 import '../styles/hero-clean-v4.css';
+import '../styles/homepage-v5.css';
 import Header from '../components/Header.astro';
 import RealHeroMedia from '../components/RealHeroMedia.astro';
-import CinematicRail from '../components/CinematicRail.astro';
+import HomeBenefits from '../components/HomeBenefits.astro';
 import DailyWorkflow from '../components/DailyWorkflow.astro';
 import EcosystemMap from '../components/EcosystemMap.astro';
-import StickyStory from '../components/StickyStory.astro';
-import VisualShowcase from '../components/VisualShowcase.astro';
-import FieldPrinciples from '../components/FieldPrinciples.astro';
-import SectorStories from '../components/SectorStories.astro';
-import OverviewSections from '../components/OverviewSections.astro';
-import ProductSections from '../components/ProductSections.astro';
+import HomeProductHighlights from '../components/HomeProductHighlights.astro';
 import Footer from '../components/Footer.astro';
 import { brand } from '../data/brand';
 
@@ -74,7 +70,7 @@ const structuredData = {
               <span class="hero-title-line">El mantenimiento,</span>
               <span class="hero-title-line"><span class="accent">todo conectado.</span></span>
             </h1>
-            <p class="lead">Avisos, técnicos, activos, materiales, inspecciones y evidencias en un mismo flujo para que oficina y campo trabajen con el mismo contexto.</p>
+            <p class="lead">Avisos, técnicos, activos, materiales, inspecciones y evidencias en un único flujo para que oficina y campo trabajen con el mismo contexto.</p>
             <div class="hero-actions">
               <a class="button button-primary" href="/ecosistema">Explorar el ecosistema →</a>
               <a class="button button-secondary" href="/aplicaciones/mantenimiento-ot">Ver IsiVoltPro OT</a>
@@ -91,21 +87,10 @@ const structuredData = {
         </div>
       </section>
 
-      <div class="sector-ribbon" aria-label="Ámbitos de aplicación">
-        <div class="container sector-ribbon-inner">
-          <span>Hospitales</span><i></i><span>Industria</span><i></i><span>Edificios</span><i></i><span>Servicios técnicos</span><i></i><span>Instalaciones</span>
-        </div>
-      </div>
-
-      <CinematicRail />
+      <HomeBenefits />
       <DailyWorkflow />
       <EcosystemMap />
-      <StickyStory />
-      <SectorStories />
-      <VisualShowcase />
-      <FieldPrinciples />
-      <OverviewSections />
-      <ProductSections />
+      <HomeProductHighlights />
     </main>
     <Footer />
 
