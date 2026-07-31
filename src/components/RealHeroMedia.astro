@@ -3,53 +3,53 @@ const scenes = [
   {
     id: 'electrical',
     label: 'Electricidad',
-    detail: 'Cuadros y maniobra',
-    title: 'Intervención en cuadro eléctrico',
-    video: 'https://videos.pexels.com/video-files/28886877/12504681_1920_1080_30fps.mp4',
-    poster: 'https://images.pexels.com/photos/33694019/pexels-photo-33694019.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    alt: 'Técnico trabajando en un cuadro eléctrico industrial'
+    detail: 'Energía · cuadros · baterías',
+    title: 'Mantenimiento de infraestructura eléctrica',
+    video: 'https://videos.pexels.com/video-files/36167827/15338269_3840_2160_23fps.mp4',
+    poster: 'https://images.pexels.com/videos/36167827/pexels-photo-36167827.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    alt: 'Técnico trabajando en una instalación eléctrica industrial',
+    accent: '#ef2636'
+  },
+  {
+    id: 'maintenance',
+    label: 'Mantenimiento',
+    detail: 'Equipos · presión · instalaciones',
+    title: 'Supervisión de una sala técnica',
+    video: 'https://videos.pexels.com/video-files/34775812/14743112_1920_1080_30fps.mp4',
+    poster: 'https://images.pexels.com/videos/34775812/pexels-photo-34775812.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    alt: 'Sala técnica industrial con equipos, tuberías y sistemas de control',
+    accent: '#2bd29c'
+  },
+  {
+    id: 'hvac',
+    label: 'Climatización',
+    detail: 'Clima · refrigeración · ventilación',
+    title: 'Sistemas de climatización y refrigeración',
+    video: 'https://videos.pexels.com/video-files/14132388/14132388-uhd_4096_2160_25fps.mp4',
+    poster: 'https://images.pexels.com/videos/14132388/pexels-photo-14132388.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    alt: 'Sistema industrial de refrigeración y climatización en funcionamiento',
+    accent: '#4c8dff'
   },
   {
     id: 'plumbing',
     label: 'Fontanería',
-    detail: 'Válvulas y tuberías',
-    title: 'Revisión de una instalación de fontanería',
-    video: 'https://videos.pexels.com/video-files/7584762/7584762-uhd_3840_2160_25fps.mp4',
-    poster: 'https://images.pexels.com/videos/7584762/pexels-photo-7584762.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    alt: 'Profesional ajustando conexiones y válvulas de una instalación de agua'
-  },
-  {
-    id: 'fire-protection',
-    label: 'PCI',
-    detail: 'Protección contra incendios',
-    title: 'Equipos de protección contra incendios',
-    video: 'https://videos.pexels.com/video-files/34775765/14743018_1920_1080_30fps.mp4',
-    poster: 'https://images.pexels.com/videos/34775765/pexels-photo-34775765.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    alt: 'Equipos de protección contra incendios en una instalación industrial'
-  },
-  {
-    id: 'security',
-    label: 'Seguridad',
-    detail: 'CCTV y supervisión',
-    title: 'Supervisión de sistemas de seguridad',
-    video: 'https://videos.pexels.com/video-files/7255101/7255101-uhd_4096_2160_30fps.mp4',
-    poster: 'https://images.pexels.com/videos/7255101/cybersecurity-man-office-people-7255101.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    alt: 'Equipo supervisando cámaras y sistemas de seguridad desde una sala de control'
-  },
-  {
-    id: 'telecom',
-    label: 'Telecomunicaciones',
-    detail: 'Redes y racks',
-    title: 'Infraestructura de red y telecomunicaciones',
-    video: 'https://videos.pexels.com/video-files/5028622/5028622-uhd_3840_2160_25fps.mp4',
-    poster: 'https://images.pexels.com/videos/5028622/pexels-photo-5028622.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    alt: 'Racks de comunicaciones y equipos de red en una sala técnica'
+    detail: 'Agua · válvulas · reparación',
+    title: 'Intervención en tuberías y conexiones',
+    video: 'https://videos.pexels.com/video-files/8488162/8488162-uhd_3840_2160_30fps.mp4',
+    poster: 'https://images.pexels.com/videos/8488162/pexels-photo-8488162.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    alt: 'Herramienta profesional ajustando una tubería de fontanería',
+    accent: '#ff9b54'
   }
 ];
 const firstScene = scenes[0];
 ---
 
-<div class="hero-media-v6 hero-media-v7 reveal" data-hero-gallery aria-label="Secuencia automática de especialidades de mantenimiento e información operativa de IsiVoltPro">
+<div
+  class="hero-media-v6 hero-media-v7 hero-media-v8 reveal"
+  data-hero-gallery
+  style={`--scene-accent:${firstScene.accent}`}
+  aria-label="Secuencia automática de electricidad, mantenimiento, climatización y fontanería"
+>
   <div class="hero-stage-v6">
     <figure class="hero-video-v6">
       <img
@@ -65,6 +65,8 @@ const firstScene = scenes[0];
         <source data-src={firstScene.video} type="video/mp4" />
       </video>
       <div class="hero-video-shade" aria-hidden="true"></div>
+      <div class="hero-transition-gradient" aria-hidden="true"></div>
+      <div class="hero-technical-grid" aria-hidden="true"></div>
 
       <button class="hero-main-play" type="button" data-start-playlist aria-label="Reproducir secuencia de vídeos de mantenimiento">
         <span aria-hidden="true">▶</span>
@@ -74,7 +76,7 @@ const firstScene = scenes[0];
         <i aria-hidden="true"></i>
         <span>
           <strong data-scene-title>{firstScene.title}</strong>
-          <small>Secuencia automática · sin sonido</small>
+          <small data-scene-detail>{firstScene.detail}</small>
         </span>
         <button type="button" data-open-gallery-video>Ver en grande</button>
       </div>
@@ -133,7 +135,9 @@ const firstScene = scenes[0];
           data-video={scene.video}
           data-poster={scene.poster}
           data-title={scene.title}
+          data-detail={scene.detail}
           data-alt={scene.alt}
+          data-accent={scene.accent}
         >
           <span class="hero-scene-thumb-v6">
             <img src={scene.poster} alt="" width="360" height="220" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
@@ -155,7 +159,7 @@ const firstScene = scenes[0];
     </video>
     <div class="hero-gallery-copy">
       <strong data-gallery-title>{firstScene.title}</strong>
-      <span>Material visual gratuito de apoyo para representar distintas especialidades. No corresponde a un cliente ni instalación real de IsiVoltPro.</span>
+      <span>Material visual gratuito de apoyo. No corresponde a un cliente ni instalación real de IsiVoltPro.</span>
     </div>
   </div>
 </dialog>
@@ -166,6 +170,7 @@ const firstScene = scenes[0];
   const mainSource = mainVideo?.querySelector('source[data-src]');
   const posterImage = gallery?.querySelector('[data-hero-poster]');
   const sceneTitle = gallery?.querySelector('[data-scene-title]');
+  const sceneDetail = gallery?.querySelector('[data-scene-detail]');
   const sceneButtons = [...(gallery?.querySelectorAll('[data-scene-button]') || [])];
   const progressButtons = [...(gallery?.querySelectorAll('[data-progress-button]') || [])];
   const videoToggle = gallery?.querySelector('[data-toggle-gallery-video]');
@@ -180,11 +185,13 @@ const firstScene = scenes[0];
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   const saveData = Boolean(connection?.saveData);
   const canAutoplay = !reduceMotion && !saveData;
-  const clipSeconds = 7;
+  const clipSeconds = 7.5;
   let currentIndex = 0;
   let mainLoaded = false;
   let inView = false;
   let userPaused = false;
+  let isSwitching = false;
+  let transitionId = 0;
 
   const currentButton = () => sceneButtons[currentIndex];
 
@@ -207,54 +214,89 @@ const firstScene = scenes[0];
     currentButton()?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'nearest' });
   };
 
-  const loadCurrentScene = ({ play = false } = {}) => {
-    const button = currentButton();
-    if (!button || !mainVideo || !mainSource) return;
-    const video = button.dataset.video || '';
-    const poster = button.dataset.poster || '';
-    const title = button.dataset.title || '';
-
-    mainVideo.pause();
-    mainSource.setAttribute('src', video);
-    mainVideo.setAttribute('poster', poster);
-    mainVideo.currentTime = 0;
-    mainVideo.load();
-    mainLoaded = true;
+  const applySceneData = (button) => {
+    const poster = button?.dataset.poster || '';
+    const title = button?.dataset.title || '';
+    const detail = button?.dataset.detail || '';
+    const accent = button?.dataset.accent || '#ef2636';
 
     if (posterImage) {
       posterImage.src = poster;
-      posterImage.alt = button.dataset.alt || '';
+      posterImage.alt = button?.dataset.alt || '';
     }
     if (sceneTitle) sceneTitle.textContent = title;
+    if (sceneDetail) sceneDetail.textContent = detail;
     if (dialogTitle) dialogTitle.textContent = title;
-    syncActiveState();
+    gallery?.style.setProperty('--scene-accent', accent);
+  };
 
+  const finishTransition = (id, play) => {
+    if (id !== transitionId || !gallery || !mainVideo) return;
+    isSwitching = false;
+    gallery.classList.add('has-video');
+    gallery.classList.remove('is-changing');
     if (play && inView && !userPaused) {
-      mainVideo.play().then(() => gallery?.classList.add('is-playing')).catch(() => gallery?.classList.remove('is-playing'));
+      mainVideo.play().then(() => gallery.classList.add('is-playing')).catch(() => gallery.classList.remove('is-playing'));
     }
   };
 
-  const selectScene = (index, { play = true } = {}) => {
-    currentIndex = (index + sceneButtons.length) % sceneButtons.length;
-    loadCurrentScene({ play });
+  const loadCurrentScene = ({ play = false, animated = false } = {}) => {
+    const button = currentButton();
+    if (!button || !mainVideo || !mainSource || !gallery) return;
+    const id = ++transitionId;
+    const delay = animated && !reduceMotion ? 320 : 0;
+    isSwitching = true;
+
+    if (animated && !reduceMotion) gallery.classList.add('is-changing');
+    syncActiveState();
+    applySceneData(button);
+
+    window.setTimeout(() => {
+      if (id !== transitionId) return;
+      const video = button.dataset.video || '';
+      const poster = button.dataset.poster || '';
+      mainVideo.pause();
+      mainSource.setAttribute('src', video);
+      mainVideo.setAttribute('poster', poster);
+      mainVideo.currentTime = 0;
+      mainVideo.load();
+      mainLoaded = true;
+
+      let settled = false;
+      const settle = () => {
+        if (settled) return;
+        settled = true;
+        finishTransition(id, play);
+      };
+      mainVideo.addEventListener('canplay', settle, { once: true });
+      window.setTimeout(settle, 1800);
+    }, delay);
   };
 
-  const advanceScene = () => selectScene(currentIndex + 1, { play: true });
+  const selectScene = (index, { play = true, animated = true } = {}) => {
+    if (!sceneButtons.length) return;
+    currentIndex = (index + sceneButtons.length) % sceneButtons.length;
+    loadCurrentScene({ play, animated });
+  };
+
+  const advanceScene = () => {
+    if (!isSwitching) selectScene(currentIndex + 1, { play: true, animated: true });
+  };
 
   sceneButtons.forEach((button, index) => button.addEventListener('click', () => {
     userPaused = false;
-    selectScene(index, { play: true });
+    selectScene(index, { play: true, animated: true });
   }));
 
   progressButtons.forEach((button, index) => button.addEventListener('click', () => {
     userPaused = false;
-    selectScene(index, { play: true });
+    selectScene(index, { play: true, animated: true });
   }));
 
   startButton?.addEventListener('click', () => {
     userPaused = false;
-    if (!mainLoaded) loadCurrentScene();
-    mainVideo?.play().then(() => gallery?.classList.add('is-playing')).catch(() => gallery?.classList.remove('is-playing'));
+    if (!mainLoaded) loadCurrentScene({ play: true, animated: false });
+    else mainVideo?.play().then(() => gallery?.classList.add('is-playing')).catch(() => gallery?.classList.remove('is-playing'));
   });
 
   if (gallery && mainVideo && mainSource) {
@@ -262,8 +304,8 @@ const firstScene = scenes[0];
       entries.forEach((entry) => {
         inView = entry.isIntersecting;
         if (inView) {
-          if (!mainLoaded) loadCurrentScene();
-          if (canAutoplay && !userPaused) {
+          if (!mainLoaded) loadCurrentScene({ play: canAutoplay, animated: false });
+          else if (canAutoplay && !userPaused) {
             mainVideo.play().then(() => gallery.classList.add('is-playing')).catch(() => gallery.classList.remove('is-playing'));
           }
         } else {
@@ -280,11 +322,11 @@ const firstScene = scenes[0];
 
     mainVideo.addEventListener('playing', () => gallery.classList.add('is-playing'));
     mainVideo.addEventListener('pause', () => {
-      if (inView && !mainVideo.ended) gallery.classList.remove('is-playing');
+      if (inView && !mainVideo.ended && !isSwitching) gallery.classList.remove('is-playing');
     });
     mainVideo.addEventListener('ended', advanceScene);
     mainVideo.addEventListener('timeupdate', () => {
-      if (mainVideo.duration && mainVideo.currentTime >= Math.min(clipSeconds, Math.max(1, mainVideo.duration - .25))) {
+      if (!isSwitching && mainVideo.duration && mainVideo.currentTime >= Math.min(clipSeconds, Math.max(1, mainVideo.duration - .25))) {
         advanceScene();
       }
     });
@@ -294,8 +336,8 @@ const firstScene = scenes[0];
     if (!mainVideo) return;
     if (mainVideo.paused) {
       userPaused = false;
-      if (!mainLoaded) loadCurrentScene();
-      mainVideo.play().catch(() => {});
+      if (!mainLoaded) loadCurrentScene({ play: true, animated: false });
+      else mainVideo.play().catch(() => {});
       videoToggle.setAttribute('aria-pressed', 'false');
       videoToggle.setAttribute('aria-label', 'Pausar vídeo');
       videoToggle.querySelector('span').textContent = 'Ⅱ';

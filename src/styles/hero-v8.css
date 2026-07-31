@@ -1,0 +1,340 @@
+/* V8: vídeos más cinematográficos, transición degradada y jornada OT con movimiento. */
+
+.hero-media-v8 {
+  --scene-accent: #ef2636;
+  position: relative;
+}
+
+.hero-media-v8 .hero-stage-v6 {
+  isolation: isolate;
+}
+
+.hero-media-v8 .hero-video-v6::before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  inset: -18%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 28%, color-mix(in srgb, var(--scene-accent) 24%, transparent), transparent 30%),
+    radial-gradient(circle at 82% 72%, rgba(33,102,243,.18), transparent 32%);
+  animation: heroAmbientDrift 11s ease-in-out infinite alternate;
+}
+
+.hero-media-v8 .hero-video-shade {
+  z-index: 3;
+  background:
+    linear-gradient(90deg, rgba(3,14,30,.18), transparent 48%),
+    linear-gradient(180deg, rgba(3,14,30,.02) 34%, rgba(3,14,30,.78) 100%),
+    linear-gradient(120deg, color-mix(in srgb, var(--scene-accent) 13%, transparent), transparent 42%);
+}
+
+.hero-technical-grid {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  opacity: .16;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(180deg, rgba(0,0,0,.82), transparent 78%);
+}
+
+.hero-transition-gradient {
+  position: absolute;
+  z-index: 8;
+  inset: -12%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-115%) skewX(-12deg);
+  background: linear-gradient(
+    102deg,
+    transparent 0%,
+    rgba(4,16,34,.9) 27%,
+    color-mix(in srgb, var(--scene-accent) 74%, transparent) 50%,
+    rgba(33,102,243,.48) 68%,
+    transparent 100%
+  );
+  filter: blur(1px);
+}
+
+.hero-media-v8.is-changing .hero-transition-gradient {
+  animation: heroGradientSweep .95s cubic-bezier(.2,.72,.2,1) both;
+}
+
+.hero-media-v8 .hero-video-v6 > video,
+.hero-media-v8 .hero-video-v6 > img {
+  transition: opacity .45s ease, filter .45s ease, transform .9s cubic-bezier(.2,.72,.2,1);
+}
+
+.hero-media-v8.is-changing .hero-video-v6 > video,
+.hero-media-v8.is-changing .hero-video-v6 > img {
+  opacity: .26 !important;
+  filter: blur(5px) saturate(.72);
+  transform: scale(1.035);
+}
+
+.hero-media-v8 .hero-live-caption {
+  border-color: color-mix(in srgb, var(--scene-accent) 32%, rgba(255,255,255,.14));
+  background: linear-gradient(135deg, rgba(5,20,40,.82), rgba(5,20,40,.58));
+  box-shadow: 0 18px 45px rgba(2,10,24,.28);
+}
+
+.hero-media-v8 .hero-live-caption > i {
+  background: var(--scene-accent);
+  box-shadow: 0 0 0 7px color-mix(in srgb, var(--scene-accent) 17%, transparent);
+  animation: heroLivePulse 2.3s ease-in-out infinite;
+}
+
+.hero-media-v8 .hero-live-caption strong {
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.hero-media-v8.is-changing .hero-live-caption strong,
+.hero-media-v8.is-changing .hero-live-caption small {
+  opacity: .35;
+  transform: translateY(4px);
+}
+
+.hero-media-v8 .hero-playlist-progress button.active span {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,.28);
+  transform: scaleY(1.35);
+}
+
+.hero-media-v8 .hero-playlist-progress button.active span::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--scene-accent), #fff);
+}
+
+.hero-media-v8.is-playing .hero-playlist-progress button.active span::after {
+  animation: heroSceneTimer 7.5s linear both;
+}
+
+.hero-media-v8 .hero-scene-v6.active {
+  border-color: var(--scene-accent);
+  box-shadow:
+    inset 0 0 0 1px var(--scene-accent),
+    0 12px 30px color-mix(in srgb, var(--scene-accent) 13%, transparent);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--scene-accent) 15%, transparent), rgba(255,255,255,.045));
+}
+
+.hero-media-v8 .hero-scene-thumb-v6 i {
+  background: var(--scene-accent);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--scene-accent) 34%, transparent);
+}
+
+.hero-media-v8 .hero-ot-status-v6 > span {
+  color: color-mix(in srgb, var(--scene-accent) 66%, #8dffcf);
+}
+
+.hero-media-v8 .hero-ot-status-v6 > div i {
+  background: linear-gradient(90deg, var(--scene-accent), #ff7a86);
+  animation: heroOtProgress 1.2s cubic-bezier(.2,.72,.2,1) both;
+  transform-origin: left;
+}
+
+@keyframes heroGradientSweep {
+  0% { opacity: 0; transform: translateX(-115%) skewX(-12deg); }
+  22% { opacity: .92; }
+  58% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(115%) skewX(-12deg); }
+}
+
+@keyframes heroAmbientDrift {
+  50% { transform: translate3d(3%, -2%, 0) scale(1.03); }
+  100% { transform: translate3d(-2%, 3%, 0) scale(1.06); }
+}
+
+@keyframes heroLivePulse {
+  50% { transform: scale(1.18); box-shadow: 0 0 0 12px transparent; }
+}
+
+@keyframes heroSceneTimer {
+  to { width: 100%; }
+}
+
+@keyframes heroOtProgress {
+  from { transform: scaleX(.12); }
+}
+
+/* Recupera la narración visual de la jornada OT. */
+.daily-workflow {
+  position: relative;
+  overflow: clip;
+  background:
+    radial-gradient(circle at 8% 10%, rgba(33,102,243,.055), transparent 26%),
+    radial-gradient(circle at 92% 88%, rgba(239,38,54,.055), transparent 28%),
+    #fff;
+}
+
+.daily-workflow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: .26;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(7,26,51,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(7,26,51,.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 78%, transparent);
+}
+
+.daily-workflow > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.daily-step-media {
+  position: relative;
+  isolation: isolate;
+}
+
+.daily-step-media::before {
+  content: '';
+  position: absolute;
+  z-index: 4;
+  inset: -30% -70%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-85%) skewX(-16deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.48), transparent);
+}
+
+.daily-step.is-active .daily-step-media::before {
+  animation: dailyCardSheen .9s cubic-bezier(.2,.72,.2,1) both;
+}
+
+.daily-step.is-active {
+  z-index: 3;
+}
+
+.daily-step.is-active .daily-step-copy h3 {
+  text-shadow: 0 8px 24px rgba(239,38,54,.13);
+}
+
+.daily-step.is-active header > span {
+  animation: dailyNodePulse 1.9s ease-in-out infinite;
+}
+
+.daily-step.is-past header > span {
+  background: linear-gradient(145deg, var(--red), #ff6572);
+}
+
+@keyframes dailyCardSheen {
+  0% { opacity: 0; transform: translateX(-85%) skewX(-16deg); }
+  35% { opacity: .7; }
+  100% { opacity: 0; transform: translateX(85%) skewX(-16deg); }
+}
+
+@keyframes dailyNodePulse {
+  50% { box-shadow: 0 0 0 12px rgba(239,38,54,0), 0 14px 30px rgba(239,38,54,.32); }
+}
+
+@media (max-width: 760px) {
+  .daily-workflow {
+    padding: 72px 0 78px;
+  }
+
+  .daily-workflow-heading {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .daily-workflow-heading h2 {
+    max-width: 520px;
+  }
+
+  .daily-workflow-track {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-inline: contain;
+    padding: 12px 4px 26px;
+    scrollbar-width: none;
+  }
+
+  .daily-workflow-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .daily-workflow-track::before,
+  .daily-track-progress {
+    display: none;
+  }
+
+  .daily-step {
+    flex: 0 0 min(82vw, 360px);
+    scroll-snap-align: center;
+    opacity: .38;
+    transform: translateY(12px) scale(.94);
+  }
+
+  .daily-step.is-past {
+    opacity: .68;
+    transform: translateY(4px) scale(.97);
+  }
+
+  .daily-step.is-active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .daily-step header {
+    margin-bottom: 14px;
+  }
+
+  .daily-step-media {
+    height: 225px;
+    border-radius: 22px;
+  }
+
+  .daily-step-copy {
+    padding: 18px 5px 0;
+  }
+
+  .daily-step-copy h3 {
+    font-size: 1.12rem;
+  }
+
+  .daily-step-copy p {
+    font-size: .82rem;
+  }
+}
+
+@media (max-width: 620px) {
+  .hero-media-v8 .hero-technical-grid {
+    background-size: 36px 36px;
+    opacity: .12;
+  }
+
+  .hero-media-v8 .hero-live-caption {
+    border-color: color-mix(in srgb, var(--scene-accent) 28%, rgba(255,255,255,.14));
+  }
+
+  .daily-step {
+    flex-basis: min(84vw, 340px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-media-v8 .hero-video-v6::before,
+  .hero-media-v8 .hero-live-caption > i,
+  .hero-media-v8.is-changing .hero-transition-gradient,
+  .hero-media-v8.is-playing .hero-playlist-progress button.active span::after,
+  .daily-step.is-active .daily-step-media::before,
+  .daily-step.is-active header > span {
+    animation: none;
+  }
+}
