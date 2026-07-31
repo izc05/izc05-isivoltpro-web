@@ -1,0 +1,229 @@
+/* Corrección específica de la portada móvil. Se carga después de todas las capas visuales. */
+
+@media (max-width: 720px) {
+  .hero-real {
+    padding: 38px 0 52px;
+    overflow: clip;
+  }
+
+  .hero-real .hero-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: stretch;
+  }
+
+  .hero-real .hero-copy {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    text-align: left;
+  }
+
+  .hero-real .hero-copy .eyebrow {
+    margin-bottom: 12px;
+    font-size: .68rem;
+  }
+
+  .hero-real h1 {
+    max-width: none;
+    margin-bottom: 20px;
+    font-size: clamp(2.65rem, 12.5vw, 3.7rem);
+    line-height: .94;
+    letter-spacing: -.058em;
+  }
+
+  .hero-title-line {
+    display: block;
+  }
+
+  .hero-title-line::after {
+    content: none;
+  }
+
+  .hero-real .hero-copy .lead {
+    max-width: none;
+    margin-bottom: 0;
+    font-size: .98rem;
+    line-height: 1.55;
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin: 24px 0 26px;
+  }
+
+  .hero-actions .button {
+    width: 100%;
+  }
+
+  .hero-points {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 14px;
+    margin-top: 0;
+  }
+
+  .hero-point {
+    min-width: 0;
+    font-size: .72rem;
+    line-height: 1.35;
+  }
+
+  .hero-point b {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 6px;
+  }
+
+  .hero-domain {
+    margin: 24px 0 0;
+  }
+
+  .real-hero-media {
+    width: 100%;
+    min-height: auto;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    perspective: none;
+  }
+
+  .real-hero-media::before {
+    display: none;
+  }
+
+  .real-hero-photo {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 270px;
+    margin: 0;
+    border-radius: 24px;
+    transform: none !important;
+    box-shadow: 0 24px 58px rgba(7, 26, 51, .18);
+  }
+
+  .real-hero-photo > img {
+    object-position: center 32%;
+  }
+
+  .real-operations-card {
+    position: relative;
+    inset: auto;
+    z-index: 5;
+    width: calc(100% - 20px);
+    margin: -42px auto 0;
+    padding: 17px;
+    border-radius: 21px;
+    transform: none !important;
+    box-shadow: 0 24px 58px rgba(5, 19, 39, .28);
+  }
+
+  .real-operations-head {
+    align-items: center;
+  }
+
+  .real-operations-head strong {
+    font-size: 1.12rem;
+    line-height: 1.15;
+    white-space: nowrap;
+  }
+
+  .real-operations-head > span {
+    max-width: 105px;
+    padding: 6px 9px;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  .real-location {
+    margin: 12px 0 14px;
+    font-size: .7rem;
+  }
+
+  .real-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .real-kpis article:nth-child(3) {
+    display: none;
+  }
+
+  .real-kpis article,
+  .real-work-detail div {
+    min-width: 0;
+    padding: 10px;
+  }
+
+  .real-work-detail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .real-work-detail strong {
+    overflow-wrap: anywhere;
+  }
+
+  .real-activity {
+    gap: 6px;
+  }
+
+  .real-activity div {
+    grid-template-columns: 7px 34px minmax(0, 1fr);
+    font-size: .49rem;
+  }
+
+  .real-video-preview {
+    position: relative;
+    inset: auto;
+    width: calc(100% - 20px);
+    margin: 12px auto 0;
+    transform: none !important;
+  }
+
+  .real-video-preview:hover {
+    transform: translateY(-2px) !important;
+  }
+
+  .sector-ribbon-inner {
+    min-height: 58px;
+  }
+}
+
+@media (max-width: 390px) {
+  .container {
+    width: min(calc(100% - 28px), var(--max));
+  }
+
+  .hero-real h1 {
+    font-size: 2.55rem;
+  }
+
+  .real-hero-photo {
+    height: 238px;
+  }
+
+  .real-operations-card {
+    width: calc(100% - 10px);
+    margin-top: -32px;
+    padding: 15px;
+  }
+
+  .real-operations-head strong {
+    font-size: 1rem;
+  }
+
+  .real-work-detail strong {
+    font-size: .58rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .real-hero-photo,
+  .real-operations-card,
+  .real-video-preview {
+    transform: none !important;
+  }
+}
