@@ -1,0 +1,111 @@
+---
+const videoUrl = 'https://videos.pexels.com/video-files/28886877/12504681_1920_1080_30fps.mp4';
+---
+
+<div class="real-hero-media reveal" aria-label="Trabajo técnico y vista operativa de IsiVoltPro">
+  <figure class="real-hero-photo">
+    <img
+      src="https://images.pexels.com/photos/3856118/pexels-photo-3856118.jpeg?auto=compress&cs=tinysrgb&w=1200"
+      alt="Profesional técnico consultando información en una tableta dentro de un taller"
+      width="1200"
+      height="800"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <figcaption>
+      <span class="real-live-dot"></span>
+      Información disponible en oficina y campo
+    </figcaption>
+  </figure>
+
+  <section class="real-operations-card" aria-label="Ejemplo conceptual de una orden de trabajo">
+    <div class="real-operations-head">
+      <div>
+        <small>Trabajo en curso</small>
+        <strong>OT-2026-0148</strong>
+      </div>
+      <span>Prioridad alta</span>
+    </div>
+
+    <p class="real-location">Planta 2 · Pasillo de quirófanos</p>
+
+    <div class="real-kpis">
+      <article><small>Avisos hoy</small><strong>12</strong><em>3 urgentes</em></article>
+      <article><small>OT en curso</small><strong>8</strong><em>2 demoradas</em></article>
+      <article><small>Preventivos</small><strong>23</strong><em>Esta semana</em></article>
+    </div>
+
+    <div class="real-work-detail">
+      <div><small>Técnico</small><strong>Equipo eléctrico</strong></div>
+      <div><small>Estado</small><strong class="status-running">En curso</strong></div>
+      <div><small>Activo</small><strong>CL-02 · Cuadro iluminación</strong></div>
+      <div><small>Inicio</small><strong>Hoy · 09:15</strong></div>
+    </div>
+
+    <div class="real-progress-row">
+      <span>Progreso de la intervención</span><b>60 %</b>
+    </div>
+    <div class="real-progress"><span></span></div>
+
+    <div class="real-activity">
+      <div><i></i><span>09:15</span><p>OT iniciada desde el móvil</p></div>
+      <div><i></i><span>09:24</span><p>Activo identificado y revisado</p></div>
+      <div><i></i><span>09:42</span><p>Pruebas de funcionamiento</p></div>
+    </div>
+  </section>
+
+  <button class="real-video-preview" type="button" data-open-video aria-haspopup="dialog">
+    <span class="real-video-thumb">
+      <img
+        src="https://images.pexels.com/photos/33694019/pexels-photo-33694019.jpeg?auto=compress&cs=tinysrgb&w=520"
+        alt=""
+        width="520"
+        height="340"
+        loading="lazy"
+        decoding="async"
+      />
+      <i aria-hidden="true">▶</i>
+    </span>
+    <span><strong>Ver el trabajo en campo</strong><small>Vídeo corto · carga bajo demanda</small></span>
+  </button>
+</div>
+
+<dialog class="media-dialog" data-video-dialog aria-label="Vídeo de trabajo técnico">
+  <button class="media-dialog-close" type="button" data-close-video aria-label="Cerrar vídeo">×</button>
+  <div class="media-dialog-frame">
+    <video controls playsinline preload="none" data-field-video poster="https://images.pexels.com/photos/33694019/pexels-photo-33694019.jpeg?auto=compress&cs=tinysrgb&w=1280">
+      <source data-src={videoUrl} type="video/mp4" />
+      Tu navegador no puede reproducir este vídeo.
+    </video>
+    <div class="media-dialog-copy">
+      <strong>Intervención técnica en un cuadro de control</strong>
+      <span>Imagen de apoyo para representar el trabajo diario. El producto mostrado en la web es IsiVoltPro.</span>
+    </div>
+  </div>
+</dialog>
+
+<script is:inline>
+  const openButton = document.querySelector('[data-open-video]');
+  const closeButton = document.querySelector('[data-close-video]');
+  const dialog = document.querySelector('[data-video-dialog]');
+  const video = document.querySelector('[data-field-video]');
+  const source = video?.querySelector('source[data-src]');
+
+  openButton?.addEventListener('click', () => {
+    if (source && !source.src) {
+      source.src = source.dataset.src || '';
+      video?.load();
+    }
+    dialog?.showModal();
+  });
+
+  const closeVideo = () => {
+    video?.pause();
+    dialog?.close();
+  };
+
+  closeButton?.addEventListener('click', closeVideo);
+  dialog?.addEventListener('click', (event) => {
+    if (event.target === dialog) closeVideo();
+  });
+</script>
