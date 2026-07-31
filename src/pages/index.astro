@@ -5,13 +5,15 @@ import '../styles/visual.css';
 import '../styles/home-v2.css';
 import '../styles/sticky-story.css';
 import '../styles/brand-refinements.css';
+import '../styles/real-media.css';
 import Header from '../components/Header.astro';
-import HeroVisual from '../components/HeroVisual.astro';
+import RealHeroMedia from '../components/RealHeroMedia.astro';
+import DailyWorkflow from '../components/DailyWorkflow.astro';
 import StickyStory from '../components/StickyStory.astro';
 import VisualShowcase from '../components/VisualShowcase.astro';
 import FieldPrinciples from '../components/FieldPrinciples.astro';
+import SectorStories from '../components/SectorStories.astro';
 import OverviewSections from '../components/OverviewSections.astro';
-import UseCases from '../components/UseCases.astro';
 import ProductSections from '../components/ProductSections.astro';
 import Footer from '../components/Footer.astro';
 import { brand } from '../data/brand';
@@ -46,35 +48,35 @@ const structuredData = {
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_ES" />
     <meta property="og:site_name" content={brand.name} />
-    <meta property="og:title" content="IsiVoltPro · Ecosistema digital del mantenimiento" />
+    <meta property="og:title" content="IsiVoltPro · Mantenimiento conectado de principio a fin" />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
-    <title>IsiVoltPro · Ecosistema digital del mantenimiento</title>
+    <title>IsiVoltPro · Mantenimiento conectado de principio a fin</title>
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <Header />
     <main id="contenido">
-      <section class="hero hero-v2" id="inicio">
+      <section class="hero hero-real" id="inicio">
         <div class="container hero-grid">
           <div class="hero-copy reveal">
-            <p class="eyebrow">Tecnología creada desde el mantenimiento real</p>
-            <h1>Mantenimiento real, <span class="accent">datos útiles</span> y decisiones claras</h1>
-            <p class="lead">IsiVoltPro conecta órdenes de trabajo, activos, inventario, inspecciones, cálculos y conocimiento para que la información acompañe al técnico desde el aviso hasta el informe.</p>
+            <p class="eyebrow">Tecnología para instalaciones que no pueden parar</p>
+            <h1>Del aviso al informe, el mantenimiento más <span class="accent">claro</span></h1>
+            <p class="lead">Órdenes de trabajo, técnicos, activos, inventario, inspecciones y evidencias. Todo conectado para que oficina y campo trabajen con la misma información.</p>
             <div class="hero-actions">
               <a class="button button-primary" href="/ecosistema">Explorar el ecosistema →</a>
               <a class="button button-secondary" href="/aplicaciones/mantenimiento-ot">Ver IsiVoltPro OT</a>
             </div>
             <div class="hero-points">
-              <div class="hero-point"><b>OT</b>Operaciones trazables</div>
-              <div class="hero-point"><b>QR</b>Activos identificados</div>
-              <div class="hero-point"><b>BT</b>Inspecciones técnicas</div>
-              <div class="hero-point"><b>DOC</b>Evidencias e informes</div>
+              <div class="hero-point"><b>OT</b>Avisos y trabajos</div>
+              <div class="hero-point"><b>QR</b>Activos e historial</div>
+              <div class="hero-point"><b>MAT</b>Material utilizado</div>
+              <div class="hero-point"><b>DOC</b>Cierre e informe</div>
             </div>
           </div>
-          <HeroVisual />
+          <RealHeroMedia />
         </div>
       </section>
 
@@ -84,11 +86,12 @@ const structuredData = {
         </div>
       </div>
 
+      <DailyWorkflow />
       <StickyStory />
+      <SectorStories />
       <VisualShowcase />
       <FieldPrinciples />
       <OverviewSections />
-      <UseCases />
       <ProductSections />
     </main>
     <Footer />
