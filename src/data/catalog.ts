@@ -5,7 +5,7 @@ export type EcosystemArea = {
   family: 'Operaciones' | 'Recursos' | 'Ingeniería' | 'Especialidades' | 'Conocimiento';
   short: string;
   description: string;
-  status: 'Disponible' | 'En desarrollo' | 'Planificado';
+  status: 'Demo operativa' | 'En desarrollo' | 'Planificado';
   audience: string;
   highlights: string[];
   previewLabel: string;
@@ -16,11 +16,11 @@ export type EcosystemArea = {
 export const ecosystemAreas: EcosystemArea[] = [
   {
     slug: 'mantenimiento-ot', code: 'OT', name: 'Mantenimiento y OT', family: 'Operaciones',
-    short: 'Órdenes, preventivos, incidencias, técnicos e instalaciones.',
-    description: 'Organiza el ciclo completo del mantenimiento desde la solicitud inicial hasta el cierre, el informe y la auditoría.',
-    status: 'Disponible', audience: 'Coordinadores, responsables de mantenimiento y técnicos de campo',
-    highlights: ['Órdenes preventivas y correctivas', 'Planificación y asignación', 'Checklists, fotos y firmas', 'Histórico y trazabilidad'],
-    previewLabel: 'Órdenes activas', previewValue: '24', previewItems: ['Urgentes: 3', 'En curso: 8', 'Pendientes: 13']
+    short: 'Avisos, órdenes, técnicos, instalaciones, evidencias e informes.',
+    description: 'Organiza el ciclo completo del mantenimiento: aviso, prioridad, asignación, intervención, materiales, evidencias, cierre e historial.',
+    status: 'Demo operativa', audience: 'Coordinación, responsables de mantenimiento y técnicos de campo',
+    highlights: ['Correctivos y preventivos', 'Asignación y seguimiento', 'Fotos, checklist y firmas', 'Informe y auditoría'],
+    previewLabel: 'Flujo principal', previewValue: 'OT', previewItems: ['Aviso y prioridad', 'Intervención técnica', 'Cierre documentado']
   },
   {
     slug: 'inventario-almacen', code: 'AL', name: 'Inventario y almacén', family: 'Recursos',
@@ -48,15 +48,15 @@ export const ecosystemAreas: EcosystemArea[] = [
   },
   {
     slug: 'inspecciones-bt', code: 'BT', name: 'Inspecciones BT', family: 'Ingeniería',
-    short: 'Revisiones, mediciones, defectos, fotografías e informes.',
-    description: 'Digitaliza inspecciones de baja tensión con bloques, mediciones, clasificación de defectos e informe final.',
+    short: 'Datos, bloques, checklist, mediciones, defectos e informe.',
+    description: 'Digitaliza inspecciones de baja tensión con datos de instalación, bloques de revisión, mediciones, defectos, fotografías y resultado final.',
     status: 'En desarrollo', audience: 'Inspectores, instaladores y responsables eléctricos',
     highlights: ['REBT y criterios técnicos', 'Mediciones y defectos', 'Evidencias fotográficas', 'Informe profesional'],
     previewLabel: 'Inspecciones', previewValue: '58', previewItems: ['Favorables: 41', 'Condicionadas: 14', 'Negativas: 3']
   },
   {
     slug: 'calculos-electricos', code: 'kW', name: 'Cálculos eléctricos', family: 'Ingeniería',
-    short: 'Secciones, caída de tensión, protecciones y dimensionado.',
+    short: 'Secciones, caída de tensión, potencia, protecciones y dimensionado.',
     description: 'Reúne calculadoras eléctricas rápidas y verificables para el trabajo diario en oficina y campo.',
     status: 'Planificado', audience: 'Electricistas, ingenierías, mantenimiento e instaladores',
     highlights: ['Sección de conductores', 'Caída de tensión', 'Protecciones', 'Potencia y consumo'],
@@ -72,10 +72,10 @@ export const ecosystemAreas: EcosystemArea[] = [
   },
   {
     slug: 'climatizacion-rite', code: 'RT', name: 'Climatización y RITE', family: 'Especialidades',
-    short: 'Equipos HVAC, ventilación, eficiencia y cumplimiento RITE.',
+    short: 'Equipos HVAC, ventilación, mantenimiento y cumplimiento RITE.',
     description: 'Gestiona instalaciones térmicas, planes de mantenimiento, verificaciones y cálculos de climatización.',
     status: 'Planificado', audience: 'Mantenedores RITE, instaladores y responsables de edificios',
-    highlights: ['Equipos HVAC', 'Planes RITE', 'Caudales y ventilación', 'Eficiencia energética'],
+    highlights: ['Equipos HVAC y UTA', 'Planes RITE', 'Caudales y ventilación', 'Eficiencia energética'],
     previewLabel: 'Equipos térmicos', previewValue: '126', previewItems: ['UTA: 18', 'Climatizadoras: 42', 'Otros equipos: 66']
   },
   {
@@ -88,7 +88,7 @@ export const ecosystemAreas: EcosystemArea[] = [
   },
   {
     slug: 'legionella-agua', code: 'H₂O', name: 'Legionella y agua', family: 'Especialidades',
-    short: 'Purgas, temperaturas, cloro, muestras y registros.',
+    short: 'Purgas, temperaturas, cloro, muestras y trazabilidad.',
     description: 'Facilita la planificación, ejecución y trazabilidad de controles de agua y prevención de Legionella.',
     status: 'Planificado', audience: 'Mantenimiento, sanidad ambiental y responsables de instalaciones',
     highlights: ['Puntos de control', 'Temperaturas y cloro', 'Purgas y muestras', 'Registros e incidencias'],
