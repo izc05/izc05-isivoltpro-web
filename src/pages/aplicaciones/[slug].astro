@@ -8,6 +8,29 @@ export function getStaticPaths() {
 
 interface Props { area: EcosystemArea; }
 const { area } = Astro.props;
+const isOperationalDemo = area.slug === 'mantenimiento-ot';
+const isInspection = area.slug === 'inspecciones-bt';
+
+const workflow = isOperationalDemo
+  ? [
+      ['01 · Aviso', 'Recibir el problema con contexto', 'Cliente, instalación, ubicación, prioridad, instrucciones de acceso, descripción y fotografías desde el primer registro.'],
+      ['02 · Coordinar', 'Asignar y hacer seguimiento', 'Administración y coordinación comparten estados, técnico responsable, próxima actuación, materiales y trazabilidad.'],
+      ['03 · Intervenir', 'Trabajar desde el móvil', 'El técnico acepta, inicia, consulta información, registra materiales, completa checklist y añade evidencias sin perder el contexto.'],
+      ['04 · Cerrar', 'Documentar el resultado', 'Resultado, observaciones, fotografías, firma, informe y auditoría cronológica quedan vinculados a la orden.']
+    ]
+  : isInspection
+    ? [
+        ['01 · Datos', 'Identificar la instalación', 'Tipo de inspección, reglamento aplicable, titular, emplazamiento, características y documentación disponible.'],
+        ['02 · Revisión', 'Trabajar por bloques', 'Unifilar, protecciones, puesta a tierra, locales especiales, checklist y puntos de inspección ordenados.'],
+        ['03 · Campo', 'Registrar mediciones y defectos', 'Valores medidos, observaciones, clasificación de defectos y evidencias fotográficas desde móvil o tableta.'],
+        ['04 · Informe', 'Construir el resultado final', 'Resumen de defectos, conclusión, fotografías, mediciones e informe profesional preparado para revisar y exportar.']
+      ]
+    : [
+        ['01 · Descubrir', 'Entender el trabajo actual', 'Analizamos quién utiliza la herramienta, dónde trabaja, qué información necesita y qué errores queremos evitar.'],
+        ['02 · Simplificar', 'Diseñar el flujo mínimo', 'El objetivo no es digitalizar formularios complicados, sino reducir pasos y hacer más clara cada decisión.'],
+        ['03 · Validar', 'Probar antes de ampliar', 'Primero se construye un recorrido completo y útil. Después se añaden automatizaciones, informes e integraciones.'],
+        ['04 · Conectar', 'Integrarse con el ecosistema', 'Cuando aporte valor, podrá compartir técnicos, ubicaciones, activos, documentos y permisos con otros módulos IsiVoltPro.']
+      ];
 ---
 
 <PageLayout title={area.name} description={area.description}>
@@ -22,8 +45,8 @@ const { area } = Astro.props;
           <span class="detail-chip">Para: {area.audience}</span>
         </div>
         <div class="hero-actions">
-          {area.slug === 'mantenimiento-ot' ? (
-            <a class="button button-primary" href="/#ot">Ver IsiVoltPro OT →</a>
+          {isOperationalDemo ? (
+            <a class="button button-primary" href="/contacto">Solicitar información →</a>
           ) : (
             <a class="button button-primary" href="/contacto">Seguir su desarrollo →</a>
           )}
@@ -41,15 +64,18 @@ const { area } = Astro.props;
   <section class="section">
     <div class="container content-split">
       <div class="content-sticky reveal">
-        <p class="eyebrow">Enfoque de producto</p>
-        <h2>Del problema técnico a una herramienta sencilla</h2>
-        <p class="lead">La aplicación se construirá a partir de situaciones reales, reduciendo pasos y mostrando solamente la información necesaria en cada momento.</p>
+        <p class="eyebrow">{isOperationalDemo || isInspection ? 'Flujo de trabajo' : 'Enfoque de producto'}</p>
+        <h2>{isOperationalDemo ? 'De la incidencia al cierre documentado' : isInspection ? 'De los datos de la instalación al informe' : 'Del problema técnico a una herramienta sencilla'}</h2>
+        <p class="lead">{isOperationalDemo
+          ? 'La información acompaña a la orden durante todo su recorrido y queda disponible para coordinación, técnico y futuras actuaciones.'
+          : isInspection
+            ? 'La inspección se divide en pasos claros para evitar omisiones y convertir el trabajo de campo en un informe coherente.'
+            : 'La aplicación se construirá a partir de situaciones reales, reduciendo pasos y mostrando solamente la información necesaria en cada momento.'}</p>
       </div>
       <div class="feature-list">
-        <article class="feature-row reveal"><span>01 · Descubrir</span><h3>Entender el trabajo actual</h3><p>Analizamos quién utiliza la herramienta, dónde trabaja, qué información necesita y qué errores queremos evitar.</p></article>
-        <article class="feature-row reveal"><span>02 · Simplificar</span><h3>Diseñar el flujo mínimo</h3><p>El objetivo no es digitalizar formularios complicados, sino reducir pasos y hacer más clara cada decisión.</p></article>
-        <article class="feature-row reveal"><span>03 · Validar</span><h3>Probar antes de ampliar</h3><p>Primero se construye un recorrido completo y útil. Después se añaden automatizaciones, informes e integraciones.</p></article>
-        <article class="feature-row reveal"><span>04 · Conectar</span><h3>Integrarse con el ecosistema</h3><p>Cuando aporte valor, podrá compartir técnicos, ubicaciones, activos, documentos y permisos con otros módulos IsiVoltPro.</p></article>
+        {workflow.map((step) => (
+          <article class="feature-row reveal"><span>{step[0]}</span><h3>{step[1]}</h3><p>{step[2]}</p></article>
+        ))}
       </div>
     </div>
   </section>
@@ -57,8 +83,13 @@ const { area } = Astro.props;
   <section class="section section-soft">
     <div class="container">
       <div class="cta reveal">
-        <div><h2>{area.status === 'Disponible' ? 'Conoce el primer módulo operativo' : 'Esta herramienta forma parte del roadmap'}</h2><p>El catálogo crecerá de forma progresiva, manteniendo una experiencia común y una arquitectura ordenada.</p></div>
-        <a class="button button-dark" href="/ecosistema">Explorar ecosistema →</a>
+        <div>
+          <h2>{isOperationalDemo ? 'IsiVoltPro OT dispone de una demo operativa' : 'Esta herramienta forma parte del roadmap'}</h2>
+          <p>{isOperationalDemo
+            ? 'Continúa evolucionando con fichas más visuales, zona móvil para técnicos, evidencias, informes e integración con el resto del ecosistema.'
+            : 'El catálogo crecerá de forma progresiva, manteniendo una experiencia común y una arquitectura ordenada.'}</p>
+        </div>
+        <a class="button button-dark" href={isOperationalDemo ? '/contacto' : '/ecosistema'}>{isOperationalDemo ? 'Hablar del proyecto →' : 'Explorar ecosistema →'}</a>
       </div>
     </div>
   </section>
