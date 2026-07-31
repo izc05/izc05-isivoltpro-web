@@ -1,0 +1,97 @@
+---
+const items = [
+  {
+    type: 'image',
+    kicker: 'Hospitales',
+    title: 'Infraestructura crítica',
+    meta: 'Ubicación · prioridad · trazabilidad',
+    image: 'https://images.pexels.com/photos/5203594/pexels-photo-5203594.jpeg?auto=compress&cs=tinysrgb&w=900'
+  },
+  {
+    type: 'image',
+    kicker: 'Electricidad',
+    title: 'Cuadros y maniobras',
+    meta: 'Mediciones · seguridad · evidencias',
+    image: 'https://images.pexels.com/photos/33694019/pexels-photo-33694019.jpeg?auto=compress&cs=tinysrgb&w=900'
+  },
+  {
+    type: 'data',
+    kicker: 'Operación conectada',
+    title: 'Una OT que conserva el contexto',
+    meta: 'Aviso → activo → intervención → informe',
+    image: ''
+  },
+  {
+    type: 'image',
+    kicker: 'Climatización',
+    title: 'Equipos e instalaciones',
+    meta: 'Preventivo · histórico · documentos',
+    image: 'https://images.pexels.com/photos/32845695/pexels-photo-32845695.jpeg?auto=compress&cs=tinysrgb&w=900'
+  },
+  {
+    type: 'image',
+    kicker: 'Trabajo móvil',
+    title: 'Información en campo',
+    meta: 'Técnico · fotografías · cierre',
+    image: 'https://images.pexels.com/photos/3856118/pexels-photo-3856118.jpeg?auto=compress&cs=tinysrgb&w=900'
+  },
+  {
+    type: 'image',
+    kicker: 'Servicios técnicos',
+    title: 'Equipos, rutas y materiales',
+    meta: 'Asignación · stock · tiempos',
+    image: 'https://images.pexels.com/photos/6195875/pexels-photo-6195875.jpeg?auto=compress&cs=tinysrgb&w=900'
+  }
+];
+
+const renderItem = (item, duplicate = false) => ({ item, duplicate });
+const trackItems = [...items.map((item) => renderItem(item)), ...items.map((item) => renderItem(item, true))];
+---
+
+<section class="cinematic-rail" aria-labelledby="cinematic-rail-title">
+  <div class="container cinematic-rail-heading reveal">
+    <div>
+      <p class="eyebrow">El ecosistema ocurre en instalaciones reales</p>
+      <h2 id="cinematic-rail-title">Distintos equipos. Un mismo hilo de información.</h2>
+    </div>
+    <p class="lead">IsiVoltPro une lo que sucede en campo con la coordinación, los activos, el material y la documentación técnica.</p>
+  </div>
+
+  <div class="cinematic-window" data-cinematic-window>
+    <div class="cinematic-track">
+      {trackItems.map(({ item, duplicate }, index) => (
+        <article class:list={["cinematic-card", item.type === 'data' && "cinematic-card-data"]} aria-hidden={duplicate ? 'true' : undefined}>
+          {item.type === 'image' ? (
+            <>
+              <img src={item.image} alt={duplicate ? '' : `${item.kicker}: ${item.title}`} width="900" height="620" loading="lazy" decoding="async" />
+              <div class="cinematic-card-shade"></div>
+            </>
+          ) : (
+            <div class="cinematic-mini-ui" aria-hidden="true">
+              <header><span>OT-2026-0148</span><b>EN CURSO</b></header>
+              <div class="cinematic-mini-grid">
+                <div><small>Ubicación</small><strong>Planta 2</strong></div>
+                <div><small>Activo</small><strong>CL-02</strong></div>
+                <div><small>Técnico</small><strong>Electricidad</strong></div>
+              </div>
+              <div class="cinematic-mini-progress"><span></span></div>
+              <footer><i></i><span>Intervención documentada</span></footer>
+            </div>
+          )}
+          <div class="cinematic-card-copy">
+            <span>{item.kicker}</span>
+            <h3>{item.title}</h3>
+            <p>{item.meta}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <div class="container cinematic-rail-footer reveal">
+    <div><strong>OT</strong><span>Trabajo trazable</span></div>
+    <div><strong>QR/NFC</strong><span>Activo identificado</span></div>
+    <div><strong>MAT</strong><span>Recursos vinculados</span></div>
+    <div><strong>DOC</strong><span>Evidencias e informe</span></div>
+  </div>
+</section>
