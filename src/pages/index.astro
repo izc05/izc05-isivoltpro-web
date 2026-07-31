@@ -6,9 +6,11 @@ import '../styles/home-v2.css';
 import '../styles/sticky-story.css';
 import '../styles/brand-refinements.css';
 import '../styles/real-media.css';
+import '../styles/premium-v2.css';
 import Header from '../components/Header.astro';
 import RealHeroMedia from '../components/RealHeroMedia.astro';
 import DailyWorkflow from '../components/DailyWorkflow.astro';
+import EcosystemMap from '../components/EcosystemMap.astro';
 import StickyStory from '../components/StickyStory.astro';
 import VisualShowcase from '../components/VisualShowcase.astro';
 import FieldPrinciples from '../components/FieldPrinciples.astro';
@@ -63,7 +65,11 @@ const structuredData = {
         <div class="container hero-grid">
           <div class="hero-copy reveal">
             <p class="eyebrow">Tecnología para instalaciones que no pueden parar</p>
-            <h1>Del aviso al informe, el mantenimiento más <span class="accent">claro</span></h1>
+            <h1>
+              <span class="hero-title-line">Del aviso al informe.</span>
+              <span class="hero-title-line">El mantenimiento</span>
+              <span class="hero-title-line"><span class="accent">más claro.</span></span>
+            </h1>
             <p class="lead">Órdenes de trabajo, técnicos, activos, inventario, inspecciones y evidencias. Todo conectado para que oficina y campo trabajen con la misma información.</p>
             <div class="hero-actions">
               <a class="button button-primary" href="/ecosistema">Explorar el ecosistema →</a>
@@ -75,6 +81,7 @@ const structuredData = {
               <div class="hero-point"><b>MAT</b>Material utilizado</div>
               <div class="hero-point"><b>DOC</b>Cierre e informe</div>
             </div>
+            <p class="hero-domain"><i></i>{brand.domain}</p>
           </div>
           <RealHeroMedia />
         </div>
@@ -87,6 +94,7 @@ const structuredData = {
       </div>
 
       <DailyWorkflow />
+      <EcosystemMap />
       <StickyStory />
       <SectorStories />
       <VisualShowcase />
