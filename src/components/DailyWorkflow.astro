@@ -1,0 +1,94 @@
+---
+const steps = [
+  {
+    number: '01',
+    time: '08:30',
+    title: 'Entra el aviso',
+    text: 'Ubicación, prioridad, descripción y fotografías desde el primer momento.',
+    type: 'ui',
+    image: ''
+  },
+  {
+    number: '02',
+    time: '08:35',
+    title: 'Se coordina el trabajo',
+    text: 'Técnico, carga del equipo, especialidad y materiales antes de desplazarse.',
+    type: 'photo',
+    image: 'https://images.pexels.com/photos/32845695/pexels-photo-32845695.jpeg?auto=compress&cs=tinysrgb&w=760'
+  },
+  {
+    number: '03',
+    time: '09:05',
+    title: 'Se consulta el activo',
+    text: 'Código, historial, ubicación, documentos y preventivos desde QR o NFC.',
+    type: 'qr',
+    image: ''
+  },
+  {
+    number: '04',
+    time: '09:15',
+    title: 'Se realiza la intervención',
+    text: 'Trabajo, mediciones, material utilizado y observaciones desde campo.',
+    type: 'photo',
+    image: 'https://images.pexels.com/photos/33694019/pexels-photo-33694019.jpeg?auto=compress&cs=tinysrgb&w=760'
+  },
+  {
+    number: '05',
+    time: '10:05',
+    title: 'Se documenta y se cierra',
+    text: 'Fotografías, checklist, firma, informe e histórico para la siguiente actuación.',
+    type: 'photo',
+    image: 'https://images.pexels.com/photos/3856118/pexels-photo-3856118.jpeg?auto=compress&cs=tinysrgb&w=760'
+  }
+];
+---
+
+<section class="daily-workflow" aria-labelledby="daily-workflow-title">
+  <div class="container">
+    <div class="daily-workflow-heading reveal">
+      <div>
+        <p class="eyebrow">Una jornada conectada</p>
+        <h2 id="daily-workflow-title">Así se trabaja cada día</h2>
+      </div>
+      <p class="lead">No se trata solo de abrir y cerrar órdenes. IsiVoltPro conserva el contexto desde que entra el aviso hasta que la actuación queda documentada.</p>
+    </div>
+
+    <div class="daily-workflow-track">
+      {steps.map((step) => (
+        <article class="daily-step reveal">
+          <header>
+            <span>{step.number}</span>
+            <time>{step.time}</time>
+          </header>
+
+          <div class:list={["daily-step-media", `daily-step-${step.type}`]}>
+            {step.type === 'photo' && (
+              <img src={step.image} alt="" width="760" height="520" loading="lazy" decoding="async" />
+            )}
+
+            {step.type === 'ui' && (
+              <div class="daily-alert-ui" aria-hidden="true">
+                <div><i></i><strong>Nuevo aviso</strong><span>08:30</span></div>
+                <b>Fallo de iluminación</b>
+                <p>Planta 2 · Pasillo quirófanos</p>
+                <footer><span>Prioridad alta</span><em>2 fotografías</em></footer>
+              </div>
+            )}
+
+            {step.type === 'qr' && (
+              <div class="daily-asset-ui" aria-hidden="true">
+                <div class="daily-qr"></div>
+                <div><small>Activo identificado</small><strong>CL-02</strong><span>Cuadro iluminación QF-2</span><em>3 actuaciones anteriores</em></div>
+              </div>
+            )}
+          </div>
+
+          <div class="daily-step-copy">
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

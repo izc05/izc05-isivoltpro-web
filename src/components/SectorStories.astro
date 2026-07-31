@@ -1,0 +1,57 @@
+---
+const sectors = [
+  {
+    name: 'Hospitales',
+    text: 'Infraestructura crítica, turnos, trazabilidad, seguridad y coordinación entre especialidades.',
+    image: 'https://images.pexels.com/photos/5203594/pexels-photo-5203594.jpeg?auto=compress&cs=tinysrgb&w=1000',
+    focus: 'center'
+  },
+  {
+    name: 'Industria',
+    text: 'Continuidad de servicio, activos productivos, repuestos y control de tiempos de parada.',
+    image: 'https://images.pexels.com/photos/32845695/pexels-photo-32845695.jpeg?auto=compress&cs=tinysrgb&w=1000',
+    focus: 'center'
+  },
+  {
+    name: 'Edificios',
+    text: 'Electricidad, climatización, agua, PCI y documentación en una visión común.',
+    image: 'https://images.pexels.com/photos/11426013/pexels-photo-11426013.jpeg?auto=compress&cs=tinysrgb&w=1000',
+    focus: 'center'
+  },
+  {
+    name: 'Servicios técnicos',
+    text: 'Equipos móviles, rutas, materiales, fotografías, firma y cierre ante el cliente.',
+    image: 'https://images.pexels.com/photos/6195875/pexels-photo-6195875.jpeg?auto=compress&cs=tinysrgb&w=1000',
+    focus: 'center'
+  }
+];
+---
+
+<section class="sector-stories" aria-labelledby="sector-stories-title">
+  <div class="container">
+    <div class="sector-stories-heading reveal">
+      <div>
+        <p class="eyebrow">Mismo método, distintos entornos</p>
+        <h2 id="sector-stories-title">La realidad cambia según la instalación</h2>
+      </div>
+      <p class="lead">IsiVoltPro parte de una base común, pero organiza la información según el riesgo, el equipo y la forma de trabajar de cada sector.</p>
+    </div>
+
+    <div class="sector-stories-grid">
+      {sectors.map((sector, index) => (
+        <article class:list={["sector-story-card", index === 0 && "sector-story-featured", "reveal"]}>
+          <img src={sector.image} alt="" width="1000" height="680" loading="lazy" decoding="async" style={`object-position:${sector.focus}`} />
+          <div class="sector-story-overlay"></div>
+          <div class="sector-story-copy">
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h3>{sector.name}</h3>
+            <p>{sector.text}</p>
+            <a href="/contacto">Plantear un caso real →</a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <p class="media-source-note">Imágenes de apoyo procedentes de Pexels y utilizadas bajo su licencia. No representan clientes ni instalaciones de IsiVoltPro.</p>
+  </div>
+</section>
