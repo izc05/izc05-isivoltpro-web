@@ -3,6 +3,7 @@ import '../styles/global.css';
 import '../styles/pages.css';
 import '../styles/brand-refinements.css';
 import '../styles/catalog-refinements.css';
+import '../styles/site-structure-v10.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { brand } from '../data/brand';
@@ -10,9 +11,10 @@ import { brand } from '../data/brand';
 interface Props {
   title: string;
   description: string;
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, noindex = false } = Astro.props;
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const fullTitle = `${title} · ${brand.name}`;
@@ -34,7 +36,7 @@ const structuredData = {
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#071a33" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <meta property="og:type" content="website" />
