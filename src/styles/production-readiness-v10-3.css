@@ -1,0 +1,111 @@
+/* Ajustes finales de claridad, accesibilidad y rendimiento visual. */
+
+:focus-visible {
+  outline: 3px solid rgba(33, 102, 243, .72);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+main > section:not(:first-child) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 820px;
+}
+
+.reveal,
+.reveal.visible {
+  will-change: auto;
+}
+
+.ecosystem-card,
+.catalog-card,
+.resource-card,
+.maintenance-item,
+.page-visual-card,
+.brand-core-card,
+.home-product-card {
+  box-shadow: 0 12px 34px rgba(12, 35, 69, .065);
+}
+
+.ecosystem-card:hover,
+.catalog-card:hover,
+.resource-card:hover,
+.maintenance-item:hover,
+.page-visual-card:hover,
+.brand-core-card:hover,
+.home-product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 17px 38px rgba(12, 35, 69, .085);
+}
+
+.hero-video-v6,
+.hero-ot-strip-v6,
+.ecosystem-map-shell,
+.brand-story-panel {
+  box-shadow: 0 20px 52px rgba(7, 26, 51, .12);
+}
+
+.hero-technical-grid,
+.hero-video-shade,
+.hero::before {
+  opacity: .72;
+}
+
+.section-heading .lead,
+.catalog-toolbar .lead,
+.page-hero .lead {
+  max-width: 720px;
+}
+
+@media (pointer: coarse) {
+  .ecosystem-card:hover,
+  .catalog-card:hover,
+  .resource-card:hover,
+  .maintenance-item:hover,
+  .page-visual-card:hover,
+  .brand-core-card:hover,
+  .home-product-card:hover,
+  .button:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .section {
+    padding-block: 66px;
+  }
+
+  main > section:not(:first-child) {
+    contain-intrinsic-size: auto 680px;
+  }
+
+  .hero-technical-grid {
+    opacity: .4;
+  }
+
+  .page-visual-card,
+  .maintenance-item,
+  .catalog-card,
+  .resource-card {
+    box-shadow: 0 8px 24px rgba(12, 35, 69, .06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
