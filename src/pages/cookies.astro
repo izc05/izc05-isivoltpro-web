@@ -2,22 +2,38 @@
 import PageLayout from '../layouts/PageLayout.astro';
 ---
 
-<PageLayout title="Cookies" description="Información sobre el uso actual de cookies y tecnologías similares en IsiVoltPro.">
+<PageLayout title="Cookies" description="Información sobre cookies, almacenamiento técnico y preferencias de privacidad en IsiVoltPro.">
   <section class="legal-hero">
     <div class="container legal-shell reveal">
       <span class="page-kicker">Transparencia técnica</span>
       <h1>Política de cookies</h1>
-      <p class="lead">La versión actual de la web no utiliza deliberadamente cookies publicitarias ni herramientas propias de seguimiento de comportamiento.</p>
+      <p class="lead">La web no utiliza analítica, publicidad comportamental ni perfiles de navegación. Solo conserva una preferencia técnica para recordar que has visto el aviso de privacidad.</p>
     </div>
   </section>
+
   <section class="section legal-section">
     <div class="container legal-shell legal-content">
-      <article><h2>1. Situación actual</h2><p>IsiVoltPro funciona principalmente como sitio estático. No se ha incorporado una plataforma propia de analítica, personalización publicitaria o perfiles de usuario en la web corporativa.</p></article>
-      <article><h2>2. Servicios externos</h2><p>El alojamiento, los vídeos, enlaces o servicios de terceros pueden realizar solicitudes técnicas y aplicar sus propias políticas. Se intentará reducir dependencias externas y cargar contenido multimedia únicamente cuando resulte necesario.</p></article>
-      <article><h2>3. Cookies técnicas futuras</h2><p>Las aplicaciones autenticadas podrán necesitar cookies o almacenamiento local para iniciar sesión, mantener la seguridad, conservar preferencias o permitir funciones esenciales. Su uso se explicará en la política específica de cada servicio.</p></article>
-      <article><h2>4. Analítica</h2><p>Si se incorpora medición de visitas, se priorizará una solución respetuosa con la privacidad. Cuando la normativa requiera consentimiento, se añadirá un mecanismo de elección antes de activar las tecnologías correspondientes.</p></article>
-      <article><h2>5. Cambios</h2><p>Esta política se actualizará cuando cambien las herramientas, el alojamiento o las funciones de la web.</p></article>
-      <p class="legal-note">Última actualización: agosto de 2026. La configuración real del navegador y de servicios externos puede variar.</p>
+      <article>
+        <h2>1. Tecnologías utilizadas actualmente</h2>
+        <p>IsiVoltPro funciona principalmente como un sitio estático. La web usa una cookie propia y almacenamiento local con finalidad técnica para recordar la elección de privacidad durante un máximo de seis meses.</p>
+        <table class="cookie-table">
+          <thead><tr><th>Nombre</th><th>Tipo</th><th>Finalidad</th><th>Duración</th></tr></thead>
+          <tbody>
+            <tr><td><code>isivoltpro_consent</code></td><td>Propia · técnica</td><td>Recordar que se ha mostrado y aceptado el aviso de privacidad.</td><td>180 días</td></tr>
+            <tr><td><code>isivoltpro_privacy_v1</code></td><td>Almacenamiento local · técnico</td><td>Conservar la fecha y el estado de las preferencias en el navegador.</td><td>180 días, renovable al guardar</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article><h2>2. Categorías no activas</h2><p>No hay cookies de analítica, publicidad, personalización comercial ni redes sociales configuradas. El centro de preferencias muestra estas categorías como inactivas para que la situación real sea visible y quede preparada para futuras ampliaciones.</p></article>
+
+      <article><h2>3. Vídeos e imágenes externas</h2><p>Algunas escenas de la portada se sirven desde Pexels como material visual de apoyo. La carga de estos archivos puede comunicar al proveedor datos técnicos habituales de una conexión web, como la dirección IP, el navegador o la hora de acceso. No se integran reproductores publicitarios ni botones sociales de terceros.</p></article>
+
+      <article><h2>4. Gestión de preferencias</h2><p>La elección puede revisarse desde el enlace <strong>Preferencias</strong> del pie de página. También puedes eliminar la cookie y el almacenamiento local desde la configuración del navegador; al volver a visitar la web se mostrará nuevamente el aviso.</p></article>
+
+      <article><h2>5. Cambios futuros</h2><p>Si se incorpora una herramienta de analítica, inicio de sesión u otra tecnología opcional, permanecerá desactivada hasta que exista una base jurídica adecuada y, cuando sea necesario, una elección previa y clara del usuario.</p></article>
+
+      <p class="legal-note">Última actualización: agosto de 2026. Documento informativo provisional pendiente de revisión jurídica antes del lanzamiento comercial definitivo.</p>
     </div>
   </section>
 </PageLayout>
