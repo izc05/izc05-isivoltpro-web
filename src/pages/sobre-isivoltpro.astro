@@ -1,0 +1,76 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { brand } from '../data/brand';
+---
+
+<PageLayout
+  title="Sobre IsiVoltPro"
+  description="Origen, propósito y principios de IsiVoltPro, una marca técnica nacida del mantenimiento, la coordinación, la inspección y el trabajo de campo."
+>
+  <section class="page-hero about-page-hero">
+    <div class="container page-hero-grid">
+      <div class="reveal">
+        <span class="page-kicker">Tecnología creada desde el trabajo real</span>
+        <h1>IsiVoltPro nace donde las instalaciones, las personas y la información <span class="accent">deben entenderse.</span></h1>
+        <p class="lead">No parte de una lista genérica de funciones. Parte de avisos incompletos, activos sin historial, herramientas difíciles de localizar, inspecciones repetitivas e informes que consumen demasiado tiempo.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/ecosistema">Explorar el ecosistema →</a>
+          <a class="button button-secondary" href="/contacto">Contactar</a>
+        </div>
+      </div>
+      <div class="brand-definition-card reveal">
+        <small>Definición de marca</small>
+        <h2>{brand.name}</h2>
+        <p>{brand.description}</p>
+        <div><span>Isi</span><b>Identidad y experiencia práctica</b></div>
+        <div><span>Volt</span><b>Energía, instalaciones y tecnología</b></div>
+        <div><span>Pro</span><b>Uso profesional y resultados verificables</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container brand-purpose-grid">
+      <article class="reveal"><span>Propósito</span><h2>Que la información acompañe al trabajo</h2><p>Evitar que cada actuación empiece desde cero y que los datos útiles desaparezcan al cerrar una incidencia.</p></article>
+      <article class="reveal"><span>Misión</span><h2>Simplificar el trabajo técnico sin vaciarlo de contenido</h2><p>Crear herramientas claras en campo, completas en oficina y capaces de producir documentación útil.</p></article>
+      <article class="reveal"><span>Visión</span><h2>Un ecosistema modular para instalaciones y mantenimiento</h2><p>Aplicaciones independientes que comparten identidad, criterios y datos cuando esa conexión aporta valor.</p></article>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container content-split">
+      <div class="content-sticky reveal">
+        <p class="eyebrow">Principios de producto</p>
+        <h2>Lo que debe seguir siendo verdad cuando el ecosistema crezca</h2>
+      </div>
+      <div class="feature-list">
+        <article class="feature-row reveal"><span>01</span><h3>El trabajo manda sobre la herramienta</h3><p>La aplicación debe adaptarse al flujo real y reducir decisiones innecesarias.</p></article>
+        <article class="feature-row reveal"><span>02</span><h3>El móvil debe ser una ayuda en campo</h3><p>Botones claros, información relevante y formularios que no obliguen a escribir lo mismo varias veces.</p></article>
+        <article class="feature-row reveal"><span>03</span><h3>Los estados deben significar algo</h3><p>Cada cambio debe indicar qué ocurrió, quién actuó y cuál es la siguiente acción esperada.</p></article>
+        <article class="feature-row reveal"><span>04</span><h3>La trazabilidad no debe convertirse en burocracia</h3><p>Registrar lo necesario para comprender, verificar y mejorar, sin llenar pantallas de datos inútiles.</p></article>
+        <article class="feature-row reveal"><span>05</span><h3>La realidad del producto debe explicarse con honestidad</h3><p>Diferenciar claramente entre demo operativa, desarrollo, planificación y funcionalidad disponible.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading reveal"><p class="eyebrow">Cómo se construye</p><h2>Observar, simplificar, probar y conectar</h2><p class="lead">El ecosistema crecerá por recorridos completos, no por listas interminables de funciones sin validar.</p></div>
+      <div class="build-method-grid">
+        <article class="reveal"><b>01</b><h3>Observar</h3><p>Entender quién trabaja, dónde, con qué información y qué errores se repiten.</p></article>
+        <article class="reveal"><b>02</b><h3>Simplificar</h3><p>Diseñar el mínimo recorrido que resuelve el problema sin ocultar lo importante.</p></article>
+        <article class="reveal"><b>03</b><h3>Validar</h3><p>Probar el flujo completo en escritorio y móvil antes de añadir automatizaciones.</p></article>
+        <article class="reveal"><b>04</b><h3>Conectar</h3><p>Compartir activos, técnicos, ubicaciones y documentos cuando mejora el trabajo.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="cta reveal">
+        <div><p class="eyebrow">Una marca en desarrollo</p><h2>IsiVoltPro crece con transparencia</h2><p>La web muestra una visión amplia, mientras cada aplicación avanza con un estado real y verificable.</p></div>
+        <a class="button button-dark" href="/aplicaciones">Consultar aplicaciones →</a>
+      </div>
+    </div>
+  </section>
+</PageLayout>

@@ -1,0 +1,104 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { brand } from '../data/brand';
+---
+
+<PageLayout
+  title="Infraestructura y control"
+  description="Arquitectura prevista para desplegar IsiVoltPro con dominio propio, aplicaciones separadas, control de accesos, copias de seguridad y datos bajo control."
+>
+  <section class="page-hero infrastructure-page-hero">
+    <div class="container page-hero-grid">
+      <div class="reveal">
+        <span class="page-kicker">La tecnología también debe ser mantenible</span>
+        <h1>Aplicaciones útiles sobre una infraestructura <span class="accent">clara, controlada y ampliable.</span></h1>
+        <p class="lead">IsiVoltPro se prepara para funcionar con dominio propio, servicios separados y una arquitectura que pueda crecer sin mezclar la web pública, las aplicaciones y los datos técnicos.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#arquitectura">Ver arquitectura →</a>
+          <a class="button button-secondary" href="/contacto">Hablar del despliegue</a>
+        </div>
+      </div>
+
+      <div class="infrastructure-stack reveal" aria-label="Capas de infraestructura IsiVoltPro">
+        <div><small>Entrada pública</small><strong>{brand.domain}</strong><span>Marca · productos · recursos</span></div>
+        <i></i>
+        <div><small>Aplicaciones</small><strong>OT · Activos · Inspecciones</strong><span>Servicios y permisos separados</span></div>
+        <i></i>
+        <div><small>Datos</small><strong>Base técnica controlada</strong><span>Usuarios · activos · históricos · documentos</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="arquitectura">
+    <div class="container">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Arquitectura propuesta</p>
+        <h2>Una dirección clara para cada parte del ecosistema</h2>
+        <p class="lead">Los nombres son una propuesta de organización. Se activarán progresivamente conforme cada aplicación esté preparada para producción.</p>
+      </div>
+      <div class="domain-grid">
+        <article class="domain-card reveal"><span>Web pública</span><h3>www.isivoltpro.com</h3><p>Marca, ecosistema, catálogo, recursos, contacto y documentación pública.</p><b>Visible para cualquier visitante</b></article>
+        <article class="domain-card reveal"><span>Acceso general</span><h3>app.isivoltpro.com</h3><p>Punto de entrada para identificar al usuario y mostrar las aplicaciones autorizadas.</p><b>Acceso autenticado</b></article>
+        <article class="domain-card reveal"><span>Operaciones</span><h3>ot.isivoltpro.com</h3><p>Clientes, instalaciones, técnicos, avisos, órdenes, evidencias e informes.</p><b>Primer módulo operativo</b></article>
+        <article class="domain-card reveal"><span>Especialistas</span><h3>activos / inspecciones</h3><p>Servicios dedicados para identificación QR/NFC e inspecciones técnicas.</p><b>Activación progresiva</b></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark trust-section">
+    <div class="container">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Principios de infraestructura</p>
+        <h2>Control sin convertir la tecnología en otra avería</h2>
+      </div>
+      <div class="trust-grid">
+        <article class="reveal"><span>01</span><h3>Separación</h3><p>La web pública no comparte el mismo nivel de acceso que las aplicaciones y bases de datos internas.</p></article>
+        <article class="reveal"><span>02</span><h3>Permisos</h3><p>Cada usuario debe ver únicamente las instalaciones, órdenes y funciones que le correspondan.</p></article>
+        <article class="reveal"><span>03</span><h3>Copias</h3><p>Datos, documentos y configuración deben disponer de copias verificables y un procedimiento de recuperación.</p></article>
+        <article class="reveal"><span>04</span><h3>Actualización</h3><p>Los cambios deben probarse antes de llegar a producción y poder revertirse cuando aparezca un problema.</p></article>
+        <article class="reveal"><span>05</span><h3>Observabilidad</h3><p>Estado del servicio, errores y consumo de recursos deben poder comprobarse sin depender de suposiciones.</p></article>
+        <article class="reveal"><span>06</span><h3>Portabilidad</h3><p>La información debe poder exportarse y la arquitectura evitar dependencias innecesarias de un único proveedor.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-split">
+      <div class="content-sticky reveal">
+        <p class="eyebrow">Opciones de despliegue</p>
+        <h2>La misma web, distintas formas de alojarla</h2>
+        <p class="lead">La elección depende del nivel de control, disponibilidad y mantenimiento que podamos asumir en cada fase.</p>
+      </div>
+      <div class="feature-list">
+        <article class="feature-row reveal"><span>Web estática</span><h3>GitHub Pages para la presencia pública</h3><p>Rápida, sencilla y con poco mantenimiento. Adecuada para páginas corporativas y recursos que no necesiten backend.</p></article>
+        <article class="feature-row reveal"><span>Servidor propio</span><h3>Mini PC con Docker y proxy seguro</h3><p>Mayor control y posibilidad de alojar servicios internos, siempre con actualizaciones, monitorización y copias correctamente gestionadas.</p></article>
+        <article class="feature-row reveal"><span>Servicio gestionado</span><h3>Nube o plataforma administrada</h3><p>Reduce tareas de infraestructura y facilita disponibilidad, escalado y servicios de base de datos.</p></article>
+        <article class="feature-row reveal"><span>Modelo híbrido</span><h3>Web pública separada de las aplicaciones</h3><p>La opción recomendada: contenido público estático y servicios operativos en una infraestructura con autenticación y datos.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading reveal"><p class="eyebrow">Ciclo de publicación</p><h2>Los cambios no deberían llegar a producción por accidente</h2></div>
+      <div class="deployment-flow">
+        <article class="reveal"><b>1</b><h3>Desarrollo</h3><p>Rama aislada y cambios pequeños.</p></article>
+        <span aria-hidden="true">→</span>
+        <article class="reveal"><b>2</b><h3>Validación</h3><p>Compilación, revisión y pruebas.</p></article>
+        <span aria-hidden="true">→</span>
+        <article class="reveal"><b>3</b><h3>Publicación</h3><p>Fusión controlada y despliegue.</p></article>
+        <span aria-hidden="true">→</span>
+        <article class="reveal"><b>4</b><h3>Comprobación</h3><p>Estado, rendimiento y posibles errores.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta reveal">
+        <div><p class="eyebrow">Estado actual</p><h2>La web pública está preparada; las aplicaciones se desplegarán por fases</h2><p>El objetivo es avanzar sin prometer una infraestructura de producción que todavía no haya sido probada, protegida y documentada.</p></div>
+        <a class="button button-dark" href="/contacto">Consultar el proyecto →</a>
+      </div>
+    </div>
+  </section>
+</PageLayout>

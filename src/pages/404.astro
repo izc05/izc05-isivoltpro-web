@@ -1,0 +1,24 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout title="Página no encontrada" description="La dirección solicitada no existe o ha cambiado dentro de IsiVoltPro." noindex={true}>
+  <section class="not-found-section">
+    <div class="container not-found-card reveal">
+      <span class="not-found-code">404</span>
+      <p class="eyebrow">Ruta no localizada</p>
+      <h1>Esta página no forma parte del plano actual.</h1>
+      <p class="lead">Puede que el enlace haya cambiado, que una aplicación siga en desarrollo o que la dirección no sea correcta.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="/">Volver al inicio →</a>
+        <a class="button button-secondary" href="/ecosistema">Explorar el ecosistema</a>
+      </div>
+      <div class="not-found-links">
+        <a href="/mantenimiento">Mantenimiento</a>
+        <a href="/aplicaciones">Aplicaciones</a>
+        <a href="/recursos">Recursos</a>
+        <a href="/contacto">Contacto</a>
+      </div>
+    </div>
+  </section>
+</PageLayout>

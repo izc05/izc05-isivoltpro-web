@@ -1,0 +1,26 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { brand } from '../data/brand';
+---
+
+<PageLayout title="Aviso legal" description="Información general sobre la titularidad, uso y contenidos de la web de IsiVoltPro.">
+  <section class="legal-hero">
+    <div class="container legal-shell reveal">
+      <span class="page-kicker">Información del sitio</span>
+      <h1>Aviso legal</h1>
+      <p class="lead">Texto informativo provisional para la fase actual del proyecto. Deberá revisarse antes de iniciar una actividad comercial o incorporar servicios sujetos a obligaciones adicionales.</p>
+    </div>
+  </section>
+  <section class="section legal-section">
+    <div class="container legal-shell legal-content">
+      <article><h2>1. Identificación</h2><p>La web se presenta bajo la marca <strong>{brand.name}</strong>, con dominio <strong>{brand.domain}</strong>, correo de contacto <a href={`mailto:${brand.email}`}>{brand.email}</a> y ámbito de actividad relacionado con mantenimiento, instalaciones, inspecciones técnicas y herramientas digitales.</p></article>
+      <article><h2>2. Finalidad</h2><p>El sitio informa sobre el proyecto IsiVoltPro, sus aplicaciones, recursos, prototipos y líneas de desarrollo. La existencia de una ficha o demostración no implica que el producto esté disponible comercialmente ni que todas las funciones mostradas estén terminadas.</p></article>
+      <article><h2>3. Contenidos técnicos</h2><p>Los contenidos tienen finalidad divulgativa y de presentación. No sustituyen proyectos, inspecciones, instrucciones de fabricante, normativa vigente ni la intervención de profesionales competentes. La aplicación de cualquier criterio técnico debe revisarse según la instalación y legislación correspondiente.</p></article>
+      <article><h2>4. Propiedad intelectual</h2><p>La identidad, textos, componentes y desarrollos propios pertenecen a sus respectivos titulares. Las fotografías y vídeos de terceros se utilizan conforme a sus licencias y como material de apoyo, sin sugerir relación comercial, certificación o respaldo.</p></article>
+      <article><h2>5. Enlaces externos</h2><p>La web puede enlazar a servicios externos. IsiVoltPro no controla sus contenidos, disponibilidad o políticas y no responde de modificaciones realizadas por terceros.</p></article>
+      <article><h2>6. Disponibilidad</h2><p>Durante la fase de desarrollo pueden producirse cambios, interrupciones, rutas temporales o elementos demostrativos. Se procurará corregir los errores detectados, sin garantizar disponibilidad continua.</p></article>
+      <article><h2>7. Contacto</h2><p>Para comunicar incidencias relacionadas con la web o sus contenidos puede escribirse a <a href={`mailto:${brand.email}`}>{brand.email}</a>.</p></article>
+      <p class="legal-note">Última actualización: agosto de 2026. Documento provisional pendiente de revisión jurídica profesional.</p>
+    </div>
+  </section>
+</PageLayout>
