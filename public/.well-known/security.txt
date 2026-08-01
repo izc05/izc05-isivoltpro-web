@@ -1,0 +1,6 @@
+Contact: mailto:isivoltpro@gmail.com
+Expires: 2027-08-01T00:00:00Z
+Preferred-Languages: es, en
+Canonical: https://www.isivoltpro.com/.well-known/security.txt
+Policy: https://www.isivoltpro.com/privacidad
+Acknowledgments: https://www.isivoltpro.com/sobre-isivoltpro

@@ -4,12 +4,20 @@
   file_server
 
   header {
+    -Server
+    Strict-Transport-Security "max-age=31536000"
     X-Content-Type-Options nosniff
-    X-Frame-Options SAMEORIGIN
+    X-Frame-Options DENY
     Referrer-Policy strict-origin-when-cross-origin
-    Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+    Cross-Origin-Opener-Policy same-origin
+    X-Permitted-Cross-Domain-Policies none
+    Content-Security-Policy "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self' mailto:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https://images.pexels.com; media-src 'self' blob: https://videos.pexels.com; connect-src 'self' https://videos.pexels.com https://images.pexels.com; upgrade-insecure-requests"
   }
 
-  @static path *.css *.js *.svg *.png *.jpg *.jpeg *.webp *.woff *.woff2
+  @static path *.css *.js *.svg *.png *.jpg *.jpeg *.webp *.woff *.woff2 *.mp4 *.webm
   header @static Cache-Control "public, max-age=31536000, immutable"
+
+  @html path *.html /
+  header @html Cache-Control "public, max-age=0, must-revalidate"
 }
