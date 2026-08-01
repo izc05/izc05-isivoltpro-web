@@ -12,38 +12,48 @@ const withBase = (href: string) => {
 
 <footer class="site-footer">
   <div class="container">
-    <div class="footer-grid">
-      <div>
+    <div class="footer-grid footer-grid-expanded">
+      <div class="footer-brand-column">
         <a class="brand" href={withBase('/')} aria-label="IsiVoltPro, inicio"><span class="brand-mark">I</span>IsiVolt<span class="accent">Pro</span></a>
-        <p style="margin-top:18px">{brand.tagline}</p>
-        <a href={brand.url}>{brand.domain}</a>
+        <p>{brand.tagline}</p>
+        <a class="footer-domain" href={brand.url}>{brand.domain}</a>
+        <span class="footer-status"><i></i> Ecosistema en desarrollo activo</span>
       </div>
       <div>
-        <h3>Ecosistema</h3>
+        <h3>Marca</h3>
         <div class="footer-links">
-          <a href={withBase('/ecosistema')}>Explorar</a>
-          <a href={withBase('/aplicaciones')}>Aplicaciones</a>
-          <a href={withBase('/#mantenimiento')}>Mantenimiento</a>
+          <a href={withBase('/sobre-isivoltpro')}>Sobre IsiVoltPro</a>
+          <a href={withBase('/ecosistema')}>Ecosistema</a>
+          <a href={withBase('/mantenimiento')}>Mantenimiento</a>
+          <a href={withBase('/infraestructura')}>Infraestructura</a>
         </div>
       </div>
       <div>
-        <h3>Recursos</h3>
+        <h3>Productos</h3>
+        <div class="footer-links">
+          <a href={withBase('/aplicaciones')}>Todas las aplicaciones</a>
+          <a href={withBase('/aplicaciones/mantenimiento-ot')}>IsiVoltPro OT</a>
+          <a href={withBase('/aplicaciones/activos-qr-nfc')}>Activos QR/NFC</a>
+          <a href={withBase('/aplicaciones/inspecciones-bt')}>Inspecciones técnicas</a>
+        </div>
+      </div>
+      <div>
+        <h3>Recursos y contacto</h3>
         <div class="footer-links">
           <a href={withBase('/recursos')}>Centro de conocimiento</a>
-          <a href={withBase('/#infraestructura')}>Infraestructura</a>
-          <a href={withBase('/aplicaciones/mantenimiento-ot')}>IsiVoltPro OT</a>
-        </div>
-      </div>
-      <div>
-        <h3>Contacto</h3>
-        <div class="footer-links">
-          <a class="brand-email" href={`mailto:${brand.email}`}>{brand.email}</a>
           <a href={withBase('/contacto')}>Página de contacto</a>
+          <a class="brand-email" href={`mailto:${brand.email}`}>{brand.email}</a>
           <span>{brand.location}</span>
-          <span>© 2026 {brand.name}</span>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">IsiVoltPro · Tecnología creada desde el mantenimiento real</div>
+    <div class="footer-bottom footer-bottom-expanded">
+      <span>© 2026 {brand.name} · Tecnología creada desde el mantenimiento real</span>
+      <nav aria-label="Información legal">
+        <a href={withBase('/aviso-legal')}>Aviso legal</a>
+        <a href={withBase('/privacidad')}>Privacidad</a>
+        <a href={withBase('/cookies')}>Cookies</a>
+      </nav>
+    </div>
   </div>
 </footer>
