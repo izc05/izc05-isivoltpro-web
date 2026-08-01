@@ -6,10 +6,17 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
+env:
+  PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+  PUBLIC_BASE_PATH: ${{ vars.PUBLIC_BASE_PATH }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 10
     steps:
       - name: Descargar repositorio
         uses: actions/checkout@v5
@@ -18,9 +25,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
 
       - name: Instalar dependencias
         run: npm install --no-audit --no-fund --prefer-offline
 
-      - name: Construir sitio estático
-        run: npm run build
+      - name: Revisar vulnerabilidades de dependencias
+        run: npm audit --audit-level=high
+
+      - name: Construir y verificar sitio estático
+        run: npm run check
