@@ -19,10 +19,10 @@ const withBase = (href: string) => {
     </a>
     <nav class="nav-links" id="main-nav" aria-label="Navegación principal">
       <a href={withBase('/ecosistema')} aria-current={active('/ecosistema') ? 'page' : undefined}>Ecosistema</a>
-      <a href={withBase('/#mantenimiento')}>Mantenimiento</a>
+      <a href={withBase('/mantenimiento')} aria-current={active('/mantenimiento') ? 'page' : undefined}>Mantenimiento</a>
       <a href={withBase('/aplicaciones')} aria-current={active('/aplicaciones') ? 'page' : undefined}>Aplicaciones</a>
       <a href={withBase('/recursos')} aria-current={active('/recursos') ? 'page' : undefined}>Recursos</a>
-      <a href={withBase('/#infraestructura')}>Servidor</a>
+      <a href={withBase('/infraestructura')} aria-current={active('/infraestructura') ? 'page' : undefined}>Infraestructura</a>
       <a href={withBase('/contacto')} aria-current={active('/contacto') ? 'page' : undefined}>Contacto</a>
     </nav>
     <div class="nav-actions">
