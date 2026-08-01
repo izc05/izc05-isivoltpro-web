@@ -20,10 +20,10 @@ async function walk(directory) {
 }
 
 function stripBase(pathname) {
-  if (basePath === '/') return pathname.replace(/^\//, '');
+  if (basePath === '/') return pathname.replace(/^\/+/, '');
   if (pathname === basePath.slice(0, -1)) return '';
   if (pathname.startsWith(basePath)) return pathname.slice(basePath.length);
-  return null;
+  return pathname.replace(/^\/+/, '');
 }
 
 async function exists(path) {
@@ -41,7 +41,6 @@ async function resolvesInsideDist(rawReference, sourceFile) {
   let relativePath;
   if (withoutFragment.startsWith('/')) {
     relativePath = stripBase(withoutFragment);
-    if (relativePath === null) return false;
   } else {
     const sourceDirectory = relative(distDir, resolve(sourceFile, '..'));
     relativePath = normalize(join(sourceDirectory, withoutFragment));
