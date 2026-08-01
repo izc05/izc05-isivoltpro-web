@@ -11,6 +11,10 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+  PUBLIC_BASE_PATH: ${{ vars.PUBLIC_BASE_PATH }}
+
 concurrency:
   group: github-pages
   cancel-in-progress: true
@@ -27,12 +31,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
 
       - name: Instalar dependencias
         run: npm install --no-audit --no-fund --prefer-offline
 
-      - name: Construir sitio
-        run: npm run build
+      - name: Construir y verificar sitio
+        run: npm run check
 
       - name: Configurar Pages
         uses: actions/configure-pages@v5
