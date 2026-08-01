@@ -4,8 +4,10 @@ import '../styles/pages.css';
 import '../styles/brand-refinements.css';
 import '../styles/catalog-refinements.css';
 import '../styles/site-structure-v10.css';
+import '../styles/privacy-security-polish.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import PrivacyCenter from '../components/PrivacyCenter.astro';
 import { brand } from '../data/brand';
 
 interface Props {
@@ -36,6 +38,7 @@ const structuredData = {
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#071a33" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
@@ -56,6 +59,7 @@ const structuredData = {
     <Header />
     <main id="contenido"><slot /></main>
     <Footer />
+    <PrivacyCenter />
     <script is:inline>
       const toggle = document.querySelector('.menu-toggle');
       const nav = document.querySelector('.nav-links');
