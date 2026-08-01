@@ -1,0 +1,116 @@
+---
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const cookiesUrl = `${base}cookies`;
+---
+
+<aside class="privacy-banner" data-privacy-banner hidden aria-label="Información sobre privacidad y cookies">
+  <div class="privacy-banner-copy">
+    <span class="privacy-status-dot" aria-hidden="true"></span>
+    <div>
+      <strong>Privacidad sin seguimiento</strong>
+      <p>Usamos una cookie técnica para recordar tu elección. No hay analítica, publicidad ni perfiles activos.</p>
+    </div>
+  </div>
+  <div class="privacy-banner-actions">
+    <a href={cookiesUrl}>Ver política</a>
+    <button class="button button-secondary button-small" type="button" data-open-privacy>Detalles</button>
+    <button class="button button-primary button-small" type="button" data-accept-necessary>Entendido</button>
+  </div>
+</aside>
+
+<dialog class="privacy-dialog" data-privacy-dialog aria-labelledby="privacy-dialog-title">
+  <form method="dialog" class="privacy-dialog-card">
+    <div class="privacy-dialog-header">
+      <div>
+        <p class="eyebrow">Control de privacidad</p>
+        <h2 id="privacy-dialog-title">Preferencias de la web</h2>
+      </div>
+      <button class="privacy-close" value="cancel" aria-label="Cerrar preferencias">×</button>
+    </div>
+
+    <p class="privacy-intro">La web corporativa es estática y no utiliza herramientas de seguimiento. Solo guardamos una preferencia técnica para no mostrar este aviso en cada visita.</p>
+
+    <div class="privacy-option">
+      <div>
+        <strong>Cookies necesarias</strong>
+        <p>Recuerdan la elección de privacidad y permiten el funcionamiento básico.</p>
+      </div>
+      <span class="privacy-required">Siempre activas</span>
+    </div>
+
+    <div class="privacy-option is-disabled">
+      <div>
+        <strong>Analítica y medición</strong>
+        <p>No hay ningún proveedor de analítica configurado actualmente.</p>
+      </div>
+      <span class="privacy-disabled">No activa</span>
+    </div>
+
+    <div class="privacy-option is-disabled">
+      <div>
+        <strong>Publicidad y perfiles</strong>
+        <p>IsiVoltPro no utiliza publicidad comportamental ni crea perfiles de navegación.</p>
+      </div>
+      <span class="privacy-disabled">No activa</span>
+    </div>
+
+    <div class="privacy-dialog-actions">
+      <a href={cookiesUrl}>Leer política completa</a>
+      <button class="button button-primary" value="default" data-save-privacy>Guardar y cerrar</button>
+    </div>
+  </form>
+</dialog>
+
+<script is:inline>
+  (() => {
+    const STORAGE_KEY = 'isivoltpro_privacy_v1';
+    const COOKIE_NAME = 'isivoltpro_consent';
+    const MAX_AGE_SECONDS = 60 * 60 * 24 * 180;
+    const MAX_AGE_MS = MAX_AGE_SECONDS * 1000;
+    const banner = document.querySelector('[data-privacy-banner]');
+    const dialog = document.querySelector('[data-privacy-dialog]');
+    const acceptButton = document.querySelector('[data-accept-necessary]');
+    const openButtons = document.querySelectorAll('[data-open-privacy], [data-open-privacy-settings]');
+    const saveButton = document.querySelector('[data-save-privacy]');
+
+    const readPreference = () => {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        const value = JSON.parse(raw);
+        if (!value?.savedAt || Date.now() - value.savedAt > MAX_AGE_MS) return null;
+        return value;
+      } catch {
+        return null;
+      }
+    };
+
+    const savePreference = () => {
+      const preference = { necessary: true, analytics: false, advertising: false, savedAt: Date.now() };
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(preference)); } catch {}
+      const secure = location.protocol === 'https:' ? '; Secure' : '';
+      document.cookie = `${COOKIE_NAME}=necessary; Max-Age=${MAX_AGE_SECONDS}; Path=/; SameSite=Lax${secure}`;
+      document.documentElement.dataset.privacy = 'necessary';
+      window.dispatchEvent(new CustomEvent('isivoltpro:privacy', { detail: preference }));
+      if (banner) banner.hidden = true;
+      if (dialog?.open) dialog.close();
+    };
+
+    const preference = readPreference();
+    if (preference) {
+      document.documentElement.dataset.privacy = 'necessary';
+    } else if (banner) {
+      window.setTimeout(() => { banner.hidden = false; }, 500);
+    }
+
+    acceptButton?.addEventListener('click', savePreference);
+    saveButton?.addEventListener('click', (event) => {
+      event.preventDefault();
+      savePreference();
+    });
+    openButtons.forEach((button) => button.addEventListener('click', (event) => {
+      event.preventDefault();
+      dialog?.showModal();
+    }));
+  })();
+</script>
