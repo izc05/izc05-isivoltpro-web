@@ -16,8 +16,17 @@ const withBase = (href: string) => {
       <div class="footer-brand-column">
         <a class="brand" href={withBase('/')} aria-label="IsiVoltPro, inicio">IsiVolt<span class="accent">Pro</span></a>
         <p>{brand.tagline} Aplicaciones profesionales, modulares y preparadas para crecer.</p>
-        <a class="footer-domain" href={brand.url}>{brand.domain}</a>
-        <span class="footer-status"><i></i> Herramientas QR/NFC operativa</span>
+        <div class="footer-meta-stack">
+          <a class="footer-domain" href={brand.url}>{brand.domain}</a>
+          <div class="footer-statuses" aria-label="Aplicaciones operativas">
+            <a class="footer-status" href={withBase('/aplicaciones/herramientas-maletines')}>
+              <i aria-hidden="true"></i><span>Herramientas QR/NFC</span><strong>Operativa</strong>
+            </a>
+            <a class="footer-status" href={withBase('/aplicaciones/mantenimiento-ot')}>
+              <i aria-hidden="true"></i><span>IsiVoltPro OT</span><strong>Operativa</strong>
+            </a>
+          </div>
+        </div>
       </div>
 
       <div>
@@ -25,6 +34,7 @@ const withBase = (href: string) => {
         <div class="footer-links">
           <a href={withBase('/aplicaciones')}>Aplicaciones</a>
           <a href={withBase('/aplicaciones/herramientas-maletines')}>Herramientas QR/NFC</a>
+          <a href={withBase('/aplicaciones/mantenimiento-ot')}>IsiVoltPro OT</a>
           <a href={withBase('/ecosistema')}>Ecosistema</a>
           <a href={withBase('/mantenimiento')}>Soluciones</a>
         </div>
