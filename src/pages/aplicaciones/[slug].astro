@@ -1,6 +1,7 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
 import ToolsProductShowcase from '../../components/ToolsProductShowcase.astro';
+import ToolsLiveAccess from '../../components/ToolsLiveAccess.astro';
 import { ecosystemAreas, type EcosystemArea } from '../../data/catalog';
 
 export function getStaticPaths() {
@@ -37,7 +38,10 @@ const workflow = isOperationalDemo
 
 <PageLayout title={area.name} description={area.description}>
   {isToolsProduct ? (
-    <ToolsProductShowcase area={area} />
+    <>
+      <ToolsLiveAccess />
+      <ToolsProductShowcase area={area} />
+    </>
   ) : (
     <>
       <section class="detail-hero">
