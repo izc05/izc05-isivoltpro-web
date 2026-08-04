@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="810" viewBox="0 0 1440 810" role="img" aria-labelledby="title desc">
+  <title id="title">Panel operativo de IsiVoltPro OT</title>
+  <desc id="desc">Interfaz de órdenes de trabajo con indicadores, listado de incidencias y actividad reciente.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#f4f7fb"/><stop offset="1" stop-color="#e9f0f8"/></linearGradient>
+    <linearGradient id="hero" x1="0" x2="1"><stop stop-color="#071a33"/><stop offset="1" stop-color="#0d4b91"/></linearGradient>
+    <linearGradient id="red" x1="0" x2="1"><stop stop-color="#f21b2e"/><stop offset="1" stop-color="#c90e1d"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#082447" flood-opacity=".12"/></filter>
+  </defs>
+  <rect width="1440" height="810" fill="url(#bg)"/>
+  <rect x="0" y="0" width="212" height="810" fill="#071a33"/>
+  <rect x="26" y="28" width="42" height="42" rx="12" fill="#ed1728"/>
+  <path d="M38 50h18M47 41v18" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <text x="80" y="55" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#fff">IsiVoltPro</text>
+  <text x="28" y="105" font-family="Arial, sans-serif" font-size="11" font-weight="700" letter-spacing="1.5" fill="#8296b0">CENTRO OPERATIVO</text>
+  <g font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#c4d2e2">
+    <rect x="18" y="132" width="176" height="46" rx="11" fill="#12345d"/><circle cx="42" cy="155" r="8" fill="#ed1728"/><text x="62" y="161" fill="#fff">Órdenes de trabajo</text>
+    <circle cx="42" cy="215" r="8" fill="#4e6a89"/><text x="62" y="221">Planificación</text>
+    <circle cx="42" cy="274" r="8" fill="#4e6a89"/><text x="62" y="280">Instalaciones</text>
+    <circle cx="42" cy="333" r="8" fill="#4e6a89"/><text x="62" y="339">Técnicos</text>
+    <circle cx="42" cy="392" r="8" fill="#4e6a89"/><text x="62" y="398">Informes</text>
+    <circle cx="42" cy="451" r="8" fill="#4e6a89"/><text x="62" y="457">Auditoría</text>
+  </g>
+  <rect x="18" y="696" width="176" height="84" rx="14" fill="#0d2a4d"/>
+  <circle cx="49" cy="730" r="17" fill="#dce8f5"/>
+  <text x="79" y="726" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">Coordinación</text>
+  <text x="79" y="747" font-family="Arial, sans-serif" font-size="11" fill="#91a8c1">Panel administrador</text>
+
+  <g transform="translate(246 28)">
+    <text x="0" y="26" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#708199">OPERACIONES / ÓRDENES</text>
+    <text x="0" y="69" font-family="Arial, sans-serif" font-size="34" font-weight="800" fill="#071a33">Órdenes de trabajo</text>
+    <text x="0" y="96" font-family="Arial, sans-serif" font-size="15" fill="#62728a">Seguimiento en tiempo real de avisos, técnicos y próximas actuaciones.</text>
+    <rect x="950" y="26" width="208" height="52" rx="12" fill="url(#red)" filter="url(#shadow)"/>
+    <text x="1054" y="59" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="800" fill="#fff">+ Nueva orden</text>
+
+    <g transform="translate(0 132)" filter="url(#shadow)">
+      <g><rect width="270" height="112" rx="17" fill="#fff"/><circle cx="39" cy="39" r="19" fill="#eaf2ff"/><path d="M31 39h16M39 31v16" stroke="#1466ef" stroke-width="3" stroke-linecap="round"/><text x="72" y="38" font-family="Arial" font-size="13" font-weight="700" fill="#6c7c91">ABIERTAS</text><text x="72" y="77" font-family="Arial" font-size="32" font-weight="800" fill="#071a33">18</text><text x="205" y="80" font-family="Arial" font-size="12" font-weight="700" fill="#16844c">+3 hoy</text></g>
+      <g transform="translate(290)"><rect width="270" height="112" rx="17" fill="#fff"/><circle cx="39" cy="39" r="19" fill="#fff0f2"/><path d="M31 39h16" stroke="#ed1728" stroke-width="3" stroke-linecap="round"/><text x="72" y="38" font-family="Arial" font-size="13" font-weight="700" fill="#6c7c91">URGENTES</text><text x="72" y="77" font-family="Arial" font-size="32" font-weight="800" fill="#071a33">4</text><text x="190" y="80" font-family="Arial" font-size="12" font-weight="700" fill="#c41325">Revisar</text></g>
+      <g transform="translate(580)"><rect width="270" height="112" rx="17" fill="#fff"/><circle cx="39" cy="39" r="19" fill="#eaf9f1"/><path d="M31 40l6 6 12-15" stroke="#22a665" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="72" y="38" font-family="Arial" font-size="13" font-weight="700" fill="#6c7c91">EN CURSO</text><text x="72" y="77" font-family="Arial" font-size="32" font-weight="800" fill="#071a33">9</text><text x="183" y="80" font-family="Arial" font-size="12" font-weight="700" fill="#16844c">Activas</text></g>
+      <g transform="translate(870)"><rect width="288" height="112" rx="17" fill="#fff"/><circle cx="39" cy="39" r="19" fill="#fff7df"/><path d="M39 28v12l8 5" stroke="#bd7d00" stroke-width="3" fill="none" stroke-linecap="round"/><text x="72" y="38" font-family="Arial" font-size="13" font-weight="700" fill="#6c7c91">PENDIENTES</text><text x="72" y="77" font-family="Arial" font-size="32" font-weight="800" fill="#071a33">7</text><text x="185" y="80" font-family="Arial" font-size="12" font-weight="700" fill="#946000">Planificar</text></g>
+    </g>
+
+    <g transform="translate(0 274)" filter="url(#shadow)">
+      <rect width="790" height="450" rx="18" fill="#fff"/>
+      <text x="24" y="38" font-family="Arial" font-size="18" font-weight="800" fill="#071a33">Actividad prioritaria</text>
+      <rect x="575" y="17" width="188" height="36" rx="9" fill="#f2f6fa"/><text x="669" y="40" text-anchor="middle" font-family="Arial" font-size="12" font-weight="700" fill="#52647b">Todas las prioridades ▾</text>
+      <line x1="24" y1="70" x2="766" y2="70" stroke="#e8edf3"/>
+      <g font-family="Arial, sans-serif">
+        <g transform="translate(24 92)"><rect width="742" height="72" rx="12" fill="#fff7f8"/><rect width="5" height="72" rx="3" fill="#ed1728"/><text x="24" y="24" font-size="12" font-weight="800" fill="#ed1728">OT-2026-00031 · URGENTE</text><text x="24" y="48" font-size="15" font-weight="800" fill="#071a33">Fallo de climatización · Quirófano 3</text><rect x="580" y="20" width="138" height="30" rx="15" fill="#eaf9f1"/><text x="649" y="40" text-anchor="middle" font-size="11" font-weight="800" fill="#16844c">EN CURSO</text></g>
+        <g transform="translate(24 176)"><rect width="742" height="72" rx="12" fill="#f8fafc"/><rect width="5" height="72" rx="3" fill="#1466ef"/><text x="24" y="24" font-size="12" font-weight="800" fill="#1466ef">OT-2026-00030 · ALTA</text><text x="24" y="48" font-size="15" font-weight="800" fill="#071a33">Pérdida de presión · Red de ACS</text><rect x="580" y="20" width="138" height="30" rx="15" fill="#eaf2ff"/><text x="649" y="40" text-anchor="middle" font-size="11" font-weight="800" fill="#145dc7">ASIGNADA</text></g>
+        <g transform="translate(24 260)"><rect width="742" height="72" rx="12" fill="#f8fafc"/><rect width="5" height="72" rx="3" fill="#f0a000"/><text x="24" y="24" font-size="12" font-weight="800" fill="#946000">OT-2026-00029 · MEDIA</text><text x="24" y="48" font-size="15" font-weight="800" fill="#071a33">Revisión de alumbrado · Planta 5</text><rect x="580" y="20" width="138" height="30" rx="15" fill="#fff5d8"/><text x="649" y="40" text-anchor="middle" font-size="11" font-weight="800" fill="#946000">PENDIENTE</text></g>
+        <g transform="translate(24 344)"><rect width="742" height="72" rx="12" fill="#f8fafc"/><rect width="5" height="72" rx="3" fill="#22b573"/><text x="24" y="24" font-size="12" font-weight="800" fill="#16844c">OT-2026-00028 · NORMAL</text><text x="24" y="48" font-size="15" font-weight="800" fill="#071a33">Sustitución de grifo · Habitación 311</text><rect x="580" y="20" width="138" height="30" rx="15" fill="#eaf9f1"/><text x="649" y="40" text-anchor="middle" font-size="11" font-weight="800" fill="#16844c">ACEPTADA</text></g>
+      </g>
+    </g>
+
+    <g transform="translate(818 274)" filter="url(#shadow)">
+      <rect width="340" height="450" rx="18" fill="url(#hero)"/>
+      <text x="24" y="40" font-family="Arial" font-size="18" font-weight="800" fill="#fff">Próxima actuación</text>
+      <rect x="24" y="64" width="292" height="104" rx="15" fill="rgba(255,255,255,.09)" stroke="rgba(255,255,255,.14)"/>
+      <text x="42" y="92" font-family="Arial" font-size="11" font-weight="800" letter-spacing="1" fill="#8ed3ff">AHORA · URGENTE</text>
+      <text x="42" y="121" font-family="Arial" font-size="16" font-weight="800" fill="#fff">Quirófano 3</text>
+      <text x="42" y="145" font-family="Arial" font-size="13" fill="#c7d7e9">Técnico: Miguel A.</text>
+      <text x="24" y="211" font-family="Arial" font-size="13" font-weight="800" fill="#fff">Actividad en vivo</text>
+      <line x1="38" y1="238" x2="38" y2="394" stroke="#47739e" stroke-width="2"/>
+      <g font-family="Arial" font-size="12">
+        <circle cx="38" cy="253" r="7" fill="#39d58a"/><text x="58" y="250" font-weight="800" fill="#fff">20:18 · OT iniciada</text><text x="58" y="270" fill="#a9bfd6">El técnico está en intervención.</text>
+        <circle cx="38" cy="318" r="7" fill="#4aa8ff"/><text x="58" y="315" font-weight="800" fill="#fff">20:05 · Aceptada</text><text x="58" y="335" fill="#a9bfd6">Confirmación desde el móvil.</text>
+        <circle cx="38" cy="383" r="7" fill="#ff6a76"/><text x="58" y="380" font-weight="800" fill="#fff">19:54 · Asignada</text><text x="58" y="400" fill="#a9bfd6">Prioridad urgente.</text>
+      </g>
+    </g>
+  </g>
+</svg>
