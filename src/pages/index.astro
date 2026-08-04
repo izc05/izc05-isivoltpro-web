@@ -5,12 +5,14 @@ import '../styles/privacy-security-polish.css';
 import '../styles/production-readiness-v10-3.css';
 import '../styles/premium-redesign-v12.css';
 import '../styles/experience-v13.css';
+import '../styles/mobile-ot-v14.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import PrivacyCenter from '../components/PrivacyCenter.astro';
 import PremiumMotion from '../components/PremiumMotion.astro';
 import AppDeviceVisual from '../components/AppDeviceVisual.astro';
 import EcosystemRoadmap from '../components/EcosystemRoadmap.astro';
+import HomeOtSpotlight from '../components/HomeOtSpotlight.astro';
 import { brand } from '../data/brand';
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
@@ -34,7 +36,7 @@ const workflow = [
 
 const applications = [
   { icon: '▣', name: 'Herramientas QR/NFC', copy: 'Inventario, préstamos y trazabilidad.', status: 'Operativa', live: true, href: '/aplicaciones/herramientas-maletines' },
-  { icon: '⌑', name: 'IsiVoltPro OT', copy: 'Avisos, órdenes, técnicos y evidencias.', status: 'Operativa', live: true, href: '/aplicaciones/mantenimiento-ot' },
+  { icon: '⌑', name: 'IsiVoltPro OT', copy: 'Clientes, instalaciones, órdenes, técnicos y auditoría.', status: 'Operativa', live: true, href: '/aplicaciones/mantenimiento-ot' },
   { icon: '✓', name: 'Inspecciones BT', copy: 'Mediciones, defectos e informes.', status: 'En desarrollo', href: '/aplicaciones/inspecciones-bt' },
   { icon: '▤', name: 'RITE', copy: 'Instalaciones térmicas y climatización.', status: 'Planificado', href: '/aplicaciones/climatizacion-rite' },
   { icon: '♨', name: 'PCI', copy: 'Equipos, revisiones y mantenimientos.', status: 'Planificado', href: '/aplicaciones/pci' },
@@ -107,18 +109,22 @@ const structuredData = {
               <a class="pv13-live-app" href={withBase('/aplicaciones/herramientas-maletines')}><i aria-hidden="true"></i><span>Herramientas QR/NFC</span><strong>Operativa</strong></a>
               <a class="pv13-live-app" href={withBase('/aplicaciones/mantenimiento-ot')}><i aria-hidden="true"></i><span>IsiVoltPro OT</span><strong>Operativa</strong></a>
             </div>
-            <div class="pv12-trust-row" aria-label="Ventajas principales">
-              <div class="pv12-trust-item"><span class="pv12-trust-icon">◇</span><span>Datos seguros<br />y bajo tu control</span></div>
-              <div class="pv12-trust-item"><span class="pv12-trust-icon">☁</span><span>Funciona online<br />y offline</span></div>
-              <div class="pv12-trust-item"><span class="pv12-trust-icon">▯</span><span>Apps móviles<br />para técnicos</span></div>
-              <div class="pv12-trust-item"><span class="pv12-trust-icon">▥</span><span>Información en<br />tiempo real</span></div>
-            </div>
           </div>
-          <div data-premium-reveal>
+
+          <div class="pv14-hero-visual" data-premium-reveal>
             <AppDeviceVisual />
+          </div>
+
+          <div class="pv12-trust-row" aria-label="Ventajas principales" data-premium-reveal>
+            <div class="pv12-trust-item"><span class="pv12-trust-icon">◇</span><span>Datos seguros<br />y bajo tu control</span></div>
+            <div class="pv12-trust-item"><span class="pv12-trust-icon">☁</span><span>Funciona online<br />y offline</span></div>
+            <div class="pv12-trust-item"><span class="pv12-trust-icon">▯</span><span>Apps móviles<br />para técnicos</span></div>
+            <div class="pv12-trust-item"><span class="pv12-trust-icon">▥</span><span>Información en<br />tiempo real</span></div>
           </div>
         </div>
       </section>
+
+      <HomeOtSpotlight />
 
       <section class="pv12-section is-soft">
         <div class="container">

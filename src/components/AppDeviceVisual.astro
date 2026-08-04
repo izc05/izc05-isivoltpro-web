@@ -16,18 +16,24 @@ const slides = [
     image: `${base}media/tools-dashboard.svg`,
     eyebrow: 'Recursos · Operativa',
     title: 'Herramientas QR/NFC',
+    short: 'Herramientas',
+    state: 'Operativa',
     alt: 'Centro operativo de IsiVoltPro Herramientas QR y NFC'
   },
   {
     image: `${base}media/ot-dashboard.svg`,
     eyebrow: 'Operaciones · Operativa',
     title: 'IsiVoltPro OT',
+    short: 'OT',
+    state: 'Operativa',
     alt: 'Panel operativo de órdenes de trabajo IsiVoltPro OT'
   },
   {
     image: `${base}media/inspections-dashboard.svg`,
     eyebrow: 'Ingeniería · En desarrollo',
     title: 'Inspecciones BT',
+    short: 'Inspecciones',
+    state: 'En desarrollo',
     alt: 'Panel de inspecciones eléctricas de baja tensión IsiVoltPro'
   }
 ];
@@ -127,6 +133,8 @@ const slides = [
     <small>ID: HER-000245</small>
   </div>
 
+  <span class="pv14-swipe-hint" aria-hidden="true">↔ Desliza para cambiar</span>
+
   <div class="pv13-carousel-controls" aria-label="Cambiar aplicación mostrada">
     {slides.map((slide, index) => (
       <button
@@ -135,7 +143,10 @@ const slides = [
         aria-label={`Mostrar ${slide.title}`}
         aria-pressed={index === 0 ? 'true' : 'false'}
         data-device-dot={index}
-      ></button>
+      >
+        <span class="pv14-tab-name">{slide.short}</span>
+        <small>{slide.state}</small>
+      </button>
     ))}
   </div>
 </div>
@@ -145,6 +156,7 @@ const slides = [
     if (window.__pv13DeviceCarouselInit) return;
     window.__pv13DeviceCarouselInit = true;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mobile = window.matchMedia('(max-width: 560px)').matches;
     const labels = [
       ['Recursos · Operativa', 'Herramientas QR/NFC'],
       ['Operaciones · Operativa', 'IsiVoltPro OT'],
@@ -158,11 +170,14 @@ const slides = [
       const eyebrow = scene.querySelector('[data-device-eyebrow]');
       const title = scene.querySelector('[data-device-title]');
       const nfc = scene.querySelector('[data-nfc-card]');
-      let current = 0;
+      let current = mobile && !scene.classList.contains('is-compact') ? 1 : 0;
       let timer;
+      let touchStartX = 0;
+      let touchStartY = 0;
 
       const show = (next) => {
         current = (next + slides.length) % slides.length;
+        scene.setAttribute('data-current-slide', String(current));
         slides.forEach((slide, index) => {
           const active = index === current;
           slide.classList.toggle('is-active', active);
@@ -182,7 +197,7 @@ const slides = [
       const stop = () => window.clearInterval(timer);
       const start = () => {
         stop();
-        if (!reduced && slides.length > 1) timer = window.setInterval(() => show(current + 1), 4800);
+        if (!reduced && slides.length > 1) timer = window.setInterval(() => show(current + 1), 4300);
       };
 
       dots.forEach((dot, index) => dot.addEventListener('click', () => { show(index); start(); }));
@@ -190,7 +205,21 @@ const slides = [
       scene.addEventListener('mouseleave', start, { passive: true });
       scene.addEventListener('focusin', stop);
       scene.addEventListener('focusout', start);
+      scene.addEventListener('touchstart', (event) => {
+        const touch = event.changedTouches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+        stop();
+      }, { passive: true });
+      scene.addEventListener('touchend', (event) => {
+        const touch = event.changedTouches[0];
+        const deltaX = touch.clientX - touchStartX;
+        const deltaY = touch.clientY - touchStartY;
+        if (Math.abs(deltaX) > 42 && Math.abs(deltaX) > Math.abs(deltaY)) show(current + (deltaX < 0 ? 1 : -1));
+        start();
+      }, { passive: true });
       document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+      show(current);
       start();
     });
   })();
