@@ -1,49 +1,60 @@
 ---
 import '../styles/global.css';
 import '../styles/pages.css';
-import '../styles/visual.css';
-import '../styles/home-v2.css';
-import '../styles/sticky-story.css';
-import '../styles/brand-refinements.css';
-import '../styles/real-media.css';
-import '../styles/premium-v2.css';
-import '../styles/cinematic-v3.css';
-import '../styles/mobile-hero-fix.css';
-import '../styles/hero-clean-v4.css';
-import '../styles/homepage-v5.css';
-import '../styles/hero-v6.css';
-import '../styles/hero-v7.css';
-import '../styles/hero-v8.css';
-import '../styles/brand-ecosystem-v9.css';
-import '../styles/site-structure-v10.css';
 import '../styles/privacy-security-polish.css';
 import '../styles/production-readiness-v10-3.css';
+import '../styles/premium-redesign-v12.css';
 import Header from '../components/Header.astro';
-import RealHeroMedia from '../components/RealHeroMedia.astro';
-import HomeBenefits from '../components/HomeBenefits.astro';
-import BrandStory from '../components/BrandStory.astro';
-import DailyWorkflow from '../components/DailyWorkflow.astro';
-import EcosystemMap from '../components/EcosystemMap.astro';
-import HomeProductHighlights from '../components/HomeProductHighlights.astro';
 import Footer from '../components/Footer.astro';
 import PrivacyCenter from '../components/PrivacyCenter.astro';
+import PremiumMotion from '../components/PremiumMotion.astro';
+import AppDeviceVisual from '../components/AppDeviceVisual.astro';
+import EcosystemRoadmap from '../components/EcosystemRoadmap.astro';
 import { brand } from '../data/brand';
 
-const description = brand.description;
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
 const canonical = new URL(base, Astro.site);
+const description = 'IsiVoltPro conecta mantenimiento, técnicos, herramientas, activos e inspecciones en un ecosistema digital profesional.';
+
+const solutions = [
+  { icon: '▣', title: 'Mantenimiento preventivo', text: 'Planifica tareas periódicas, vencimientos y evidencias para alargar la vida útil de las instalaciones.' },
+  { icon: '⌕', title: 'Mantenimiento correctivo', text: 'Gestiona incidencias, responsables, tiempos y cierres con un historial claro y verificable.' },
+  { icon: '✓', title: 'Inspecciones y auditorías', text: 'Crea checklists, mediciones, fotografías, firmas e informes técnicos desde campo.' },
+  { icon: '◇', title: 'Gestión de activos', text: 'Identifica herramientas, equipos e instalaciones mediante QR/NFC y consulta su contexto.' }
+];
+
+const workflow = [
+  { icon: '⌕', title: 'Detectar', text: 'Identificamos necesidades, evaluamos instalaciones y capturamos los datos importantes.' },
+  { icon: '⚙', title: 'Gestionar', text: 'Organizamos tareas, técnicos y recursos con control y trazabilidad.' },
+  { icon: '↗', title: 'Optimizar', text: 'Analizamos resultados para reducir tiempos, pérdidas y trabajo repetido.' },
+  { icon: '◎', title: 'Evolucionar', text: 'Conectamos nuevas aplicaciones sin perder la información ya creada.' }
+];
+
+const applications = [
+  { icon: '▣', name: 'Herramientas QR/NFC', copy: 'Inventario, préstamos y trazabilidad.', status: 'Publicada', live: true, href: '/aplicaciones/herramientas-maletines' },
+  { icon: '⌑', name: 'IsiVoltPro OT', copy: 'Avisos, órdenes y técnicos.', status: 'Próxima publicación', next: true, href: '/aplicaciones/mantenimiento-ot' },
+  { icon: '✓', name: 'Inspecciones BT', copy: 'Mediciones, defectos e informes.', status: 'En desarrollo', href: '/aplicaciones/inspecciones-bt' },
+  { icon: '▤', name: 'RITE', copy: 'Instalaciones térmicas y climatización.', status: 'Planificado', href: '/aplicaciones/climatizacion-rite' },
+  { icon: '♨', name: 'PCI', copy: 'Equipos, revisiones y mantenimientos.', status: 'Planificado', href: '/aplicaciones/pci' },
+  { icon: '◯', name: 'Legionella', copy: 'Controles, muestras y registros.', status: 'Planificado', href: '/aplicaciones/legionella-agua' }
+];
+
+const resources = [
+  { art: '🏥', title: 'Mantenimiento hospitalario: continuidad y trazabilidad', meta: 'Mantenimiento' },
+  { art: '▥', title: 'Digitalización: del papel a una operación conectada', meta: 'Transformación digital' },
+  { art: '⚡', title: 'Cuadros eléctricos: revisión y puntos críticos', meta: 'Instalaciones' },
+  { art: '❄', title: 'RITE: qué revisar en instalaciones térmicas', meta: 'Climatización' },
+  { art: '✓', title: 'Checklists digitales: menos errores y más control', meta: 'Buenas prácticas' }
+];
+
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: brand.name,
   url: canonical.toString(),
   description,
-  publisher: {
-    '@type': 'Organization',
-    name: brand.name,
-    email: brand.email,
-    slogan: brand.claim
-  }
+  publisher: { '@type': 'Organization', name: brand.name, email: brand.email, slogan: brand.claim }
 };
 ---
 
@@ -61,73 +72,131 @@ const structuredData = {
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_ES" />
     <meta property="og:site_name" content={brand.name} />
-    <meta property="og:title" content="IsiVoltPro · Mantenimiento conectado de principio a fin" />
+    <meta property="og:title" content="IsiVoltPro · Mantenimiento inteligente y aplicaciones técnicas" />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
-    <title>IsiVoltPro · Mantenimiento conectado de principio a fin</title>
+    <title>IsiVoltPro · Mantenimiento inteligente y aplicaciones técnicas</title>
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <Header />
+
     <main id="contenido">
-      <section class="hero hero-real hero-clean" id="inicio">
-        <div class="container hero-grid">
-          <div class="hero-copy reveal">
-            <p class="eyebrow">Mantenimiento real conectado de principio a fin</p>
-            <h1>
-              <span class="hero-title-line">Del aviso al cierre.</span>
-              <span class="hero-title-line">El mantenimiento,</span>
-              <span class="hero-title-line"><span class="accent">todo conectado.</span></span>
-            </h1>
-            <p class="lead">Avisos, técnicos, activos, materiales, inspecciones y evidencias en un único flujo para que oficina y campo trabajen con el mismo contexto.</p>
-            <div class="hero-actions">
-              <a class="button button-primary" href="/ecosistema">Explorar el ecosistema →</a>
-              <a class="button button-secondary" href="/aplicaciones/mantenimiento-ot">Ver IsiVoltPro OT</a>
+      <section class="pv12-home-hero" id="inicio">
+        <div class="container pv12-home-grid">
+          <div class="pv12-home-copy" data-premium-reveal>
+            <p class="eyebrow">Ecosistema para el mantenimiento técnico</p>
+            <h1>Mantenimiento inteligente y aplicaciones digitales para el <span class="accent">trabajo técnico</span></h1>
+            <p class="lead">Digitalizamos procesos, conectamos equipos y damos a técnicos y responsables herramientas potentes, sencillas y seguras. Todo el mantenimiento, en un solo ecosistema.</p>
+            <div class="pv12-hero-actions">
+              <a class="button button-primary" href={withBase('/mantenimiento')}>Ver soluciones →</a>
+              <a class="button button-secondary" href={withBase('/aplicaciones')}>Explorar aplicaciones</a>
             </div>
-            <div class="hero-points" aria-label="Funciones principales">
-              <div class="hero-point"><b>OT</b><span>Avisos y trabajo</span></div>
-              <div class="hero-point"><b>QR</b><span>Activos e historial</span></div>
-              <div class="hero-point"><b>MAT</b><span>Material usado</span></div>
-              <div class="hero-point"><b>DOC</b><span>Cierre e informe</span></div>
+            <div class="pv12-trust-row" aria-label="Ventajas principales">
+              <div class="pv12-trust-item"><span class="pv12-trust-icon">◇</span><span>Datos seguros<br />y bajo tu control</span></div>
+              <div class="pv12-trust-item"><span class="pv12-trust-icon">☁</span><span>Funciona online<br />y offline</span></div>
+              <div class="pv12-trust-item"><span class="pv12-trust-icon">▯</span><span>Apps móviles<br />para técnicos</span></div>
+              <div class="pv12-trust-item"><span class="pv12-trust-icon">▥</span><span>Información en<br />tiempo real</span></div>
             </div>
-            <p class="hero-domain"><i></i>{brand.domain}</p>
           </div>
-          <RealHeroMedia />
+          <div data-premium-reveal>
+            <AppDeviceVisual />
+          </div>
         </div>
       </section>
 
-      <HomeBenefits />
-      <BrandStory />
-      <DailyWorkflow />
-      <EcosystemMap />
-      <HomeProductHighlights />
+      <section class="pv12-section is-soft">
+        <div class="container">
+          <div class="pv12-section-head" data-premium-reveal><h2>Todo el mantenimiento en un solo ecosistema</h2></div>
+          <div class="pv12-solution-grid">
+            {solutions.map((item, index) => (
+              <article class="pv12-solution-card" data-premium-reveal style={`transition-delay:${index * 70}ms`}>
+                <span class="pv12-card-icon">{item.icon}</span><h3>{item.title}</h3><p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="pv12-section">
+        <div class="container">
+          <div class="pv12-section-head" data-premium-reveal><h2>Cómo trabajamos</h2></div>
+          <div class="pv12-workflow">
+            {workflow.map((item, index) => (
+              <article class="pv12-workflow-item" data-premium-reveal style={`transition-delay:${index * 90}ms`}>
+                <span class="pv12-workflow-number">{index + 1}</span><span class="pv12-workflow-icon">{item.icon}</span><div><h3>{item.title}</h3><p>{item.text}</p></div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="pv12-section" style="padding-top:0">
+        <div class="container">
+          <div class="pv12-feature-band" data-premium-reveal>
+            <div class="pv12-feature-copy">
+              <span class="pv12-feature-label">Primera aplicación publicada</span>
+              <h2>Herramientas QR/NFC</h2>
+              <p>La aplicación real de IsiVoltPro para inventario, responsables, préstamos, devoluciones, etiquetas e historial completo.</p>
+              <ul class="pv12-feature-list">
+                <li>Inventario de herramientas y equipos</li><li>Identificación mediante QR y NFC</li><li>Asignación a técnicos y responsables</li><li>Historial y auditoría de movimientos</li><li>Préstamos y devoluciones controladas</li><li>Base preparada para conectar con OT</li>
+              </ul>
+              <a class="button button-dark" href={withBase('/aplicaciones/herramientas-maletines')}>Explorar Herramientas QR/NFC →</a>
+            </div>
+            <div class="pv12-feature-visual"><AppDeviceVisual compact={true} showMetrics={false} /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pv12-section is-soft"><div class="container"><EcosystemRoadmap /></div></section>
+
+      <section class="pv12-section">
+        <div class="container">
+          <div class="pv12-section-head" data-premium-reveal>
+            <h2>Aplicaciones que forman el ecosistema</h2>
+            <p>Herramientas QR/NFC es la primera publicación. IsiVoltPro OT será la siguiente pieza y el resto crecerá por especialidades.</p>
+          </div>
+          <div class="pv12-app-grid">
+            {applications.map((app, index) => (
+              <a class:list={['pv12-app-card', app.live && 'is-live', app.next && 'is-next']} href={withBase(app.href)} data-premium-reveal style={`transition-delay:${index * 55}ms`}>
+                <span class="pv12-app-icon">{app.icon}</span><h3>{app.name}</h3><p>{app.copy}</p><span class:list={['pv12-app-status', app.live && 'is-live', app.next && 'is-next']}>{app.status}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="pv12-section is-soft">
+        <div class="container">
+          <div class="pv12-section-head" data-premium-reveal><h2>Novedades y recursos</h2><p>Contenido técnico para acompañar la digitalización del mantenimiento y las instalaciones.</p></div>
+          <div class="pv12-resource-grid">
+            {resources.map((resource, index) => (
+              <a class="pv12-resource-card" href={withBase('/recursos')} data-premium-reveal style={`transition-delay:${index * 55}ms`}>
+                <div class="pv12-resource-art">{resource.art}</div><div class="pv12-resource-body"><h3>{resource.title}</h3><p>{resource.meta}</p></div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="pv12-section" style="padding-top:0">
+        <div class="container">
+          <div class="pv12-server-banner" data-premium-reveal>
+            <span class="pv12-server-icon">▤</span><div><h2>Tu información, en tu servidor y tu dominio</h2><p>IsiVoltPro está preparado para funcionar en infraestructura propia, con control de acceso, copias y publicación segura.</p></div><a class="button button-primary" href={withBase('/contacto')}>Solicitar demo</a>
+          </div>
+        </div>
+      </section>
     </main>
-    <Footer />
-    <PrivacyCenter />
+
+    <Footer /><PrivacyCenter /><PremiumMotion />
 
     <script is:inline>
       const toggle = document.querySelector('.menu-toggle');
       const nav = document.querySelector('.nav-links');
-      toggle?.addEventListener('click', () => {
-        const open = nav?.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', String(Boolean(open)));
-      });
-      nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-        nav.classList.remove('open');
-        toggle?.setAttribute('aria-expanded', 'false');
-      }));
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12 });
-      document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+      toggle?.addEventListener('click', () => { const open = nav?.classList.toggle('open'); toggle.setAttribute('aria-expanded', String(Boolean(open))); });
+      nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => { nav.classList.remove('open'); toggle?.setAttribute('aria-expanded', 'false'); }));
     </script>
   </body>
 </html>

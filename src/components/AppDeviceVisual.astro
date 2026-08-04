@@ -1,0 +1,66 @@
+---
+interface Props {
+  compact?: boolean;
+  showMetrics?: boolean;
+  label?: string;
+}
+
+const {
+  compact = false,
+  showMetrics = true,
+  label = 'Interfaz real de IsiVoltPro Herramientas QR'
+} = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const image = `${base}media/tools-dashboard.svg`;
+---
+
+<div class:list={['pv12-device-scene', compact && 'is-compact']} data-parallax-root aria-label={label}>
+  <div class="pv12-device-glow" aria-hidden="true"></div>
+
+  {showMetrics && (
+    <>
+      <div class="pv12-float-metric metric-one" data-parallax="1.8">
+        <span>Herramientas</span><strong>1.248</strong><small>registradas</small>
+      </div>
+      <div class="pv12-float-metric metric-two" data-parallax="2.2">
+        <span>Préstamos</span><strong>32</strong><small>en curso</small>
+      </div>
+      <div class="pv12-float-metric metric-three" data-parallax="1.45">
+        <span>Técnicos</span><strong>48</strong><small>activos</small>
+      </div>
+    </>
+  )}
+
+  <div class="pv12-laptop" data-parallax="0.7" data-scroll-parallax="0.55">
+    <div class="pv12-laptop-lid">
+      <span class="pv12-camera" aria-hidden="true"></span>
+      <div class="pv12-laptop-screen">
+        <img src={image} alt="Centro operativo real de IsiVoltPro Herramientas QR" loading="eager" decoding="async" />
+      </div>
+    </div>
+    <div class="pv12-laptop-base" aria-hidden="true"><span></span></div>
+  </div>
+
+  <div class="pv12-phone" data-parallax="1.65" data-scroll-parallax="1.1" aria-label="Vista móvil de ficha de herramienta">
+    <div class="pv12-phone-notch" aria-hidden="true"></div>
+    <div class="pv12-phone-ui">
+      <div class="pv12-phone-top"><span>‹</span><b>Detalle de herramienta</b><span>•••</span></div>
+      <div class="pv12-tool-illustration" aria-hidden="true">⚒</div>
+      <h3>Taladro percutor 18 V</h3>
+      <div class="pv12-phone-status"><span>HER-000245</span><b>Disponible</b></div>
+      <dl>
+        <div><dt>Categoría</dt><dd>Herramienta eléctrica</dd></div>
+        <div><dt>Ubicación</dt><dd>Almacén principal</dd></div>
+        <div><dt>Responsable</dt><dd>Sin asignar</dd></div>
+      </dl>
+      <button type="button" tabindex="-1">Nuevo préstamo</button>
+    </div>
+  </div>
+
+  <div class="pv12-nfc-card" data-parallax="2.5" data-scroll-parallax="1.4" aria-label="Etiqueta NFC y QR">
+    <span class="pv12-nfc-wave">)))</span>
+    <strong>NFC</strong>
+    <div class="pv12-qr-pattern" aria-hidden="true"></div>
+    <small>ID: HER-000245</small>
+  </div>
+</div>

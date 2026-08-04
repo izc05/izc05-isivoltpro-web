@@ -1,0 +1,72 @@
+<script is:inline>
+  (() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+    const revealItems = document.querySelectorAll('[data-premium-reveal]');
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-premium-visible');
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+      revealItems.forEach((item) => observer.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add('is-premium-visible'));
+    }
+
+    if (reduced || coarse) return;
+
+    const roots = document.querySelectorAll('[data-parallax-root]');
+    roots.forEach((root) => {
+      let frame = 0;
+      const layers = root.querySelectorAll('[data-parallax]');
+      const update = (event) => {
+        const rect = root.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          layers.forEach((layer) => {
+            const depth = Number(layer.getAttribute('data-parallax') || 1);
+            layer.style.setProperty('--parallax-x', `${x * depth * 18}px`);
+            layer.style.setProperty('--parallax-y', `${y * depth * 14}px`);
+          });
+        });
+      };
+      const reset = () => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          layers.forEach((layer) => {
+            layer.style.setProperty('--parallax-x', '0px');
+            layer.style.setProperty('--parallax-y', '0px');
+          });
+        });
+      };
+      root.addEventListener('pointermove', update, { passive: true });
+      root.addEventListener('pointerleave', reset, { passive: true });
+    });
+
+    const scrollLayers = document.querySelectorAll('[data-scroll-parallax]');
+    let ticking = false;
+    const updateScroll = () => {
+      const viewport = window.innerHeight;
+      scrollLayers.forEach((layer) => {
+        const rect = layer.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > viewport) return;
+        const progress = (rect.top + rect.height / 2 - viewport / 2) / viewport;
+        const depth = Number(layer.getAttribute('data-scroll-parallax') || 1);
+        layer.style.setProperty('--scroll-shift', `${progress * depth * -24}px`);
+      });
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateScroll);
+    }, { passive: true });
+    updateScroll();
+  })();
+</script>

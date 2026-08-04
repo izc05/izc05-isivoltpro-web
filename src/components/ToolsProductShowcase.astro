@@ -1,165 +1,166 @@
 ---
+import AppDeviceVisual from './AppDeviceVisual.astro';
 import type { EcosystemArea } from '../data/catalog';
 
 interface Props { area: EcosystemArea; }
 const { area } = Astro.props;
-const repositoryUrl = 'https://github.com/izc05/ISIVOLT-Herramientas-QR';
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
+const dashboardImage = `${base}media/tools-dashboard.svg`;
+const appUrl = 'https://qr.isivoltpro.com/';
 
-const capabilities = [
-  ['01', 'Herramientas y equipos', 'Alta, clasificación, ubicación, estado, fotografías, marca, modelo, número de serie y datos de compra.'],
-  ['02', 'Técnicos y responsables', 'Organización por especialidad, estado, departamento y relación directa con los equipos entregados.'],
-  ['03', 'Préstamos y devoluciones', 'Registro de quién recibe cada herramienta, cuándo sale, cuándo vuelve y qué movimientos quedan pendientes.'],
-  ['04', 'QR y NFC', 'Identificación inmediata de herramientas, maletines, equipos de medida, EPI y otros recursos técnicos.'],
-  ['05', 'Revisión y calibración', 'Fechas de revisión, calibración, intervalos y estados de servicio para evitar equipos fuera de control.'],
-  ['06', 'Historial trazable', 'Cada alta, entrega, devolución o vinculación queda reflejada en una cronología consultable.']
+const features = [
+  { icon: '▤', title: 'Inventario inteligente', text: 'Herramientas, equipos, EPI, maletines y materiales con código, categoría, estado y ubicación.' },
+  { icon: '♙', title: 'Asignación a técnicos', text: 'Responsables, especialidades y material entregado con consulta inmediata.' },
+  { icon: '↔', title: 'Préstamos y devoluciones', text: 'Salidas, entradas, responsables, fechas y lotes con control de disponibilidad.' },
+  { icon: '▦', title: 'Etiquetado QR/NFC', text: 'Identificación rápida para consultar, prestar, devolver o revisar un equipo.' },
+  { icon: '◷', title: 'Historial y trazabilidad', text: 'Cronología completa de movimientos, ubicaciones, incidencias y responsables.' },
+  { icon: '▧', title: 'Incidencias y evidencias', text: 'Fotografías, observaciones y estados de revisión asociados a cada elemento.' },
+  { icon: '◉', title: 'Stock y control', text: 'Disponibilidad, ubicación, stock mínimo y alertas para evitar roturas de inventario.' },
+  { icon: '⚙', title: 'Preparada para crecer', text: 'Arquitectura lista para sincronización y conexión futura con OT y activos.' }
 ];
 
-const flow = [
-  ['Registrar', 'Crear la herramienta y asignar código, categoría, ubicación y datos técnicos.'],
-  ['Identificar', 'Generar su QR y, cuando proceda, vincular o grabar una etiqueta NFC.'],
-  ['Entregar', 'Seleccionar equipo y técnico para registrar la salida desde almacén.'],
-  ['Consultar', 'Saber en todo momento dónde está, quién lo tiene y cuál es su estado.'],
-  ['Devolver', 'Registrar la entrada, revisar el estado y devolver el equipo a disponibilidad.'],
-  ['Aprender', 'Conservar el historial para auditorías, reposición y futuras decisiones.']
+const dailyFlow = [
+  { icon: '▤', title: 'Alta', text: 'Registra la herramienta y crea su ficha.' },
+  { icon: '▦', title: 'Etiquetado', text: 'Genera QR y vincula NFC.' },
+  { icon: '♙', title: 'Asignación', text: 'Selecciona técnico y responsable.' },
+  { icon: '⚒', title: 'Uso', text: 'El equipo queda trazado en campo.' },
+  { icon: '↶', title: 'Devolución', text: 'Valida entrada y estado.' },
+  { icon: '◷', title: 'Historial', text: 'Consulta movimientos y evidencias.' }
+];
+
+const modules = [
+  { title: 'Inicio', text: 'Centro operativo y actividad reciente.' },
+  { title: 'Herramientas', text: 'Inventario, filtros y estados.' },
+  { title: 'Técnicos', text: 'Responsables y material asignado.' },
+  { title: 'Movimientos', text: 'Préstamos, devoluciones y lotes.' },
+  { title: 'QR/NFC', text: 'Etiquetas, lectura y vinculación.' },
+  { title: 'Configuración', text: 'Catálogos, espacios y preferencias.' }
+];
+
+const integrations = [
+  { icon: '▣', name: 'Operaciones OT', text: 'Órdenes y mantenimientos' },
+  { icon: '✓', name: 'Inspecciones BT', text: 'Evidencias y verificaciones' },
+  { icon: '▥', name: 'RITE', text: 'Equipos térmicos' },
+  { icon: '♨', name: 'PCI', text: 'Equipos contra incendios' },
+  { icon: '◯', name: 'Legionella', text: 'Puntos y controles' },
+  { icon: '▦', name: 'Activos QR/NFC', text: 'Esta aplicación', current: true }
 ];
 ---
 
-<section class="tools-product-hero">
-  <div class="container tools-product-grid">
-    <div class="tools-product-copy reveal">
-      <span class="page-kicker">HM · Primera aplicación funcional de recursos</span>
-      <div class="tools-state-row" aria-label="Estado del producto">
-        <span class="tools-state tools-state-live"><i></i> Demo operativa</span>
-        <span class="tools-state">Versión 2.0.0-alpha.7.9</span>
-        <span class="tools-state">Cloud en desarrollo</span>
+<section class="pv12-tools-hero">
+  <div class="container pv12-tools-grid">
+    <div data-premium-reveal>
+      <p class="eyebrow">Herramientas · activos QR/NFC</p>
+      <h1>Control total de herramientas y activos <span class="accent">con QR y NFC</span></h1>
+      <p class="lead">Inventario inteligente, asignación a técnicos, préstamos, devoluciones, trazabilidad e historial. La primera aplicación real del ecosistema IsiVoltPro ya está publicada y funcionando.</p>
+      <div class="pv12-hero-actions">
+        <a class="button button-primary" href={appUrl} target="_blank" rel="noopener noreferrer">Abrir aplicación →</a>
+        <a class="button button-secondary" href={withBase('/contacto')}>Solicitar demo</a>
       </div>
-      <h1>IsiVoltPro<br /><span>Herramientas QR</span></h1>
-      <p class="lead">Control de herramientas, maletines, equipos de medida y material técnico mediante QR, NFC, préstamos, devoluciones e historial.</p>
-      <p class="tools-product-summary">La aplicación ya funciona en modo local y está instalada en el mini PC. El siguiente paso es completar la sincronización para compartir la misma información entre ordenador, móvil y diferentes usuarios.</p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="#funciones-herramientas">Ver cómo funciona →</a>
-        <a class="button button-secondary" href={repositoryUrl} target="_blank" rel="noopener noreferrer">Ver repositorio</a>
+      <div class="pv12-tools-badges">
+        <span class="pv12-tools-badge"><i>◇</i> Datos bajo tu control</span>
+        <span class="pv12-tools-badge"><i>☁</i> Local y preparada para nube</span>
+        <span class="pv12-tools-badge"><i>▯</i> Diseñada para móvil</span>
       </div>
-      <p class="tools-link-note">El enlace público de la aplicación se añadirá cuando la publicación definitiva esté sincronizada con la versión actual.</p>
     </div>
+    <div data-premium-reveal><AppDeviceVisual /></div>
+  </div>
+</section>
 
-    <div class="tools-app-preview reveal" aria-label="Recreación visual de la aplicación Herramientas QR">
-      <div class="tools-window-bar">
-        <span class="tools-window-brand"><b>I</b> IsiVolt<span>Pro</span></span>
-        <span class="tools-window-mode"><i></i> Espacio local</span>
-      </div>
-      <div class="tools-app-shell">
-        <aside class="tools-mini-sidebar" aria-hidden="true">
-          <strong>HM</strong>
-          <span class="active">Inicio</span>
-          <span>Herramientas</span>
-          <span>Técnicos</span>
-          <span>Movimientos</span>
-        </aside>
-        <div class="tools-mini-main">
-          <header><div><small>Resumen del espacio</small><strong>Control de herramientas</strong></div><button type="button" tabindex="-1">+ Nueva</button></header>
-          <div class="tools-mini-metrics">
-            <article><span>Total</span><strong>128</strong><small>equipos activos</small></article>
-            <article><span>Disponibles</span><strong>91</strong><small>en almacén</small></article>
-            <article><span>Prestadas</span><strong>31</strong><small>con responsable</small></article>
-            <article><span>Revisión</span><strong>6</strong><small>requieren atención</small></article>
-          </div>
-          <div class="tools-mini-table">
-            <div class="tools-mini-table-head"><strong>Herramientas recientes</strong><span>Buscar y filtrar</span></div>
-            <div class="tools-mini-row"><b>MED-004</b><span>Pinza amperimétrica</span><em class="loaned">En préstamo</em><small>Equipo eléctrico</small></div>
-            <div class="tools-mini-row"><b>MAL-002</b><span>Maletín electricista</span><em>Disponible</em><small>Almacén principal</small></div>
-            <div class="tools-mini-row"><b>CLI-008</b><span>Bomba de vacío</span><em class="review">Revisión</em><small>Taller clima</small></div>
-          </div>
+<section class="pv12-section is-soft" id="funciones">
+  <div class="container">
+    <div class="pv12-section-head" data-premium-reveal>
+      <h2>Todo lo necesario para gestionar herramientas y activos</h2>
+      <p>La aplicación convierte altas, etiquetas y movimientos en una operación clara para almacén, coordinación y técnicos.</p>
+    </div>
+    <div class="pv12-tools-feature-grid">
+      {features.map((item, index) => (
+        <article class="pv12-tools-feature" data-premium-reveal style={`transition-delay:${index * 45}ms`}>
+          <i>{item.icon}</i><h3>{item.title}</h3><p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="pv12-section">
+  <div class="container">
+    <div class="pv12-section-head" data-premium-reveal><h2>Así funciona en el día a día</h2></div>
+    <div class="pv12-tools-day">
+      {dailyFlow.map((item, index) => (
+        <article class="pv12-tools-step" data-premium-reveal style={`transition-delay:${index * 60}ms`}>
+          <b>{index + 1}</b><i>{item.icon}</i><h3>{item.title}</h3><p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="pv12-section is-soft">
+  <div class="container">
+    <div class="pv12-section-head" data-premium-reveal>
+      <h2>Módulos de la aplicación</h2>
+      <p>Pantallas reales del centro operativo actual, organizadas por las tareas principales.</p>
+    </div>
+    <div class="pv12-module-grid">
+      {modules.map((module, index) => (
+        <article class="pv12-module-card" data-premium-reveal style={`transition-delay:${index * 50}ms`}>
+          <div class="pv12-module-shot"><img src={dashboardImage} alt={`Vista del módulo ${module.title} de Herramientas QR`} loading="lazy" decoding="async" /></div>
+          <div class="pv12-module-copy"><h3>{module.title}</h3><p>{module.text}</p></div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="pv12-section">
+  <div class="container pv12-tools-panels">
+    <article class="pv12-tools-panel" data-premium-reveal>
+      <p class="eyebrow">Dashboard web</p>
+      <h2>Control para coordinación y almacén</h2>
+      <p>Resumen de herramientas, disponibilidad, responsables, actividad reciente y puesta en marcha del espacio local.</p>
+      <a class="button button-secondary" href={appUrl} target="_blank" rel="noopener noreferrer">Ver dashboard</a>
+      <img class="pv12-panel-image" src={dashboardImage} alt="Dashboard real de Herramientas QR" loading="lazy" decoding="async" />
+    </article>
+
+    <article class="pv12-tools-panel" data-premium-reveal>
+      <p class="eyebrow">Etiquetas e identificación</p>
+      <h2>Diseñador QR y vinculación NFC</h2>
+      <p>Cada herramienta puede disponer de una identidad física para abrir su ficha y registrar movimientos con menos pasos.</p>
+      <div class="pv12-label-designer">
+        <small>Vista previa de etiqueta</small>
+        <div class="pv12-label-preview">
+          <div class="pv12-qr-pattern" aria-hidden="true"></div>
+          <div><strong>IsiVoltPro<br />HER-000245</strong><small>Taladro percutor 18 V · NFC</small></div>
         </div>
       </div>
-      <p class="tools-preview-caption"><span>Vista recreada</span> a partir de la interfaz y funciones actuales. Se sustituirá por capturas reales de la publicación.</p>
-    </div>
+    </article>
   </div>
 </section>
 
-<section class="section tools-value-section" id="funciones-herramientas">
+<section class="pv12-section is-soft">
   <div class="container">
-    <div class="section-heading reveal">
-      <p class="eyebrow">Un problema muy concreto</p>
-      <h2>Saber qué existe, dónde está y quién lo tiene</h2>
-      <p>La aplicación reúne en un mismo flujo el almacén, los técnicos, la identificación física y el historial. El objetivo es reducir búsquedas, pérdidas, entregas sin registrar y revisiones olvidadas.</p>
-    </div>
-    <div class="tools-capability-grid">
-      {capabilities.map(([number, title, text]) => (
-        <article class="tools-capability reveal"><span>{number}</span><h3>{title}</h3><p>{text}</p></article>
+    <div class="pv12-section-head" data-premium-reveal><h2>Parte del ecosistema IsiVoltPro</h2><p>Herramientas QR/NFC es la primera pieza operativa y la base de futuras conexiones.</p></div>
+    <div class="pv12-integration-grid">
+      {integrations.map((item, index) => (
+        <a class:list={['pv12-integration-card', item.current && 'is-current']} href={item.current ? appUrl : withBase('/ecosistema')} target={item.current ? '_blank' : undefined} rel={item.current ? 'noopener noreferrer' : undefined} data-premium-reveal style={`transition-delay:${index * 50}ms`}>
+          <i>{item.icon}</i><strong>{item.name}</strong><small>{item.text}</small>
+        </a>
       ))}
     </div>
   </div>
 </section>
 
-<section class="section section-soft tools-flow-section">
-  <div class="container tools-flow-grid">
-    <div class="tools-flow-copy reveal">
-      <p class="eyebrow">Recorrido completo</p>
-      <h2>De la etiqueta al historial</h2>
-      <p class="lead">QR y NFC no son el objetivo final. Son la puerta de entrada para consultar y actualizar la información del equipo con menos pasos.</p>
-      <div class="tools-id-card" aria-label="Ejemplo de ficha identificada">
-        <div class="tools-qr-symbol" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div><span>Equipo identificado</span><strong>MED-004</strong><small>Pinza amperimétrica · En préstamo</small></div>
-        <b>NFC</b>
+<section class="pv12-section" style="padding-top:0">
+  <div class="container">
+    <div class="pv12-final-cta" data-premium-reveal>
+      <span class="pv12-final-cta-icon">▣</span>
+      <div><h2>Lleva el control de tus herramientas al siguiente nivel</h2><p>Menos pérdidas, más control y trazabilidad completa en cada movimiento.</p></div>
+      <div class="pv12-hero-actions" style="margin:0">
+        <a class="button button-primary" href={withBase('/contacto')}>Solicitar demo</a>
+        <a class="button button-dark" href={appUrl} target="_blank" rel="noopener noreferrer">Abrir aplicación</a>
       </div>
     </div>
-    <div class="tools-flow-list">
-      {flow.map(([title, text], index) => (
-        <article class="tools-flow-step reveal"><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{text}</p></div></article>
-      ))}
-    </div>
   </div>
 </section>
-
-<section class="section tools-gallery-section">
-  <div class="container">
-    <div class="section-heading reveal">
-      <p class="eyebrow">Galería de producto</p>
-      <h2>Las capturas reales serán la siguiente capa</h2>
-      <p>La estructura ya está preparada para incorporar imágenes del panel, listado, ficha QR, préstamo, devolución, técnicos e historial cuando tengamos el enlace público actualizado.</p>
-    </div>
-    <div class="tools-gallery-plan">
-      <article class="reveal"><span>01</span><div><strong>Panel principal</strong><small>Indicadores y actividad reciente</small></div></article>
-      <article class="reveal"><span>02</span><div><strong>Listado de herramientas</strong><small>Filtros, estados y responsables</small></div></article>
-      <article class="reveal"><span>03</span><div><strong>Ficha QR/NFC</strong><small>Identificación y datos técnicos</small></div></article>
-      <article class="reveal"><span>04</span><div><strong>Préstamo y devolución</strong><small>Flujo operativo completo</small></div></article>
-      <article class="reveal"><span>05</span><div><strong>Técnicos</strong><small>Especialidad y material asignado</small></div></article>
-      <article class="reveal"><span>06</span><div><strong>Historial</strong><small>Cronología de movimientos</small></div></article>
-    </div>
-  </div>
-</section>
-
-<section class="section tools-roadmap-section">
-  <div class="container tools-roadmap-card reveal">
-    <div>
-      <p class="eyebrow">Estado actual</p>
-      <h2>Operativa en local. Preparando el trabajo compartido.</h2>
-      <p>La versión actual permite trabajar con datos guardados en el dispositivo. La sincronización con PocketBase deberá añadir usuarios, roles, separación por espacio de trabajo, copias y acceso desde distintos equipos.</p>
-    </div>
-    <div class="tools-roadmap-status">
-      <span class="done"><i>✓</i> Aplicación React operativa</span>
-      <span class="done"><i>✓</i> Instalación en mini PC</span>
-      <span class="done"><i>✓</i> QR, NFC y movimientos</span>
-      <span><i>→</i> Sincronización cloud</span>
-      <span><i>→</i> Enlace público definitivo</span>
-      <span><i>→</i> Integración futura con OT</span>
-    </div>
-  </div>
-</section>
-
-<section class="section section-soft">
-  <div class="container">
-    <div class="cta reveal">
-      <div>
-        <h2>Una aplicación real dentro del ecosistema</h2>
-        <p>No es una maqueta: ya existe una versión funcional publicada en GitHub e instalada en el mini PC. La web irá mostrando su evolución de forma transparente.</p>
-      </div>
-      <a class="button button-dark" href="/contacto">Hablar del proyecto →</a>
-    </div>
-  </div>
-</section>
-
-<style>
-  .tools-product-hero{padding:clamp(5.6rem,9vw,8.5rem) 0 clamp(3.6rem,7vw,6.5rem);overflow:hidden;background:radial-gradient(circle at 82% 20%,rgba(35,204,155,.12),transparent 30%),linear-gradient(145deg,#06172d 0%,#092342 58%,#071a33 100%);color:#fff}.tools-product-grid{display:grid;grid-template-columns:minmax(0,.88fr) minmax(480px,1.12fr);gap:clamp(2rem,5vw,5rem);align-items:center}.tools-product-copy h1{font-size:clamp(3.5rem,7vw,6.9rem);line-height:.88;letter-spacing:-.065em;margin:.9rem 0 1.55rem}.tools-product-copy h1 span{color:#31d6a5}.tools-product-copy .lead{max-width:720px;color:#e4edf7}.tools-product-summary{max-width:690px;color:#aebdd0;line-height:1.75}.tools-state-row{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1.15rem}.tools-state{display:inline-flex;align-items:center;gap:.45rem;padding:.46rem .72rem;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(255,255,255,.055);font-size:.74rem;font-weight:800;color:#c6d2e0}.tools-state-live{color:#7ff0c9;border-color:rgba(49,214,165,.35);background:rgba(49,214,165,.09)}.tools-state i,.tools-window-mode i{width:7px;height:7px;border-radius:50%;background:#31d6a5;box-shadow:0 0 0 5px rgba(49,214,165,.12)}.tools-link-note{font-size:.76rem;color:#91a3ba;margin-top:1rem;max-width:620px}.tools-app-preview{border:1px solid rgba(255,255,255,.15);border-radius:26px;background:#f4f7fa;box-shadow:0 32px 80px rgba(0,0,0,.28);overflow:hidden;transform:rotate(.25deg)}.tools-window-bar{min-height:56px;display:flex;justify-content:space-between;align-items:center;padding:.8rem 1rem;background:#fff;border-bottom:1px solid #dfe6ed;color:#0b2340}.tools-window-brand{font-weight:900;letter-spacing:-.03em}.tools-window-brand b{display:inline-grid;place-items:center;width:26px;height:26px;margin-right:.45rem;border-radius:8px;background:#0b2340;color:#fff}.tools-window-brand span{color:#ef2636}.tools-window-mode{display:flex;align-items:center;gap:.55rem;font-size:.72rem;font-weight:800;color:#456}.tools-app-shell{display:grid;grid-template-columns:132px 1fr;min-height:430px}.tools-mini-sidebar{padding:1.15rem .85rem;background:#071a33;color:#92a8c0;display:flex;flex-direction:column;gap:.35rem}.tools-mini-sidebar strong{font-size:1.25rem;color:#fff;margin:0 0 .8rem .35rem}.tools-mini-sidebar span{padding:.65rem .7rem;border-radius:9px;font-size:.68rem;font-weight:750}.tools-mini-sidebar .active{background:#ef2636;color:#fff}.tools-mini-main{padding:1.15rem;color:#10243c;min-width:0}.tools-mini-main header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}.tools-mini-main header div{display:flex;flex-direction:column}.tools-mini-main header small{font-size:.62rem;color:#708094}.tools-mini-main header strong{font-size:1rem}.tools-mini-main header button{border:0;border-radius:9px;padding:.58rem .8rem;background:#ef2636;color:#fff;font-weight:800;font-size:.66rem}.tools-mini-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem}.tools-mini-metrics article{padding:.75rem;border:1px solid #e1e7ed;border-radius:12px;background:#fff;display:flex;flex-direction:column}.tools-mini-metrics span,.tools-mini-metrics small{font-size:.54rem;color:#748397}.tools-mini-metrics strong{font-size:1.35rem;line-height:1.2}.tools-mini-table{margin-top:.75rem;border:1px solid #dde5ec;border-radius:14px;background:#fff;overflow:hidden}.tools-mini-table-head{display:flex;justify-content:space-between;padding:.75rem;border-bottom:1px solid #edf1f4;font-size:.64rem}.tools-mini-table-head span{color:#8793a2}.tools-mini-row{display:grid;grid-template-columns:64px minmax(120px,1fr) 78px minmax(90px,.8fr);gap:.55rem;align-items:center;padding:.72rem;border-bottom:1px solid #edf1f4;font-size:.59rem}.tools-mini-row:last-child{border-bottom:0}.tools-mini-row b{color:#193a5b}.tools-mini-row em{font-style:normal;color:#168660;background:#e5f8f1;padding:.28rem .4rem;border-radius:999px;text-align:center;font-weight:800}.tools-mini-row em.loaned{color:#9b6700;background:#fff2cf}.tools-mini-row em.review{color:#ad3440;background:#ffe7e9}.tools-mini-row small{font-size:.56rem;color:#718094}.tools-preview-caption{margin:0;padding:.68rem 1rem;background:#edf2f6;color:#68798b;font-size:.65rem}.tools-preview-caption span{font-weight:900;color:#243d58}.tools-value-section{background:#fff}.tools-capability-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}.tools-capability{position:relative;padding:1.45rem;border:1px solid #dfe7ee;border-radius:18px;background:#fff}.tools-capability>span{display:block;color:#ef2636;font-size:.69rem;font-weight:900;margin-bottom:1.1rem}.tools-capability h3{margin:0 0 .55rem;font-size:1.03rem}.tools-capability p{margin:0;color:#607286;line-height:1.65;font-size:.88rem}.tools-flow-grid{display:grid;grid-template-columns:minmax(300px,.78fr) minmax(0,1.22fr);gap:clamp(2rem,6vw,6rem);align-items:start}.tools-flow-copy{position:sticky;top:110px}.tools-id-card{display:grid;grid-template-columns:76px 1fr auto;gap:1rem;align-items:center;margin-top:2rem;padding:1rem;border:1px solid #d8e4e9;border-radius:18px;background:#fff}.tools-id-card div:nth-child(2){display:flex;flex-direction:column;min-width:0}.tools-id-card span,.tools-id-card small{color:#6f8191;font-size:.68rem}.tools-id-card strong{font-size:1.25rem;color:#0b2643}.tools-id-card>b{padding:.4rem .5rem;border-radius:8px;background:#071a33;color:#fff;font-size:.64rem}.tools-qr-symbol{width:68px;height:68px;display:grid!important;grid-template-columns:repeat(3,1fr);gap:4px;padding:7px;background:#071a33;border-radius:9px}.tools-qr-symbol i{background:#fff;border-radius:1px}.tools-qr-symbol i:nth-child(2),.tools-qr-symbol i:nth-child(4),.tools-qr-symbol i:nth-child(8){background:#31d6a5}.tools-flow-list{display:flex;flex-direction:column}.tools-flow-step{display:grid;grid-template-columns:58px 1fr;gap:1rem;padding:1.2rem 0;border-bottom:1px solid #dce5eb}.tools-flow-step>span{font-weight:900;color:#ef2636}.tools-flow-step h3{margin:0 0 .35rem}.tools-flow-step p{margin:0;color:#617386;line-height:1.6}.tools-gallery-plan{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-top:2rem}.tools-gallery-plan article{min-height:135px;padding:1.15rem;border:1px dashed #bccbd7;border-radius:16px;background:linear-gradient(145deg,#f8fafb,#eef3f6);display:flex;gap:1rem;align-items:flex-start}.tools-gallery-plan article>span{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:#0b2643;color:#fff;font-size:.68rem;font-weight:900}.tools-gallery-plan article div{display:flex;flex-direction:column}.tools-gallery-plan strong{font-size:.91rem}.tools-gallery-plan small{margin-top:.25rem;color:#718295;line-height:1.45}.tools-roadmap-card{display:grid;grid-template-columns:1fr minmax(310px,.72fr);gap:2rem;padding:clamp(1.5rem,4vw,3rem);border-radius:24px;background:#071a33;color:#fff}.tools-roadmap-card h2{max-width:760px}.tools-roadmap-card p{color:#aebed0;line-height:1.7}.tools-roadmap-status{display:flex;flex-direction:column;justify-content:center;gap:.65rem}.tools-roadmap-status span{display:flex;align-items:center;gap:.7rem;padding:.65rem .8rem;border:1px solid rgba(255,255,255,.1);border-radius:11px;color:#aebed0;font-size:.79rem;font-weight:750}.tools-roadmap-status i{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.08);font-style:normal}.tools-roadmap-status .done{color:#baf8e2;border-color:rgba(49,214,165,.18)}.tools-roadmap-status .done i{background:#31d6a5;color:#062018}.tools-product-hero .button-secondary{border-color:rgba(255,255,255,.25);color:#fff}.tools-product-hero .button-secondary:hover{background:#fff;color:#071a33}@media(max-width:980px){.tools-product-grid{grid-template-columns:1fr}.tools-app-preview{max-width:760px}.tools-capability-grid,.tools-gallery-plan{grid-template-columns:repeat(2,1fr)}.tools-flow-grid,.tools-roadmap-card{grid-template-columns:1fr}.tools-flow-copy{position:static}.tools-app-shell{min-height:400px}}@media(max-width:640px){.tools-product-hero{padding-top:5rem}.tools-product-copy h1{font-size:clamp(3.1rem,17vw,5rem)}.tools-state-row{gap:.4rem}.tools-state{font-size:.66rem}.tools-app-preview{border-radius:18px}.tools-window-mode{display:none}.tools-app-shell{grid-template-columns:1fr;min-height:auto}.tools-mini-sidebar{display:none}.tools-mini-main{padding:.8rem}.tools-mini-metrics{grid-template-columns:repeat(2,1fr)}.tools-mini-row{grid-template-columns:55px 1fr 70px}.tools-mini-row small{display:none}.tools-capability-grid,.tools-gallery-plan{grid-template-columns:1fr}.tools-id-card{grid-template-columns:62px 1fr}.tools-id-card>b{display:none}.tools-qr-symbol{width:58px;height:58px}.tools-roadmap-card{border-radius:18px}.tools-product-summary{font-size:.92rem}}
-</style>

@@ -3,7 +3,8 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 const currentPath = Astro.url.pathname.startsWith(base)
   ? `/${Astro.url.pathname.slice(base.length)}`
   : Astro.url.pathname;
-const active = (href: string) => href !== '/' && currentPath.startsWith(href);
+const normalizedPath = currentPath.replace(/\/+$/, '') || '/';
+const active = (href: string) => href === '/' ? normalizedPath === '/' : normalizedPath.startsWith(href);
 const withBase = (href: string) => {
   if (href === '/') return base;
   const [pathname, hash] = href.split('#');
@@ -14,19 +15,19 @@ const withBase = (href: string) => {
 
 <header class="site-header">
   <div class="container navbar">
-    <a class="brand" href={withBase('/')} aria-label="IsiVoltPro, inicio" aria-current={currentPath === '/' ? 'page' : undefined}>
-      <span class="brand-mark">I</span>IsiVolt<span class="accent">Pro</span>
+    <a class="brand" href={withBase('/')} aria-label="IsiVoltPro, inicio" aria-current={active('/') ? 'page' : undefined}>
+      IsiVolt<span class="accent">Pro</span>
     </a>
     <nav class="nav-links" id="main-nav" aria-label="Navegación principal">
+      <a href={withBase('/')} aria-current={active('/') ? 'page' : undefined}>Inicio</a>
       <a href={withBase('/ecosistema')} aria-current={active('/ecosistema') ? 'page' : undefined}>Ecosistema</a>
-      <a href={withBase('/mantenimiento')} aria-current={active('/mantenimiento') ? 'page' : undefined}>Mantenimiento</a>
       <a href={withBase('/aplicaciones')} aria-current={active('/aplicaciones') ? 'page' : undefined}>Aplicaciones</a>
-      <a href={withBase('/recursos')} aria-current={active('/recursos') ? 'page' : undefined}>Recursos</a>
-      <a href={withBase('/infraestructura')} aria-current={active('/infraestructura') ? 'page' : undefined}>Infraestructura</a>
+      <a href={withBase('/mantenimiento')} aria-current={active('/mantenimiento') ? 'page' : undefined}>Soluciones</a>
+      <a href={withBase('/recursos')} aria-current={active('/recursos') ? 'page' : undefined}>Blog</a>
       <a href={withBase('/contacto')} aria-current={active('/contacto') ? 'page' : undefined}>Contacto</a>
     </nav>
     <div class="nav-actions">
-      <a class="button button-primary button-small" href={withBase('/contacto')}>Solicitar información →</a>
+      <a class="button button-primary button-small" href={withBase('/contacto')}>Solicitar demo</a>
       <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-controls="main-nav" aria-expanded="false">☰</button>
     </div>
   </div>

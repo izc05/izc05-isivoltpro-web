@@ -1,7 +1,6 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
 import ToolsProductShowcase from '../../components/ToolsProductShowcase.astro';
-import ToolsLiveAccess from '../../components/ToolsLiveAccess.astro';
 import { ecosystemAreas, type EcosystemArea } from '../../data/catalog';
 
 export function getStaticPaths() {
@@ -10,11 +9,11 @@ export function getStaticPaths() {
 
 interface Props { area: EcosystemArea; }
 const { area } = Astro.props;
-const isOperationalDemo = area.slug === 'mantenimiento-ot';
+const isNextRelease = area.slug === 'mantenimiento-ot';
 const isInspection = area.slug === 'inspecciones-bt';
 const isToolsProduct = area.slug === 'herramientas-maletines';
 
-const workflow = isOperationalDemo
+const workflow = isNextRelease
   ? [
       ['01 · Aviso', 'Recibir el problema con contexto', 'Cliente, instalación, ubicación, prioridad, instrucciones de acceso, descripción y fotografías desde el primer registro.'],
       ['02 · Coordinar', 'Asignar y hacer seguimiento', 'Administración y coordinación comparten estados, técnico responsable, próxima actuación, materiales y trazabilidad.'],
@@ -38,10 +37,7 @@ const workflow = isOperationalDemo
 
 <PageLayout title={area.name} description={area.description}>
   {isToolsProduct ? (
-    <>
-      <ToolsLiveAccess />
-      <ToolsProductShowcase area={area} />
-    </>
+    <ToolsProductShowcase area={area} />
   ) : (
     <>
       <section class="detail-hero">
@@ -50,56 +46,36 @@ const workflow = isOperationalDemo
             <span class="page-kicker">{area.code} · Ecosistema IsiVoltPro</span>
             <h1>{area.name}</h1>
             <p class="lead">{area.description}</p>
-            <div class="detail-meta">
-              <span class="detail-chip">Estado: {area.status}</span>
-              <span class="detail-chip">Para: {area.audience}</span>
-            </div>
+            <div class="detail-meta"><span class="detail-chip">Estado: {area.status}</span><span class="detail-chip">Para: {area.audience}</span></div>
             <div class="hero-actions">
-              {isOperationalDemo ? (
-                <a class="button button-primary" href="/contacto">Solicitar información →</a>
-              ) : (
-                <a class="button button-primary" href="/contacto">Seguir su desarrollo →</a>
-              )}
+              <a class="button button-primary" href="/contacto">{isNextRelease ? 'Seguir la próxima publicación →' : 'Seguir su desarrollo →'}</a>
               <a class="button button-secondary" href="/aplicaciones">Volver al catálogo</a>
             </div>
           </div>
-          <aside class="detail-panel reveal">
-            <p class="eyebrow">Funciones principales</p>
-            <h2>Diseñada para resolver tareas concretas</h2>
-            <ul>{area.highlights.map((highlight) => <li>{highlight}</li>)}</ul>
-          </aside>
+          <aside class="detail-panel reveal"><p class="eyebrow">Funciones principales</p><h2>Diseñada para resolver tareas concretas</h2><ul>{area.highlights.map((highlight) => <li>{highlight}</li>)}</ul></aside>
         </div>
       </section>
 
       <section class="section">
         <div class="container content-split">
           <div class="content-sticky reveal">
-            <p class="eyebrow">{isOperationalDemo || isInspection ? 'Flujo de trabajo' : 'Enfoque de producto'}</p>
-            <h2>{isOperationalDemo ? 'De la incidencia al cierre documentado' : isInspection ? 'De los datos de la instalación al informe' : 'Del problema técnico a una herramienta sencilla'}</h2>
-            <p class="lead">{isOperationalDemo
-              ? 'La información acompaña a la orden durante todo su recorrido y queda disponible para coordinación, técnico y futuras actuaciones.'
+            <p class="eyebrow">{isNextRelease || isInspection ? 'Flujo de trabajo' : 'Enfoque de producto'}</p>
+            <h2>{isNextRelease ? 'De la incidencia al cierre documentado' : isInspection ? 'De los datos de la instalación al informe' : 'Del problema técnico a una herramienta sencilla'}</h2>
+            <p class="lead">{isNextRelease
+              ? 'OT será la siguiente aplicación que se publicará. Conectará avisos, coordinación, técnicos, evidencias y cierre sin perder el contexto de la intervención.'
               : isInspection
                 ? 'La inspección se divide en pasos claros para evitar omisiones y convertir el trabajo de campo en un informe coherente.'
                 : 'La aplicación se construirá a partir de situaciones reales, reduciendo pasos y mostrando solamente la información necesaria en cada momento.'}</p>
           </div>
-          <div class="feature-list">
-            {workflow.map((step) => (
-              <article class="feature-row reveal"><span>{step[0]}</span><h3>{step[1]}</h3><p>{step[2]}</p></article>
-            ))}
-          </div>
+          <div class="feature-list">{workflow.map((step) => <article class="feature-row reveal"><span>{step[0]}</span><h3>{step[1]}</h3><p>{step[2]}</p></article>)}</div>
         </div>
       </section>
 
       <section class="section section-soft">
         <div class="container">
           <div class="cta reveal">
-            <div>
-              <h2>{isOperationalDemo ? 'IsiVoltPro OT dispone de una demo operativa' : 'Esta herramienta forma parte del roadmap'}</h2>
-              <p>{isOperationalDemo
-                ? 'Continúa evolucionando con fichas más visuales, zona móvil para técnicos, evidencias, informes e integración con el resto del ecosistema.'
-                : 'El catálogo crecerá de forma progresiva, manteniendo una experiencia común y una arquitectura ordenada.'}</p>
-            </div>
-            <a class="button button-dark" href={isOperationalDemo ? '/contacto' : '/ecosistema'}>{isOperationalDemo ? 'Hablar del proyecto →' : 'Explorar ecosistema →'}</a>
+            <div><h2>{isNextRelease ? 'IsiVoltPro OT será la siguiente pieza publicada' : 'Esta herramienta forma parte del roadmap'}</h2><p>{isNextRelease ? 'La base funcional ya existe y continuará evolucionando antes de abrir su publicación: zona móvil, evidencias, informes, permisos e integración con Herramientas QR/NFC.' : 'El catálogo crecerá de forma progresiva, manteniendo una experiencia común y una arquitectura ordenada.'}</p></div>
+            <a class="button button-dark" href={isNextRelease ? '/contacto' : '/ecosistema'}>{isNextRelease ? 'Conocer el avance de OT →' : 'Explorar ecosistema →'}</a>
           </div>
         </div>
       </section>
