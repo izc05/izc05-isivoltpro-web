@@ -9,6 +9,7 @@ import Footer from '../components/Footer.astro';
 import PrivacyCenter from '../components/PrivacyCenter.astro';
 import PremiumMotion from '../components/PremiumMotion.astro';
 import AppDeviceVisual from '../components/AppDeviceVisual.astro';
+import EcosystemRoadmap from '../components/EcosystemRoadmap.astro';
 import { brand } from '../data/brand';
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
@@ -31,12 +32,12 @@ const workflow = [
 ];
 
 const applications = [
-  { icon: '▣', name: 'Herramientas QR/NFC', copy: 'Inventario, préstamos y trazabilidad.', status: 'Disponible', live: true, href: '/aplicaciones/herramientas-maletines' },
-  { icon: '⌑', name: 'IsiVoltPro OT', copy: 'Avisos y órdenes de trabajo.', status: 'En desarrollo', href: '/aplicaciones/mantenimiento-ot' },
+  { icon: '▣', name: 'Herramientas QR/NFC', copy: 'Inventario, préstamos y trazabilidad.', status: 'Publicada', live: true, href: '/aplicaciones/herramientas-maletines' },
+  { icon: '⌑', name: 'IsiVoltPro OT', copy: 'Avisos, órdenes y técnicos.', status: 'Próxima publicación', next: true, href: '/aplicaciones/mantenimiento-ot' },
   { icon: '✓', name: 'Inspecciones BT', copy: 'Mediciones, defectos e informes.', status: 'En desarrollo', href: '/aplicaciones/inspecciones-bt' },
-  { icon: '▤', name: 'RITE', copy: 'Instalaciones térmicas y climatización.', status: 'Próximamente', href: '/aplicaciones/climatizacion-rite' },
-  { icon: '♨', name: 'PCI', copy: 'Equipos, revisiones y mantenimientos.', status: 'Próximamente', href: '/aplicaciones/pci' },
-  { icon: '◯', name: 'Legionella', copy: 'Controles, muestras y registros.', status: 'Próximamente', href: '/aplicaciones/legionella-agua' }
+  { icon: '▤', name: 'RITE', copy: 'Instalaciones térmicas y climatización.', status: 'Planificado', href: '/aplicaciones/climatizacion-rite' },
+  { icon: '♨', name: 'PCI', copy: 'Equipos, revisiones y mantenimientos.', status: 'Planificado', href: '/aplicaciones/pci' },
+  { icon: '◯', name: 'Legionella', copy: 'Controles, muestras y registros.', status: 'Planificado', href: '/aplicaciones/legionella-agua' }
 ];
 
 const resources = [
@@ -108,15 +109,11 @@ const structuredData = {
 
       <section class="pv12-section is-soft">
         <div class="container">
-          <div class="pv12-section-head" data-premium-reveal>
-            <h2>Todo el mantenimiento en un solo ecosistema</h2>
-          </div>
+          <div class="pv12-section-head" data-premium-reveal><h2>Todo el mantenimiento en un solo ecosistema</h2></div>
           <div class="pv12-solution-grid">
             {solutions.map((item, index) => (
               <article class="pv12-solution-card" data-premium-reveal style={`transition-delay:${index * 70}ms`}>
-                <span class="pv12-card-icon">{item.icon}</span>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
+                <span class="pv12-card-icon">{item.icon}</span><h3>{item.title}</h3><p>{item.text}</p>
               </article>
             ))}
           </div>
@@ -129,9 +126,7 @@ const structuredData = {
           <div class="pv12-workflow">
             {workflow.map((item, index) => (
               <article class="pv12-workflow-item" data-premium-reveal style={`transition-delay:${index * 90}ms`}>
-                <span class="pv12-workflow-number">{index + 1}</span>
-                <span class="pv12-workflow-icon">{item.icon}</span>
-                <div><h3>{item.title}</h3><p>{item.text}</p></div>
+                <span class="pv12-workflow-number">{index + 1}</span><span class="pv12-workflow-icon">{item.icon}</span><div><h3>{item.title}</h3><p>{item.text}</p></div>
               </article>
             ))}
           </div>
@@ -142,16 +137,11 @@ const structuredData = {
         <div class="container">
           <div class="pv12-feature-band" data-premium-reveal>
             <div class="pv12-feature-copy">
-              <span class="pv12-feature-label">Primera pieza operativa</span>
+              <span class="pv12-feature-label">Primera aplicación publicada</span>
               <h2>Herramientas QR/NFC</h2>
               <p>La aplicación real de IsiVoltPro para inventario, responsables, préstamos, devoluciones, etiquetas e historial completo.</p>
               <ul class="pv12-feature-list">
-                <li>Inventario de herramientas y equipos</li>
-                <li>Identificación mediante QR y NFC</li>
-                <li>Asignación a técnicos y responsables</li>
-                <li>Historial y auditoría de movimientos</li>
-                <li>Préstamos y devoluciones controladas</li>
-                <li>Base preparada para crecer hacia OT</li>
+                <li>Inventario de herramientas y equipos</li><li>Identificación mediante QR y NFC</li><li>Asignación a técnicos y responsables</li><li>Historial y auditoría de movimientos</li><li>Préstamos y devoluciones controladas</li><li>Base preparada para conectar con OT</li>
               </ul>
               <a class="button button-dark" href={withBase('/aplicaciones/herramientas-maletines')}>Explorar Herramientas QR/NFC →</a>
             </div>
@@ -160,36 +150,31 @@ const structuredData = {
         </div>
       </section>
 
-      <section class="pv12-section is-soft">
+      <section class="pv12-section is-soft"><div class="container"><EcosystemRoadmap /></div></section>
+
+      <section class="pv12-section">
         <div class="container">
           <div class="pv12-section-head" data-premium-reveal>
             <h2>Aplicaciones que forman el ecosistema</h2>
-            <p>Empieza por la pieza que necesitas y conecta nuevas capacidades cuando tu operación crezca.</p>
+            <p>Herramientas QR/NFC es la primera publicación. IsiVoltPro OT será la siguiente pieza y el resto crecerá por especialidades.</p>
           </div>
           <div class="pv12-app-grid">
             {applications.map((app, index) => (
-              <a class:list={['pv12-app-card', app.live && 'is-live']} href={withBase(app.href)} data-premium-reveal style={`transition-delay:${index * 55}ms`}>
-                <span class="pv12-app-icon">{app.icon}</span>
-                <h3>{app.name}</h3>
-                <p>{app.copy}</p>
-                <span class:list={['pv12-app-status', app.live && 'is-live']}>{app.status}</span>
+              <a class:list={['pv12-app-card', app.live && 'is-live', app.next && 'is-next']} href={withBase(app.href)} data-premium-reveal style={`transition-delay:${index * 55}ms`}>
+                <span class="pv12-app-icon">{app.icon}</span><h3>{app.name}</h3><p>{app.copy}</p><span class:list={['pv12-app-status', app.live && 'is-live', app.next && 'is-next']}>{app.status}</span>
               </a>
             ))}
           </div>
         </div>
       </section>
 
-      <section class="pv12-section">
+      <section class="pv12-section is-soft">
         <div class="container">
-          <div class="pv12-section-head" data-premium-reveal>
-            <h2>Novedades y recursos</h2>
-            <p>Contenido técnico para acompañar la digitalización del mantenimiento y las instalaciones.</p>
-          </div>
+          <div class="pv12-section-head" data-premium-reveal><h2>Novedades y recursos</h2><p>Contenido técnico para acompañar la digitalización del mantenimiento y las instalaciones.</p></div>
           <div class="pv12-resource-grid">
             {resources.map((resource, index) => (
               <a class="pv12-resource-card" href={withBase('/recursos')} data-premium-reveal style={`transition-delay:${index * 55}ms`}>
-                <div class="pv12-resource-art">{resource.art}</div>
-                <div class="pv12-resource-body"><h3>{resource.title}</h3><p>{resource.meta}</p></div>
+                <div class="pv12-resource-art">{resource.art}</div><div class="pv12-resource-body"><h3>{resource.title}</h3><p>{resource.meta}</p></div>
               </a>
             ))}
           </div>
@@ -199,29 +184,19 @@ const structuredData = {
       <section class="pv12-section" style="padding-top:0">
         <div class="container">
           <div class="pv12-server-banner" data-premium-reveal>
-            <span class="pv12-server-icon">▤</span>
-            <div><h2>Tu información, en tu servidor y tu dominio</h2><p>IsiVoltPro está preparado para funcionar en infraestructura propia, con control de acceso, copias y publicación segura.</p></div>
-            <a class="button button-primary" href={withBase('/contacto')}>Solicitar demo</a>
+            <span class="pv12-server-icon">▤</span><div><h2>Tu información, en tu servidor y tu dominio</h2><p>IsiVoltPro está preparado para funcionar en infraestructura propia, con control de acceso, copias y publicación segura.</p></div><a class="button button-primary" href={withBase('/contacto')}>Solicitar demo</a>
           </div>
         </div>
       </section>
     </main>
 
-    <Footer />
-    <PrivacyCenter />
-    <PremiumMotion />
+    <Footer /><PrivacyCenter /><PremiumMotion />
 
     <script is:inline>
       const toggle = document.querySelector('.menu-toggle');
       const nav = document.querySelector('.nav-links');
-      toggle?.addEventListener('click', () => {
-        const open = nav?.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', String(Boolean(open)));
-      });
-      nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-        nav.classList.remove('open');
-        toggle?.setAttribute('aria-expanded', 'false');
-      }));
+      toggle?.addEventListener('click', () => { const open = nav?.classList.toggle('open'); toggle.setAttribute('aria-expanded', String(Boolean(open))); });
+      nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => { nav.classList.remove('open'); toggle?.setAttribute('aria-expanded', 'false'); }));
     </script>
   </body>
 </html>
