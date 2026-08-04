@@ -24,11 +24,11 @@ export const ecosystemAreas: EcosystemArea[] = [
   },
   {
     slug: 'mantenimiento-ot', code: 'OT', name: 'IsiVoltPro OT', family: 'Operaciones',
-    short: 'Avisos, órdenes, técnicos, instalaciones, evidencias e informes.',
-    description: 'Organiza el ciclo completo del mantenimiento: aviso, prioridad, asignación, intervención, materiales, evidencias, cierre e historial.',
+    short: 'Clientes, instalaciones, órdenes, técnicos, estados y auditoría.',
+    description: 'Organiza avisos y órdenes de trabajo con clientes, instalaciones, asignación, seguimiento, zona móvil del técnico y auditoría cronológica. El cierre documentado seguirá ampliándose por fases.',
     status: 'Operativa', audience: 'Coordinación, responsables de mantenimiento y técnicos de campo',
-    highlights: ['Correctivos y preventivos', 'Asignación y seguimiento', 'Fotos, checklist y firmas', 'Informe y auditoría'],
-    previewLabel: 'Estado actual', previewValue: 'Operativa', previewItems: ['Avisos y prioridades', 'Zona móvil del técnico', 'Cierre documentado']
+    highlights: ['Clientes e instalaciones', 'Asignación y estados operativos', 'Zona móvil del técnico', 'Auditoría cronológica'],
+    previewLabel: 'Estado actual', previewValue: 'Operativa', previewItems: ['Panel central de coordinación', 'Zona móvil del técnico', 'Estados y seguimiento']
   },
   {
     slug: 'inventario-almacen', code: 'AL', name: 'Inventario y almacén', family: 'Recursos',
