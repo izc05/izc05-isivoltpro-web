@@ -1,5 +1,6 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
+import EcosystemRoadmap from '../../components/EcosystemRoadmap.astro';
 import { ecosystemAreas } from '../../data/catalog';
 ---
 
@@ -10,16 +11,13 @@ import { ecosystemAreas } from '../../data/catalog';
         <span class="page-kicker">Catálogo de productos</span>
         <h1>Herramientas creadas para el <span class="accent">trabajo técnico real</span></h1>
         <p class="lead">Aplicaciones especializadas para gestionar mantenimiento, controlar recursos, inspeccionar, calcular, documentar y tomar mejores decisiones.</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#aplicaciones">Ver aplicaciones →</a>
-          <a class="button button-secondary" href="/ecosistema">Cómo encajan en el ecosistema</a>
-        </div>
+        <div class="hero-actions"><a class="button button-primary" href="#aplicaciones">Ver aplicaciones →</a><a class="button button-secondary" href="/ecosistema">Cómo encajan en el ecosistema</a></div>
       </div>
       <div class="page-visual reveal">
         <div class="page-visual-grid">
-          <div class="page-visual-card"><span>Demo operativa</span><strong>IsiVoltPro OT</strong></div>
-          <div class="page-visual-card"><span>En desarrollo</span><strong>Inventario y herramientas</strong></div>
-          <div class="page-visual-card"><span>En desarrollo</span><strong>Inspecciones BT</strong></div>
+          <div class="page-visual-card"><span>Publicada</span><strong>Herramientas QR/NFC</strong></div>
+          <div class="page-visual-card"><span>Siguiente publicación</span><strong>IsiVoltPro OT</strong></div>
+          <div class="page-visual-card"><span>En desarrollo</span><strong>Inspecciones y activos</strong></div>
           <div class="page-visual-card"><span>Planificado</span><strong>Especialidades técnicas</strong></div>
         </div>
       </div>
@@ -30,15 +28,13 @@ import { ecosystemAreas } from '../../data/catalog';
     <div class="container">
       <div class="catalog-toolbar reveal">
         <div><p class="eyebrow">Modular y escalable</p><h2>Aplicaciones de IsiVoltPro</h2></div>
-        <p class="lead">Los estados muestran la situación real de cada idea: demo operativa, desarrollo activo o planificación. Las cifras de las vistas son ejemplos visuales.</p>
+        <p class="lead">Los estados muestran la situación real: Herramientas QR/NFC ya está publicada, OT será la siguiente pieza y el resto crecerá por etapas.</p>
       </div>
       <div class="catalog-list">
-        {ecosystemAreas.map((area, index) => (
-          <article class:list={['catalog-card', 'reveal', { featured: index === 0 }]}>
-            <span class:list={['status', { available: area.slug === 'mantenimiento-ot' }]}>{area.status}</span>
-            <div class="icon-box">{area.code}</div>
-            <h3>{area.name}</h3>
-            <p>{area.description}</p>
+        {ecosystemAreas.map((area) => (
+          <article class:list={['catalog-card','reveal',{featured:area.status==='Publicada'}]}>
+            <span class:list={['status',{available:area.status==='Publicada'}]}>{area.status}</span>
+            <div class="icon-box">{area.code}</div><h3>{area.name}</h3><p>{area.description}</p>
             <a class="card-link" href={`/aplicaciones/${area.slug}`}>Ver aplicación →</a>
           </article>
         ))}
@@ -46,13 +42,11 @@ import { ecosystemAreas } from '../../data/catalog';
     </div>
   </section>
 
-  <section class="section section-soft">
+  <section class="section section-soft"><div class="container"><EcosystemRoadmap /></div></section>
+
+  <section class="section">
     <div class="container">
-      <div class="section-heading reveal">
-        <p class="eyebrow">Principios del producto</p>
-        <h2>Qué debe tener cualquier aplicación IsiVoltPro</h2>
-        <p class="lead">Una experiencia profesional, simple en campo y preparada para crecer.</p>
-      </div>
+      <div class="section-heading reveal"><p class="eyebrow">Principios del producto</p><h2>Qué debe tener cualquier aplicación IsiVoltPro</h2><p class="lead">Una experiencia profesional, simple en campo y preparada para crecer.</p></div>
       <div class="maintenance-grid">
         <article class="maintenance-item reveal"><div class="icon-box">UX</div><h3>Fácil de usar</h3><p>Menos pasos y decisiones claras.</p></article>
         <article class="maintenance-item reveal"><div class="icon-box">M</div><h3>Móvil primero</h3><p>Diseñada para trabajar en campo.</p></article>
