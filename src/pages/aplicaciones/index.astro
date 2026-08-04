@@ -2,6 +2,8 @@
 import PageLayout from '../../layouts/PageLayout.astro';
 import EcosystemRoadmap from '../../components/EcosystemRoadmap.astro';
 import { ecosystemAreas } from '../../data/catalog';
+
+const isOperational = (status: string) => status === 'Operativa' || status === 'Publicada';
 ---
 
 <PageLayout title="Aplicaciones" description="Catálogo de aplicaciones y herramientas del ecosistema IsiVoltPro.">
@@ -15,8 +17,8 @@ import { ecosystemAreas } from '../../data/catalog';
       </div>
       <div class="page-visual reveal">
         <div class="page-visual-grid">
-          <div class="page-visual-card"><span>Publicada</span><strong>Herramientas QR/NFC</strong></div>
-          <div class="page-visual-card"><span>Siguiente publicación</span><strong>IsiVoltPro OT</strong></div>
+          <div class="page-visual-card"><span>Operativa</span><strong>Herramientas QR/NFC</strong></div>
+          <div class="page-visual-card"><span>Operativa</span><strong>IsiVoltPro OT</strong></div>
           <div class="page-visual-card"><span>En desarrollo</span><strong>Inspecciones y activos</strong></div>
           <div class="page-visual-card"><span>Planificado</span><strong>Especialidades técnicas</strong></div>
         </div>
@@ -28,12 +30,12 @@ import { ecosystemAreas } from '../../data/catalog';
     <div class="container">
       <div class="catalog-toolbar reveal">
         <div><p class="eyebrow">Modular y escalable</p><h2>Aplicaciones de IsiVoltPro</h2></div>
-        <p class="lead">Los estados muestran la situación real: Herramientas QR/NFC ya está publicada, OT será la siguiente pieza y el resto crecerá por etapas.</p>
+        <p class="lead">Herramientas QR/NFC e IsiVoltPro OT ya están operativas. El resto del catálogo seguirá creciendo por etapas y especialidades.</p>
       </div>
       <div class="catalog-list">
         {ecosystemAreas.map((area) => (
-          <article class:list={['catalog-card','reveal',{featured:area.status==='Publicada'}]}>
-            <span class:list={['status',{available:area.status==='Publicada'}]}>{area.status}</span>
+          <article class:list={['catalog-card','reveal',{featured:isOperational(area.status)}]}>
+            <span class:list={['status',{available:isOperational(area.status)}]}>{area.status}</span>
             <div class="icon-box">{area.code}</div><h3>{area.name}</h3><p>{area.description}</p>
             <a class="card-link" href={`/aplicaciones/${area.slug}`}>Ver aplicación →</a>
           </article>
