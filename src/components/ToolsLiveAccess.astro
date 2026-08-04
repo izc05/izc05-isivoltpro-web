@@ -23,6 +23,21 @@ const fallbackUrl = 'https://izc05.github.io/ISIVOLT-Herramientas-QR/';
   </div>
 </section>
 
+<script is:inline>
+  const galleryTitle = document.querySelector('.tools-gallery-section .section-heading h2');
+  const galleryText = document.querySelector('.tools-gallery-section .section-heading p:last-child');
+  const previewCaption = document.querySelector('.tools-preview-caption');
+  const publicLinkStatus = document.querySelector('.tools-roadmap-status span:nth-child(5)');
+
+  if (galleryTitle) galleryTitle.textContent = 'Capturas reales en preparación';
+  if (galleryText) galleryText.textContent = 'La demo ya está publicada. El siguiente paso es capturar la versión correcta del panel, listado, ficha QR/NFC, préstamos, técnicos e historial para sustituir la recreación temporal.';
+  if (previewCaption) previewCaption.innerHTML = '<span>Vista recreada</span> de la interfaz. La demo real puede abrirse desde el acceso superior y esta imagen se sustituirá por capturas verificadas.';
+  if (publicLinkStatus) {
+    publicLinkStatus.classList.add('done');
+    publicLinkStatus.innerHTML = '<i>✓</i> Demo pública disponible';
+  }
+</script>
+
 <style>
   .tools-live-access{position:relative;z-index:4;padding:1rem 0 1.15rem;background:#041326;color:#fff;border-bottom:1px solid rgba(255,255,255,.1)}
   .tools-live-inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
@@ -38,7 +53,6 @@ const fallbackUrl = 'https://izc05.github.io/ISIVOLT-Herramientas-QR/';
   .tools-live-note{display:flex;gap:.6rem;margin-top:.8rem;color:#8094aa;font-size:.68rem;line-height:1.45}
   .tools-live-note strong{color:#d7e0ea;white-space:nowrap}
   :global(.tools-link-note){display:none}
-  :global(.tools-roadmap-status span:nth-child(5)){display:none}
   @media(max-width:880px){.tools-live-inner{align-items:flex-start;flex-direction:column}.tools-live-actions{width:100%}.tools-live-actions .button{flex:1;text-align:center}.tools-live-copy{align-items:flex-start}.tools-live-status{margin-top:.1rem}}
   @media(max-width:600px){.tools-live-copy{flex-direction:column;gap:.7rem}.tools-live-actions{align-items:stretch;flex-direction:column}.tools-live-secondary{text-align:center;border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:.7rem}.tools-live-note{flex-direction:column;gap:.2rem}}
 </style>
