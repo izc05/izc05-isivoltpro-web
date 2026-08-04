@@ -1,6 +1,7 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import AppDeviceVisual from '../components/AppDeviceVisual.astro';
+import EcosystemRoadmap from '../components/EcosystemRoadmap.astro';
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
@@ -30,88 +31,30 @@ const benefits = [
         <p class="eyebrow">Ecosistema IsiVoltPro</p>
         <h1>Un ecosistema completo para el <span class="accent">mantenimiento técnico</span></h1>
         <p class="lead">IsiVoltPro conecta operaciones, activos, técnicos, inspecciones, herramientas y conocimiento técnico en una única base digital. Empieza por una pieza y amplía sin perder el trabajo ya realizado.</p>
-        <div class="pv12-hero-actions">
-          <a class="button button-primary" href={withBase('/aplicaciones')}>Ver aplicaciones →</a>
-          <a class="button button-secondary" href={withBase('/contacto')}>Solicitar demo</a>
-        </div>
-        <div class="pv12-pill-row">
-          <span class="pv12-pill">◇ Todo conectado</span>
-          <span class="pv12-pill">◉ Datos en tiempo real</span>
-          <span class="pv12-pill">✓ Escalable y seguro</span>
-        </div>
+        <div class="pv12-hero-actions"><a class="button button-primary" href={withBase('/aplicaciones')}>Ver aplicaciones →</a><a class="button button-secondary" href={withBase('/contacto')}>Solicitar demo</a></div>
+        <div class="pv12-pill-row"><span class="pv12-pill">◇ Todo conectado</span><span class="pv12-pill">◉ Datos en tiempo real</span><span class="pv12-pill">✓ Escalable y seguro</span></div>
       </div>
 
       <div class="pv12-network" data-premium-reveal data-parallax-root aria-label="Mapa visual del ecosistema IsiVoltPro">
         <div class="pv12-network-lines" aria-hidden="true"></div>
         <div class="pv12-network-core" data-parallax=".5"><div><b>I</b><strong>IsiVoltPro</strong></div></div>
-        <a class="pv12-network-node node-a" href={withBase('/aplicaciones/herramientas-maletines')} data-parallax="1.3"><i>▦</i><span><strong>Herramientas QR/NFC</strong><small>Disponible</small></span></a>
+        <a class="pv12-network-node node-a" href={withBase('/aplicaciones/herramientas-maletines')} data-parallax="1.3"><i>▦</i><span><strong>Herramientas QR/NFC</strong><small>Publicada</small></span></a>
         <a class="pv12-network-node node-b" href={withBase('/aplicaciones/activos-qr-nfc')} data-parallax="1.1"><i>◇</i><span><strong>Activos</strong><small>Identidad e historial</small></span></a>
         <a class="pv12-network-node node-c" href={withBase('/aplicaciones/documentacion-tecnica')} data-parallax="1.5"><i>▤</i><span><strong>Documentación</strong><small>Planos e informes</small></span></a>
-        <a class="pv12-network-node node-d" href={withBase('/aplicaciones/mantenimiento-ot')} data-parallax="1.4"><i>⚙</i><span><strong>IsiVoltPro OT</strong><small>En desarrollo</small></span></a>
+        <a class="pv12-network-node node-d" href={withBase('/aplicaciones/mantenimiento-ot')} data-parallax="1.4"><i>OT</i><span><strong>IsiVoltPro OT</strong><small>Siguiente publicación</small></span></a>
         <a class="pv12-network-node node-e" href={withBase('/aplicaciones/inspecciones-bt')} data-parallax="1.1"><i>✓</i><span><strong>Inspecciones BT</strong><small>Medición y evidencia</small></span></a>
         <a class="pv12-network-node node-f" href={withBase('/aplicaciones/climatizacion-rite')} data-parallax="1.55"><i>▥</i><span><strong>RITE y especialidades</strong><small>Flujos técnicos</small></span></a>
       </div>
     </div>
   </section>
 
-  <section class="pv12-section is-soft">
-    <div class="container">
-      <div class="pv12-section-head" data-premium-reveal>
-        <p class="eyebrow">Cómo se conecta todo</p>
-        <h2>La información acompaña al trabajo de principio a fin</h2>
-      </div>
-      <div class="pv12-flow-grid">
-        {flow.map((item, index) => (
-          <article class="pv12-flow-card" data-premium-reveal style={`transition-delay:${index * 70}ms`}>
-            <b>{index + 1}</b><h3>{item.icon} {item.title}</h3><p>{item.text}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
+  <section class="pv12-section is-soft"><div class="container"><div class="pv12-section-head" data-premium-reveal><p class="eyebrow">Cómo se conecta todo</p><h2>La información acompaña al trabajo de principio a fin</h2></div><div class="pv12-flow-grid">{flow.map((item,index)=><article class="pv12-flow-card" data-premium-reveal style={`transition-delay:${index*70}ms`}><b>{index+1}</b><h3>{item.icon} {item.title}</h3><p>{item.text}</p></article>)}</div></div></section>
 
-  <section class="pv12-section">
-    <div class="container">
-      <div class="pv12-section-head" data-premium-reveal><h2>Qué aporta el ecosistema</h2></div>
-      <div class="pv12-benefit-grid">
-        {benefits.map((item, index) => (
-          <article class="pv12-benefit-card" data-premium-reveal style={`transition-delay:${index * 55}ms`}>
-            <i>{item.icon}</i><h3>{item.title}</h3><p>{item.text}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
+  <section class="pv12-section"><div class="container"><div class="pv12-section-head" data-premium-reveal><h2>Qué aporta el ecosistema</h2></div><div class="pv12-benefit-grid">{benefits.map((item,index)=><article class="pv12-benefit-card" data-premium-reveal style={`transition-delay:${index*55}ms`}><i>{item.icon}</i><h3>{item.title}</h3><p>{item.text}</p></article>)}</div></div></section>
 
-  <section class="pv12-section" style="padding-top:0">
-    <div class="container">
-      <div class="pv12-eco-highlight" data-premium-reveal>
-        <div class="pv12-eco-highlight-copy">
-          <p class="eyebrow" style="color:#5fe0ef">Primera pieza real del ecosistema</p>
-          <h2>Herramientas QR/NFC</h2>
-          <p>La primera aplicación funcional de IsiVoltPro ya controla inventario, técnicos, préstamos, devoluciones, etiquetas QR/NFC e historial de movimientos.</p>
-          <ul class="pv12-feature-list">
-            <li>Inventario de herramientas y equipos</li>
-            <li>Préstamos y devoluciones con historial</li>
-            <li>Etiquetado y trazabilidad QR/NFC</li>
-            <li>Rutas de trabajo y verificaciones</li>
-            <li>Preparada para crecer con más módulos</li>
-            <li>Integrada en la identidad IsiVoltPro</li>
-          </ul>
-          <a class="button button-dark" href={withBase('/aplicaciones/herramientas-maletines')}>Explorar Herramientas QR/NFC →</a>
-        </div>
-        <AppDeviceVisual compact={true} showMetrics={false} />
-      </div>
-    </div>
-  </section>
+  <section class="pv12-section" style="padding-top:0"><div class="container"><div class="pv12-eco-highlight" data-premium-reveal><div class="pv12-eco-highlight-copy"><p class="eyebrow" style="color:#5fe0ef">Primera aplicación publicada</p><h2>Herramientas QR/NFC</h2><p>La primera aplicación funcional de IsiVoltPro ya controla inventario, técnicos, préstamos, devoluciones, etiquetas QR/NFC e historial de movimientos.</p><ul class="pv12-feature-list"><li>Inventario de herramientas y equipos</li><li>Préstamos y devoluciones con historial</li><li>Etiquetado y trazabilidad QR/NFC</li><li>Rutas de trabajo y verificaciones</li><li>Preparada para crecer con más módulos</li><li>Integrada en la identidad IsiVoltPro</li></ul><a class="button button-dark" href={withBase('/aplicaciones/herramientas-maletines')}>Explorar Herramientas QR/NFC →</a></div><AppDeviceVisual compact={true} showMetrics={false} /></div></div></section>
 
-  <section class="pv12-section is-soft">
-    <div class="container">
-      <div class="pv12-final-cta" data-premium-reveal>
-        <span class="pv12-final-cta-icon">↗</span>
-        <div><h2>Empieza hoy. Escala mañana.</h2><p>Activa la pieza que necesitas y crece con un ecosistema diseñado para conectar personas, instalaciones y conocimiento.</p></div>
-        <a class="button button-primary" href={withBase('/contacto')}>Solicitar demo personalizada</a>
-      </div>
-    </div>
-  </section>
+  <section class="pv12-section is-soft"><div class="container"><EcosystemRoadmap title="Herramientas abre el camino. OT será la siguiente publicación." /></div></section>
+
+  <section class="pv12-section"><div class="container"><div class="pv12-final-cta" data-premium-reveal><span class="pv12-final-cta-icon">↗</span><div><h2>Empieza hoy. Escala mañana.</h2><p>Activa la pieza que necesitas y crece con un ecosistema diseñado para conectar personas, instalaciones y conocimiento.</p></div><a class="button button-primary" href={withBase('/contacto')}>Solicitar demo personalizada</a></div></div></section>
 </PageLayout>
