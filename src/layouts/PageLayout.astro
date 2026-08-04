@@ -6,9 +6,11 @@ import '../styles/catalog-refinements.css';
 import '../styles/site-structure-v10.css';
 import '../styles/privacy-security-polish.css';
 import '../styles/production-readiness-v10-3.css';
+import '../styles/premium-redesign-v12.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import PrivacyCenter from '../components/PrivacyCenter.astro';
+import PremiumMotion from '../components/PremiumMotion.astro';
 import { brand } from '../data/brand';
 
 interface Props {
@@ -61,6 +63,7 @@ const structuredData = {
     <main id="contenido"><slot /></main>
     <Footer />
     <PrivacyCenter />
+    <PremiumMotion />
     <script is:inline>
       const toggle = document.querySelector('.menu-toggle');
       const nav = document.querySelector('.nav-links');
