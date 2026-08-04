@@ -31,12 +31,12 @@ export const ecosystemAreas: EcosystemArea[] = [
     previewLabel: 'Referencias', previewValue: '1.248', previewItems: ['Stock bajo: 12', 'Movimientos hoy: 36', 'Almacenes: 4']
   },
   {
-    slug: 'herramientas-maletines', code: 'HM', name: 'Herramientas y maletines', family: 'Recursos',
-    short: 'Asignación, entrega, devolución y trazabilidad de equipos.',
-    description: 'Registra herramientas, maletines, equipos de medida y EPI vinculados a cada técnico mediante QR o NFC.',
-    status: 'En desarrollo', audience: 'Talleres, servicios técnicos y responsables de equipos',
-    highlights: ['Asignación a técnicos', 'Control de entregas', 'Estado y revisiones', 'Identificación QR/NFC'],
-    previewLabel: 'Equipos controlados', previewValue: '386', previewItems: ['Asignados: 291', 'En almacén: 82', 'Revisión pendiente: 13']
+    slug: 'herramientas-maletines', code: 'HM', name: 'Herramientas QR y NFC', family: 'Recursos',
+    short: 'Herramientas, técnicos, préstamos, devoluciones y trazabilidad.',
+    description: 'Gestiona herramientas, maletines, equipos de medida, EPI y otros recursos técnicos con identificación QR/NFC, responsables e historial.',
+    status: 'Demo operativa', audience: 'Almacenes, coordinación, talleres y servicios técnicos',
+    highlights: ['Alta y clasificación', 'Préstamos y devoluciones', 'QR/NFC por equipo', 'Revisiones e historial'],
+    previewLabel: 'Versión actual', previewValue: 'Alpha 7.9', previewItems: ['Instalada en mini PC', 'Modo local operativo', 'Cloud en desarrollo']
   },
   {
     slug: 'activos-qr-nfc', code: 'QR', name: 'Activos QR/NFC', family: 'Operaciones',
