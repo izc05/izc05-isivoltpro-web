@@ -8,25 +8,44 @@ interface Props {
 const {
   compact = false,
   showMetrics = true,
-  label = 'Interfaz real de IsiVoltPro Herramientas QR'
+  label = 'Interfaces reales y demostrativas del ecosistema IsiVoltPro'
 } = Astro.props;
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
-const image = `${base}media/tools-dashboard.svg`;
+const slides = [
+  {
+    image: `${base}media/tools-dashboard.svg`,
+    eyebrow: 'Recursos · Operativa',
+    title: 'Herramientas QR/NFC',
+    alt: 'Centro operativo de IsiVoltPro Herramientas QR y NFC'
+  },
+  {
+    image: `${base}media/ot-dashboard.svg`,
+    eyebrow: 'Operaciones · Operativa',
+    title: 'IsiVoltPro OT',
+    alt: 'Panel operativo de órdenes de trabajo IsiVoltPro OT'
+  },
+  {
+    image: `${base}media/inspections-dashboard.svg`,
+    eyebrow: 'Ingeniería · En desarrollo',
+    title: 'Inspecciones BT',
+    alt: 'Panel de inspecciones eléctricas de baja tensión IsiVoltPro'
+  }
+];
 ---
 
-<div class:list={['pv12-device-scene', compact && 'is-compact']} data-parallax-root aria-label={label}>
+<div class:list={['pv12-device-scene', compact && 'is-compact']} data-parallax-root data-device-carousel aria-label={label}>
   <div class="pv12-device-glow" aria-hidden="true"></div>
 
   {showMetrics && (
     <>
       <div class="pv12-float-metric metric-one" data-parallax="1.8">
-        <span>Herramientas</span><strong>1.248</strong><small>registradas</small>
+        <span>Aplicaciones</span><strong>2</strong><small>operativas</small>
       </div>
       <div class="pv12-float-metric metric-two" data-parallax="2.2">
-        <span>Préstamos</span><strong>32</strong><small>en curso</small>
+        <span>Órdenes</span><strong>Tiempo real</strong><small>coordinación y campo</small>
       </div>
       <div class="pv12-float-metric metric-three" data-parallax="1.45">
-        <span>Técnicos</span><strong>48</strong><small>activos</small>
+        <span>Identificación</span><strong>QR / NFC</strong><small>activos y herramientas</small>
       </div>
     </>
   )}
@@ -35,32 +54,144 @@ const image = `${base}media/tools-dashboard.svg`;
     <div class="pv12-laptop-lid">
       <span class="pv12-camera" aria-hidden="true"></span>
       <div class="pv12-laptop-screen">
-        <img src={image} alt="Centro operativo real de IsiVoltPro Herramientas QR" loading="eager" decoding="async" />
+        <div class="pv13-screen-stack">
+          {slides.map((slide, index) => (
+            <img
+              class:list={['pv13-screen-slide', index === 0 && 'is-active']}
+              src={slide.image}
+              alt={slide.alt}
+              loading={compact || index > 0 ? 'lazy' : 'eager'}
+              decoding="async"
+              data-device-slide={index}
+              aria-hidden={index === 0 ? 'false' : 'true'}
+            />
+          ))}
+          <div class="pv13-screen-caption" aria-live="polite">
+            <i aria-hidden="true"></i>
+            <div><span data-device-eyebrow>{slides[0].eyebrow}</span><strong data-device-title>{slides[0].title}</strong></div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pv12-laptop-base" aria-hidden="true"><span></span></div>
   </div>
 
-  <div class="pv12-phone" data-parallax="1.65" data-scroll-parallax="1.1" aria-label="Vista móvil de ficha de herramienta">
+  <div class="pv12-phone" data-parallax="1.65" data-scroll-parallax="1.1" aria-label="Vista móvil de las aplicaciones IsiVoltPro">
     <div class="pv12-phone-notch" aria-hidden="true"></div>
     <div class="pv12-phone-ui">
-      <div class="pv12-phone-top"><span>‹</span><b>Detalle de herramienta</b><span>•••</span></div>
-      <div class="pv12-tool-illustration" aria-hidden="true">⚒</div>
-      <h3>Taladro percutor 18 V</h3>
-      <div class="pv12-phone-status"><span>HER-000245</span><b>Disponible</b></div>
-      <dl>
-        <div><dt>Categoría</dt><dd>Herramienta eléctrica</dd></div>
-        <div><dt>Ubicación</dt><dd>Almacén principal</dd></div>
-        <div><dt>Responsable</dt><dd>Sin asignar</dd></div>
-      </dl>
-      <button type="button" tabindex="-1">Nuevo préstamo</button>
+      <div class="pv13-phone-slide is-active" data-phone-slide="0">
+        <div class="pv12-phone-top"><span>‹</span><b>Detalle de herramienta</b><span>•••</span></div>
+        <div class="pv12-tool-illustration" aria-hidden="true">⚒</div>
+        <h3>Taladro percutor 18 V</h3>
+        <div class="pv13-phone-code"><span>HER-000245</span><b>Disponible</b></div>
+        <dl>
+          <div><dt>Categoría</dt><dd>Herramienta eléctrica</dd></div>
+          <div><dt>Ubicación</dt><dd>Almacén principal</dd></div>
+          <div><dt>Responsable</dt><dd>Sin asignar</dd></div>
+        </dl>
+        <button type="button" tabindex="-1">Nuevo préstamo</button>
+      </div>
+
+      <div class="pv13-phone-slide" data-phone-slide="1">
+        <div class="pv12-phone-top"><span>‹</span><b>Orden de trabajo</b><span>•••</span></div>
+        <div class="pv12-tool-illustration" aria-hidden="true">OT</div>
+        <h3>Fallo de climatización</h3>
+        <div class="pv13-phone-code"><span>OT-2026-00031</span><b class="is-blue">En curso</b></div>
+        <dl>
+          <div><dt>Prioridad</dt><dd>Urgente</dd></div>
+          <div><dt>Ubicación</dt><dd>Quirófano 3</dd></div>
+          <div><dt>Técnico</dt><dd>Miguel A.</dd></div>
+        </dl>
+        <button type="button" tabindex="-1">Registrar actuación</button>
+      </div>
+
+      <div class="pv13-phone-slide" data-phone-slide="2">
+        <div class="pv12-phone-top"><span>‹</span><b>Inspección BT</b><span>•••</span></div>
+        <div class="pv12-tool-illustration" aria-hidden="true">✓</div>
+        <h3>Centro sanitario</h3>
+        <div class="pv13-phone-code"><span>BT-2026-018</span><b class="is-amber">71%</b></div>
+        <dl>
+          <div><dt>Reglamento</dt><dd>REBT 2002</dd></div>
+          <div><dt>Bloque</dt><dd>Mediciones</dd></div>
+          <div><dt>Defectos</dt><dd>3 registrados</dd></div>
+        </dl>
+        <button type="button" tabindex="-1">Continuar inspección</button>
+      </div>
     </div>
   </div>
 
-  <div class="pv12-nfc-card" data-parallax="2.5" data-scroll-parallax="1.4" aria-label="Etiqueta NFC y QR">
+  <div class="pv12-nfc-card" data-parallax="2.5" data-scroll-parallax="1.4" data-nfc-card aria-label="Etiqueta NFC y QR">
     <span class="pv12-nfc-wave">)))</span>
     <strong>NFC</strong>
     <div class="pv12-qr-pattern" aria-hidden="true"></div>
     <small>ID: HER-000245</small>
   </div>
+
+  <div class="pv13-carousel-controls" aria-label="Cambiar aplicación mostrada">
+    {slides.map((slide, index) => (
+      <button
+        class:list={['pv13-carousel-dot', index === 0 && 'is-active']}
+        type="button"
+        aria-label={`Mostrar ${slide.title}`}
+        aria-pressed={index === 0 ? 'true' : 'false'}
+        data-device-dot={index}
+      ></button>
+    ))}
+  </div>
 </div>
+
+<script is:inline>
+  (() => {
+    if (window.__pv13DeviceCarouselInit) return;
+    window.__pv13DeviceCarouselInit = true;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const labels = [
+      ['Recursos · Operativa', 'Herramientas QR/NFC'],
+      ['Operaciones · Operativa', 'IsiVoltPro OT'],
+      ['Ingeniería · En desarrollo', 'Inspecciones BT']
+    ];
+
+    document.querySelectorAll('[data-device-carousel]').forEach((scene) => {
+      const slides = [...scene.querySelectorAll('[data-device-slide]')];
+      const phoneSlides = [...scene.querySelectorAll('[data-phone-slide]')];
+      const dots = [...scene.querySelectorAll('[data-device-dot]')];
+      const eyebrow = scene.querySelector('[data-device-eyebrow]');
+      const title = scene.querySelector('[data-device-title]');
+      const nfc = scene.querySelector('[data-nfc-card]');
+      let current = 0;
+      let timer;
+
+      const show = (next) => {
+        current = (next + slides.length) % slides.length;
+        slides.forEach((slide, index) => {
+          const active = index === current;
+          slide.classList.toggle('is-active', active);
+          slide.setAttribute('aria-hidden', String(!active));
+        });
+        phoneSlides.forEach((slide, index) => slide.classList.toggle('is-active', index === current));
+        dots.forEach((dot, index) => {
+          const active = index === current;
+          dot.classList.toggle('is-active', active);
+          dot.setAttribute('aria-pressed', String(active));
+        });
+        if (eyebrow) eyebrow.textContent = labels[current][0];
+        if (title) title.textContent = labels[current][1];
+        nfc?.classList.toggle('is-hidden', current !== 0);
+      };
+
+      const stop = () => window.clearInterval(timer);
+      const start = () => {
+        stop();
+        if (!reduced && slides.length > 1) timer = window.setInterval(() => show(current + 1), 4800);
+      };
+
+      dots.forEach((dot, index) => dot.addEventListener('click', () => { show(index); start(); }));
+      scene.addEventListener('mouseenter', stop, { passive: true });
+      scene.addEventListener('mouseleave', start, { passive: true });
+      scene.addEventListener('focusin', stop);
+      scene.addEventListener('focusout', start);
+      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+      start();
+    });
+  })();
+</script>
