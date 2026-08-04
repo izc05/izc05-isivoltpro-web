@@ -1,0 +1,58 @@
+---
+const primaryUrl = 'https://qr.isivoltpro.com/';
+const fallbackUrl = 'https://izc05.github.io/ISIVOLT-Herramientas-QR/';
+---
+
+<section class="tools-live-access" aria-labelledby="tools-live-title">
+  <div class="container tools-live-inner">
+    <div class="tools-live-copy">
+      <span class="tools-live-status"><i></i> Demo publicada</span>
+      <div>
+        <h2 id="tools-live-title">Prueba IsiVoltPro Herramientas QR</h2>
+        <p>El dominio IsiVoltPro es el acceso principal. GitHub Pages queda disponible como publicación alternativa mientras se completa la sincronización cloud.</p>
+      </div>
+    </div>
+    <div class="tools-live-actions">
+      <a class="button button-primary" href={primaryUrl} target="_blank" rel="noopener noreferrer">Abrir demo →</a>
+      <a class="tools-live-secondary" href={fallbackUrl} target="_blank" rel="noopener noreferrer">Versión GitHub Pages</a>
+    </div>
+  </div>
+  <div class="container tools-live-note">
+    <strong>Entorno de validación</strong>
+    <span>Los datos pueden guardarse únicamente en el navegador o corresponder a una versión distinta mientras se actualiza el mini PC. No introduzcas información sensible durante las pruebas.</span>
+  </div>
+</section>
+
+<script is:inline>
+  const galleryTitle = document.querySelector('.tools-gallery-section .section-heading h2');
+  const galleryText = document.querySelector('.tools-gallery-section .section-heading p:last-child');
+  const previewCaption = document.querySelector('.tools-preview-caption');
+  const publicLinkStatus = document.querySelector('.tools-roadmap-status span:nth-child(5)');
+
+  if (galleryTitle) galleryTitle.textContent = 'Capturas reales en preparación';
+  if (galleryText) galleryText.textContent = 'La demo ya está publicada. El siguiente paso es capturar la versión correcta del panel, listado, ficha QR/NFC, préstamos, técnicos e historial para sustituir la recreación temporal.';
+  if (previewCaption) previewCaption.innerHTML = '<span>Vista recreada</span> de la interfaz. La demo real puede abrirse desde el acceso superior y esta imagen se sustituirá por capturas verificadas.';
+  if (publicLinkStatus) {
+    publicLinkStatus.classList.add('done');
+    publicLinkStatus.innerHTML = '<i>✓</i> Demo pública disponible';
+  }
+</script>
+
+<style>
+  .tools-live-access{position:relative;z-index:4;padding:1rem 0 1.15rem;background:#041326;color:#fff;border-bottom:1px solid rgba(255,255,255,.1)}
+  .tools-live-inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
+  .tools-live-copy{display:flex;align-items:center;gap:1rem;min-width:0}
+  .tools-live-copy h2{margin:0;font-size:clamp(1rem,2vw,1.28rem);letter-spacing:-.025em}
+  .tools-live-copy p{margin:.22rem 0 0;max-width:780px;color:#aebed0;font-size:.79rem;line-height:1.5}
+  .tools-live-status{flex:0 0 auto;display:inline-flex;align-items:center;gap:.5rem;padding:.52rem .72rem;border:1px solid rgba(49,214,165,.32);border-radius:999px;background:rgba(49,214,165,.1);color:#8ff2d0;font-size:.7rem;font-weight:900;white-space:nowrap}
+  .tools-live-status i{width:8px;height:8px;border-radius:50%;background:#31d6a5;box-shadow:0 0 0 5px rgba(49,214,165,.13)}
+  .tools-live-actions{display:flex;align-items:center;gap:.75rem;flex:0 0 auto}
+  .tools-live-actions .button{white-space:nowrap}
+  .tools-live-secondary{color:#dce7f3;font-size:.78rem;font-weight:850;text-decoration:none;white-space:nowrap;border-bottom:1px solid rgba(220,231,243,.35);padding:.3rem 0}
+  .tools-live-secondary:hover{color:#fff;border-color:#fff}
+  .tools-live-note{display:flex;gap:.6rem;margin-top:.8rem;color:#8094aa;font-size:.68rem;line-height:1.45}
+  .tools-live-note strong{color:#d7e0ea;white-space:nowrap}
+  :global(.tools-link-note){display:none}
+  @media(max-width:880px){.tools-live-inner{align-items:flex-start;flex-direction:column}.tools-live-actions{width:100%}.tools-live-actions .button{flex:1;text-align:center}.tools-live-copy{align-items:flex-start}.tools-live-status{margin-top:.1rem}}
+  @media(max-width:600px){.tools-live-copy{flex-direction:column;gap:.7rem}.tools-live-actions{align-items:stretch;flex-direction:column}.tools-live-secondary{text-align:center;border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:.7rem}.tools-live-note{flex-direction:column;gap:.2rem}}
+</style>
