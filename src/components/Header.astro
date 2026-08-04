@@ -11,9 +11,53 @@ const withBase = (href: string) => {
   const resolved = `${base}${pathname.replace(/^\/+/, '')}`;
   return hash === undefined ? resolved : `${resolved}#${hash}`;
 };
+
+const pageLabels: Record<string, string> = {
+  '/ecosistema': 'Ecosistema',
+  '/aplicaciones': 'Aplicaciones',
+  '/aplicaciones/herramientas-maletines': 'Herramientas QR/NFC',
+  '/aplicaciones/mantenimiento-ot': 'IsiVoltPro OT',
+  '/aplicaciones/inventario-almacen': 'Inventario y almacén',
+  '/aplicaciones/activos-qr-nfc': 'Activos QR/NFC',
+  '/aplicaciones/inspecciones-bt': 'Inspecciones BT',
+  '/aplicaciones/calculos-electricos': 'Cálculos eléctricos',
+  '/aplicaciones/refrigeracion': 'Refrigeración',
+  '/aplicaciones/climatizacion-rite': 'Climatización y RITE',
+  '/aplicaciones/pci': 'Protección contra incendios',
+  '/aplicaciones/legionella-agua': 'Legionella y agua',
+  '/aplicaciones/documentacion-tecnica': 'Documentación técnica',
+  '/aplicaciones/utilidades-asistentes': 'Utilidades y asistentes',
+  '/mantenimiento': 'Soluciones de mantenimiento',
+  '/recursos': 'Blog técnico',
+  '/contacto': 'Contacto',
+  '/infraestructura': 'Infraestructura',
+  '/sobre-isivoltpro': 'Sobre IsiVoltPro',
+  '/aviso-legal': 'Aviso legal',
+  '/privacidad': 'Privacidad',
+  '/cookies': 'Cookies'
+};
+
+const section = normalizedPath.startsWith('/aplicaciones')
+  ? { href: '/aplicaciones', label: 'Aplicaciones' }
+  : normalizedPath.startsWith('/recursos')
+    ? { href: '/recursos', label: 'Blog técnico' }
+    : normalizedPath.startsWith('/mantenimiento')
+      ? { href: '/mantenimiento', label: 'Soluciones' }
+      : normalizedPath.startsWith('/ecosistema')
+        ? { href: '/ecosistema', label: 'Ecosistema' }
+        : normalizedPath.startsWith('/contacto')
+          ? { href: '/contacto', label: 'Contacto' }
+          : normalizedPath.startsWith('/infraestructura')
+            ? { href: '/infraestructura', label: 'Infraestructura' }
+            : normalizedPath.startsWith('/sobre-isivoltpro')
+              ? { href: '/sobre-isivoltpro', label: 'IsiVoltPro' }
+              : { href: normalizedPath, label: 'Información' };
+const pageLabel = pageLabels[normalizedPath] ?? section.label;
+const showLocation = normalizedPath !== '/';
+const nestedLocation = normalizedPath !== section.href;
 ---
 
-<header class="site-header">
+<header class="site-header" data-current-section={section.label}>
   <div class="container navbar">
     <a class="brand" href={withBase('/')} aria-label="IsiVoltPro, inicio" aria-current={active('/') ? 'page' : undefined}>
       IsiVolt<span class="accent">Pro</span>
@@ -31,6 +75,22 @@ const withBase = (href: string) => {
       <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-controls="main-nav" aria-expanded="false">☰</button>
     </div>
   </div>
+
+  {showLocation && (
+    <nav class="pv13-location-bar" aria-label="Ubicación actual">
+      <div class="container pv13-location-inner">
+        <a class="pv13-location-home" href={withBase('/')}>Inicio</a>
+        <span class="pv13-location-separator" aria-hidden="true">›</span>
+        {nestedLocation ? (
+          <>
+            <a class="pv13-location-section" href={withBase(section.href)}>{section.label}</a>
+            <span class="pv13-location-separator" aria-hidden="true">›</span>
+          </>
+        ) : null}
+        <span class="pv13-location-current" aria-current="page">{pageLabel}</span>
+      </div>
+    </nav>
+  )}
 </header>
 
 <script is:inline define:vars={{ base }}>

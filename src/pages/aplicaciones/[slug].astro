@@ -9,11 +9,11 @@ export function getStaticPaths() {
 
 interface Props { area: EcosystemArea; }
 const { area } = Astro.props;
-const isNextRelease = area.slug === 'mantenimiento-ot';
+const isOperationalOT = area.slug === 'mantenimiento-ot';
 const isInspection = area.slug === 'inspecciones-bt';
 const isToolsProduct = area.slug === 'herramientas-maletines';
 
-const workflow = isNextRelease
+const workflow = isOperationalOT
   ? [
       ['01 · Aviso', 'Recibir el problema con contexto', 'Cliente, instalación, ubicación, prioridad, instrucciones de acceso, descripción y fotografías desde el primer registro.'],
       ['02 · Coordinar', 'Asignar y hacer seguimiento', 'Administración y coordinación comparten estados, técnico responsable, próxima actuación, materiales y trazabilidad.'],
@@ -48,7 +48,7 @@ const workflow = isNextRelease
             <p class="lead">{area.description}</p>
             <div class="detail-meta"><span class="detail-chip">Estado: {area.status}</span><span class="detail-chip">Para: {area.audience}</span></div>
             <div class="hero-actions">
-              <a class="button button-primary" href="/contacto">{isNextRelease ? 'Seguir la próxima publicación →' : 'Seguir su desarrollo →'}</a>
+              <a class="button button-primary" href="/contacto">{isOperationalOT ? 'Solicitar acceso a OT →' : 'Seguir su desarrollo →'}</a>
               <a class="button button-secondary" href="/aplicaciones">Volver al catálogo</a>
             </div>
           </div>
@@ -59,10 +59,10 @@ const workflow = isNextRelease
       <section class="section">
         <div class="container content-split">
           <div class="content-sticky reveal">
-            <p class="eyebrow">{isNextRelease || isInspection ? 'Flujo de trabajo' : 'Enfoque de producto'}</p>
-            <h2>{isNextRelease ? 'De la incidencia al cierre documentado' : isInspection ? 'De los datos de la instalación al informe' : 'Del problema técnico a una herramienta sencilla'}</h2>
-            <p class="lead">{isNextRelease
-              ? 'OT será la siguiente aplicación que se publicará. Conectará avisos, coordinación, técnicos, evidencias y cierre sin perder el contexto de la intervención.'
+            <p class="eyebrow">{isOperationalOT || isInspection ? 'Flujo de trabajo' : 'Enfoque de producto'}</p>
+            <h2>{isOperationalOT ? 'De la incidencia al cierre documentado' : isInspection ? 'De los datos de la instalación al informe' : 'Del problema técnico a una herramienta sencilla'}</h2>
+            <p class="lead">{isOperationalOT
+              ? 'IsiVoltPro OT ya está operativa. Conecta avisos, coordinación, técnicos, evidencias y cierre sin perder el contexto de la intervención, y continuará evolucionando con nuevos módulos.'
               : isInspection
                 ? 'La inspección se divide en pasos claros para evitar omisiones y convertir el trabajo de campo en un informe coherente.'
                 : 'La aplicación se construirá a partir de situaciones reales, reduciendo pasos y mostrando solamente la información necesaria en cada momento.'}</p>
@@ -74,8 +74,8 @@ const workflow = isNextRelease
       <section class="section section-soft">
         <div class="container">
           <div class="cta reveal">
-            <div><h2>{isNextRelease ? 'IsiVoltPro OT será la siguiente pieza publicada' : 'Esta herramienta forma parte del roadmap'}</h2><p>{isNextRelease ? 'La base funcional ya existe y continuará evolucionando antes de abrir su publicación: zona móvil, evidencias, informes, permisos e integración con Herramientas QR/NFC.' : 'El catálogo crecerá de forma progresiva, manteniendo una experiencia común y una arquitectura ordenada.'}</p></div>
-            <a class="button button-dark" href={isNextRelease ? '/contacto' : '/ecosistema'}>{isNextRelease ? 'Conocer el avance de OT →' : 'Explorar ecosistema →'}</a>
+            <div><h2>{isOperationalOT ? 'IsiVoltPro OT ya está operativa' : 'Esta herramienta forma parte del roadmap'}</h2><p>{isOperationalOT ? 'La base funcional ya trabaja con avisos, asignación, zona móvil y trazabilidad. Seguirá creciendo con evidencias, informes, permisos e integración progresiva con Herramientas QR/NFC.' : 'El catálogo crecerá de forma progresiva, manteniendo una experiencia común y una arquitectura ordenada.'}</p></div>
+            <a class="button button-dark" href={isOperationalOT ? '/contacto' : '/ecosistema'}>{isOperationalOT ? 'Solicitar demo de OT →' : 'Explorar ecosistema →'}</a>
           </div>
         </div>
       </section>

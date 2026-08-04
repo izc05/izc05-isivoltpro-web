@@ -4,6 +4,7 @@ import '../styles/pages.css';
 import '../styles/privacy-security-polish.css';
 import '../styles/production-readiness-v10-3.css';
 import '../styles/premium-redesign-v12.css';
+import '../styles/experience-v13.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import PrivacyCenter from '../components/PrivacyCenter.astro';
@@ -32,8 +33,8 @@ const workflow = [
 ];
 
 const applications = [
-  { icon: '▣', name: 'Herramientas QR/NFC', copy: 'Inventario, préstamos y trazabilidad.', status: 'Publicada', live: true, href: '/aplicaciones/herramientas-maletines' },
-  { icon: '⌑', name: 'IsiVoltPro OT', copy: 'Avisos, órdenes y técnicos.', status: 'Próxima publicación', next: true, href: '/aplicaciones/mantenimiento-ot' },
+  { icon: '▣', name: 'Herramientas QR/NFC', copy: 'Inventario, préstamos y trazabilidad.', status: 'Operativa', live: true, href: '/aplicaciones/herramientas-maletines' },
+  { icon: '⌑', name: 'IsiVoltPro OT', copy: 'Avisos, órdenes, técnicos y evidencias.', status: 'Operativa', live: true, href: '/aplicaciones/mantenimiento-ot' },
   { icon: '✓', name: 'Inspecciones BT', copy: 'Mediciones, defectos e informes.', status: 'En desarrollo', href: '/aplicaciones/inspecciones-bt' },
   { icon: '▤', name: 'RITE', copy: 'Instalaciones térmicas y climatización.', status: 'Planificado', href: '/aplicaciones/climatizacion-rite' },
   { icon: '♨', name: 'PCI', copy: 'Equipos, revisiones y mantenimientos.', status: 'Planificado', href: '/aplicaciones/pci' },
@@ -85,6 +86,14 @@ const structuredData = {
 
     <main id="contenido">
       <section class="pv12-home-hero" id="inicio">
+        <div class="pv13-hero-ambient" aria-hidden="true">
+          <span class="pv13-grid-lines"></span>
+          <span class="pv13-orb pv13-orb-one"></span>
+          <span class="pv13-orb pv13-orb-two"></span>
+          <span class="pv13-orb pv13-orb-three"></span>
+          <span class="pv13-signal pv13-signal-one"></span>
+          <span class="pv13-signal pv13-signal-two"></span>
+        </div>
         <div class="container pv12-home-grid">
           <div class="pv12-home-copy" data-premium-reveal>
             <p class="eyebrow">Ecosistema para el mantenimiento técnico</p>
@@ -93,6 +102,10 @@ const structuredData = {
             <div class="pv12-hero-actions">
               <a class="button button-primary" href={withBase('/mantenimiento')}>Ver soluciones →</a>
               <a class="button button-secondary" href={withBase('/aplicaciones')}>Explorar aplicaciones</a>
+            </div>
+            <div class="pv13-live-apps" aria-label="Aplicaciones operativas">
+              <a class="pv13-live-app" href={withBase('/aplicaciones/herramientas-maletines')}><i aria-hidden="true"></i><span>Herramientas QR/NFC</span><strong>Operativa</strong></a>
+              <a class="pv13-live-app" href={withBase('/aplicaciones/mantenimiento-ot')}><i aria-hidden="true"></i><span>IsiVoltPro OT</span><strong>Operativa</strong></a>
             </div>
             <div class="pv12-trust-row" aria-label="Ventajas principales">
               <div class="pv12-trust-item"><span class="pv12-trust-icon">◇</span><span>Datos seguros<br />y bajo tu control</span></div>
@@ -137,7 +150,7 @@ const structuredData = {
         <div class="container">
           <div class="pv12-feature-band" data-premium-reveal>
             <div class="pv12-feature-copy">
-              <span class="pv12-feature-label">Primera aplicación publicada</span>
+              <span class="pv12-feature-label">Aplicación operativa</span>
               <h2>Herramientas QR/NFC</h2>
               <p>La aplicación real de IsiVoltPro para inventario, responsables, préstamos, devoluciones, etiquetas e historial completo.</p>
               <ul class="pv12-feature-list">
@@ -156,12 +169,12 @@ const structuredData = {
         <div class="container">
           <div class="pv12-section-head" data-premium-reveal>
             <h2>Aplicaciones que forman el ecosistema</h2>
-            <p>Herramientas QR/NFC es la primera publicación. IsiVoltPro OT será la siguiente pieza y el resto crecerá por especialidades.</p>
+            <p>Herramientas QR/NFC e IsiVoltPro OT ya están operativas. El resto del ecosistema crecerá por especialidades conectadas.</p>
           </div>
           <div class="pv12-app-grid">
             {applications.map((app, index) => (
-              <a class:list={['pv12-app-card', app.live && 'is-live', app.next && 'is-next']} href={withBase(app.href)} data-premium-reveal style={`transition-delay:${index * 55}ms`}>
-                <span class="pv12-app-icon">{app.icon}</span><h3>{app.name}</h3><p>{app.copy}</p><span class:list={['pv12-app-status', app.live && 'is-live', app.next && 'is-next']}>{app.status}</span>
+              <a class:list={['pv12-app-card', app.live && 'is-live', app.live && 'is-operational']} href={withBase(app.href)} data-premium-reveal style={`transition-delay:${index * 55}ms`}>
+                <span class="pv12-app-icon">{app.icon}</span><h3>{app.name}</h3><p>{app.copy}</p><span class:list={['pv12-app-status', app.live && 'is-live', app.live && 'is-operational']}>{app.status}</span>
               </a>
             ))}
           </div>

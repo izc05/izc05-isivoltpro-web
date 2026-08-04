@@ -5,7 +5,7 @@ export type EcosystemArea = {
   family: 'Operaciones' | 'Recursos' | 'Ingeniería' | 'Especialidades' | 'Conocimiento';
   short: string;
   description: string;
-  status: 'Publicada' | 'Próxima publicación' | 'En desarrollo' | 'Planificado';
+  status: 'Operativa' | 'Publicada' | 'Próxima publicación' | 'En desarrollo' | 'Planificado';
   audience: string;
   highlights: string[];
   previewLabel: string;
@@ -18,7 +18,7 @@ export const ecosystemAreas: EcosystemArea[] = [
     slug: 'herramientas-maletines', code: 'HM', name: 'Herramientas QR y NFC', family: 'Recursos',
     short: 'Herramientas, técnicos, préstamos, devoluciones y trazabilidad.',
     description: 'Gestiona herramientas, maletines, equipos de medida, EPI y otros recursos técnicos con identificación QR/NFC, responsables e historial.',
-    status: 'Publicada', audience: 'Almacenes, coordinación, talleres y servicios técnicos',
+    status: 'Operativa', audience: 'Almacenes, coordinación, talleres y servicios técnicos',
     highlights: ['Alta y clasificación', 'Préstamos y devoluciones', 'QR/NFC por equipo', 'Revisiones e historial'],
     previewLabel: 'Estado actual', previewValue: 'Operativa', previewItems: ['Publicada en qr.isivoltpro.com', 'Modo local operativo', 'Sincronización cloud en evolución']
   },
@@ -26,9 +26,9 @@ export const ecosystemAreas: EcosystemArea[] = [
     slug: 'mantenimiento-ot', code: 'OT', name: 'IsiVoltPro OT', family: 'Operaciones',
     short: 'Avisos, órdenes, técnicos, instalaciones, evidencias e informes.',
     description: 'Organiza el ciclo completo del mantenimiento: aviso, prioridad, asignación, intervención, materiales, evidencias, cierre e historial.',
-    status: 'Próxima publicación', audience: 'Coordinación, responsables de mantenimiento y técnicos de campo',
+    status: 'Operativa', audience: 'Coordinación, responsables de mantenimiento y técnicos de campo',
     highlights: ['Correctivos y preventivos', 'Asignación y seguimiento', 'Fotos, checklist y firmas', 'Informe y auditoría'],
-    previewLabel: 'Siguiente lanzamiento', previewValue: 'OT', previewItems: ['Avisos y prioridades', 'Zona móvil del técnico', 'Cierre documentado']
+    previewLabel: 'Estado actual', previewValue: 'Operativa', previewItems: ['Avisos y prioridades', 'Zona móvil del técnico', 'Cierre documentado']
   },
   {
     slug: 'inventario-almacen', code: 'AL', name: 'Inventario y almacén', family: 'Recursos',
