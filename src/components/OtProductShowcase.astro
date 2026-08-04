@@ -1,0 +1,154 @@
+---
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
+
+const operationalCapabilities = [
+  { icon: 'CL', title: 'Clientes e instalaciones', text: 'Cada orden conserva el contexto del cliente, el centro, la ubicación y las instrucciones de acceso.' },
+  { icon: 'OT', title: 'Órdenes y prioridades', text: 'Creación, asignación y seguimiento de avisos con estados claros para coordinación y técnicos.' },
+  { icon: 'M', title: 'Zona móvil del técnico', text: 'Pendientes, trabajo de hoy, urgentes, órdenes en curso, bloqueadas e historial desde el móvil.' },
+  { icon: '↺', title: 'Auditoría cronológica', text: 'Los cambios de estado y las acciones relevantes quedan ordenados dentro de la propia OT.' },
+  { icon: 'T', title: 'Técnicos activos', text: 'Asignación a profesionales disponibles con especialidad, carga y contexto operativo.' },
+  { icon: 'RT', title: 'Información en tiempo real', text: 'Coordinación puede ver la evolución de las órdenes sin perder el hilo de la intervención.' }
+];
+
+const workflow = [
+  ['01', 'Crear', 'Registrar cliente, instalación, ubicación, prioridad y descripción del aviso.'],
+  ['02', 'Asignar', 'Seleccionar el técnico responsable y dejar trazabilidad de la asignación.'],
+  ['03', 'Aceptar', 'El técnico recibe la orden en su zona móvil y confirma que se hace cargo.'],
+  ['04', 'Intervenir', 'La OT pasa a EN CURSO y coordinación sigue la actividad desde el panel central.']
+];
+---
+
+<section class="pv14-ot-product-hero">
+  <div class="container pv14-ot-product-grid">
+    <div class="pv14-ot-product-copy" data-premium-reveal>
+      <span class="pv14-operational-label"><i aria-hidden="true"></i> Aplicación operativa</span>
+      <h1>Órdenes de trabajo conectadas desde coordinación hasta el <span class="accent">técnico</span></h1>
+      <p class="lead">IsiVoltPro OT organiza clientes, instalaciones, técnicos y órdenes de trabajo en una experiencia central para coordinación y otra adaptada al trabajo desde el móvil.</p>
+      <div class="pv14-ot-product-badges" aria-label="Características de IsiVoltPro OT">
+        <span>Panel central</span><span>Zona móvil</span><span>Estados trazables</span><span>Auditoría</span>
+      </div>
+      <div class="pv14-ot-product-actions">
+        <a class="button button-primary" href={withBase('/contacto')}>Solicitar demo de OT →</a>
+        <a class="button button-secondary" href={withBase('/aplicaciones')}>Volver a aplicaciones</a>
+      </div>
+    </div>
+
+    <div class="pv14-ot-product-visual" data-premium-reveal>
+      <div class="pv14-ot-dashboard-frame">
+        <img src={`${base}media/ot-dashboard.svg`} alt="Panel central operativo de IsiVoltPro OT" loading="eager" decoding="async" />
+      </div>
+      <span class="pv14-ot-live-pill"><i aria-hidden="true"></i> Seguimiento operativo</span>
+      <div class="pv14-ot-phone-card" aria-label="Vista móvil de una orden de trabajo">
+        <div class="pv14-ot-phone-ui">
+          <small>ORDEN DE TRABAJO</small>
+          <h3>Fallo de climatización</h3>
+          <strong>EN CURSO</strong>
+          <dl>
+            <div><dt>OT</dt><dd>2026-00031</dd></div>
+            <div><dt>Prioridad</dt><dd>Urgente</dd></div>
+            <div><dt>Ubicación</dt><dd>Quirófano 3</dd></div>
+            <div><dt>Técnico</dt><dd>Miguel A.</dd></div>
+          </dl>
+          <button type="button" tabindex="-1">Registrar actuación</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pv14-ot-section is-soft">
+  <div class="container">
+    <div class="pv14-ot-heading" data-premium-reveal>
+      <p class="eyebrow">Dos experiencias, una sola OT</p>
+      <h2>La información cambia de formato, no se pierde</h2>
+      <p>Coordinación dispone de visión global y el técnico recibe solamente el trabajo y las acciones que necesita en campo.</p>
+    </div>
+    <div class="pv14-role-grid">
+      <article class="pv14-role-card is-dark" data-premium-reveal>
+        <span class="pv14-role-icon">PC</span>
+        <h3>Panel central</h3>
+        <p>Preparado para administrar, coordinar, asignar y seguir la evolución de las órdenes.</p>
+        <ul>
+          <li>Clientes e instalaciones</li>
+          <li>Técnicos activos y carga</li>
+          <li>Prioridades y estados</li>
+          <li>Próxima actuación y auditoría</li>
+        </ul>
+      </article>
+      <article class="pv14-role-card" data-premium-reveal>
+        <span class="pv14-role-icon">M</span>
+        <h3>Zona técnico</h3>
+        <p>Una experiencia móvil centrada en aceptar, iniciar y consultar las OT asignadas.</p>
+        <ul>
+          <li>Pendientes y trabajo de hoy</li>
+          <li>Órdenes urgentes y en curso</li>
+          <li>Datos de acceso y ubicación</li>
+          <li>Historial personal de intervenciones</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="pv14-ot-section">
+  <div class="container">
+    <div class="pv14-ot-heading" data-premium-reveal>
+      <p class="eyebrow">Base operativa actual</p>
+      <h2>Qué está resolviendo IsiVoltPro OT</h2>
+    </div>
+    <div class="pv14-operational-grid">
+      {operationalCapabilities.map((item, index) => (
+        <article class="pv14-operational-card" data-premium-reveal style={`transition-delay:${index * 55}ms`}>
+          <i>{item.icon}</i><h3>{item.title}</h3><p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="pv14-ot-section is-soft">
+  <div class="container">
+    <div class="pv14-ot-heading" data-premium-reveal>
+      <p class="eyebrow">Flujo activo</p>
+      <h2>De BORRADOR a EN CURSO sin perder contexto</h2>
+    </div>
+    <div class="pv14-ot-workflow">
+      {workflow.map((step, index) => (
+        <article class="pv14-ot-step" data-premium-reveal style={`transition-delay:${index * 70}ms`}>
+          <b>{step[0]}</b><h3>{step[1]}</h3><p>{step[2]}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="pv14-ot-section">
+  <div class="container">
+    <div class="pv14-now-next" data-premium-reveal>
+      <div class="is-now">
+        <p class="eyebrow" style="color:#8de3b9">Operativa ahora</p>
+        <h2>Una base funcional para trabajar</h2>
+        <p>La aplicación ya permite organizar la estructura operativa y mover una OT desde su creación hasta la intervención del técnico.</p>
+        <ul>
+          <li>Clientes, instalaciones y técnicos</li>
+          <li>Asignación y estados operativos</li>
+          <li>Panel central y zona móvil</li>
+          <li>Auditoría cronológica</li>
+        </ul>
+      </div>
+      <div class="is-next">
+        <p class="eyebrow">Evolución prevista</p>
+        <h2>Cierre cada vez más documentado</h2>
+        <p>La siguiente evolución ampliará el cierre técnico y la documentación final sin romper el flujo que ya está funcionando.</p>
+        <ul>
+          <li>Checklist, fotografías y firmas</li>
+          <li>Finalización y validación</li>
+          <li>Informes versionados</li>
+          <li>Conexión progresiva con QR/NFC</li>
+        </ul>
+        <a class="button button-primary" href={withBase('/contacto')}>Conocer IsiVoltPro OT →</a>
+      </div>
+    </div>
+  </div>
+</section>
