@@ -12,14 +12,15 @@ import PortalLayout from '../../../layouts/PortalLayout.astro';
       <div>
         <p class="portal-eyebrow">Propietario de plataforma</p>
         <h1 id="admin-title">Solicitudes de acceso</h1>
-        <p>Primera bandeja de revisión. La aprobación e invitación se añadirá mediante función segura de servidor.</p>
+        <p>Revisa la solicitud, asigna empresa y permisos, e invita al usuario desde el servidor.</p>
       </div>
       <a class="portal-button portal-button--ghost" href="../apps/">Volver a mis aplicaciones</a>
     </header>
 
     <div id="admin-error" class="portal-alert portal-alert--error" role="alert"></div>
-    <div id="admin-info" class="portal-alert portal-alert--info" data-visible="true" role="status">
-      En esta fase solo se muestran las solicitudes. Ningún botón del navegador puede crear usuarios ni conceder permisos todavía.
+    <div id="admin-success" class="portal-alert portal-alert--success" role="status"></div>
+    <div class="portal-alert portal-alert--info" data-visible="true" role="status">
+      Las operaciones pasan por una función de servidor, vuelven a validar que eres propietario y nunca exponen la clave administrativa.
     </div>
 
     <section id="admin-loading" class="portal-loading">
@@ -44,21 +45,48 @@ import PortalLayout from '../../../layouts/PortalLayout.astro';
       withBase,
       type AccessRequestRecord,
     } from '../../../lib/platformClient';
+    import {
+      approveAccessRequest,
+      reviewAccessRequest,
+      type AdminPermissionInput,
+    } from '../../../lib/platformAdminClient';
 
     const labels: Record<string, string> = {
       ot: 'IsiVoltPro OT',
       preinspecciones_bt: 'Preinspecciones BT',
       herramientas_qr: 'Herramientas QR/NFC',
     };
+    const roles: Record<string, Array<[string, string]>> = {
+      ot: [
+        ['admin_cliente', 'Administrador cliente'],
+        ['coordinador', 'Coordinador'],
+        ['tecnico', 'Técnico'],
+        ['solo_consulta', 'Solo consulta'],
+      ],
+      preinspecciones_bt: [
+        ['administrador', 'Administrador'],
+        ['coordinador', 'Coordinador'],
+        ['tecnico', 'Técnico'],
+        ['solo_consulta', 'Solo consulta'],
+      ],
+      herramientas_qr: [
+        ['administrador', 'Administrador'],
+        ['gestor', 'Gestor'],
+        ['tecnico', 'Técnico'],
+        ['solo_consulta', 'Solo consulta'],
+      ],
+    };
+
     const loading = document.querySelector<HTMLElement>('#admin-loading');
     const list = document.querySelector<HTMLElement>('#request-list');
     const empty = document.querySelector<HTMLElement>('#request-empty');
     const errorAlert = document.querySelector<HTMLElement>('#admin-error');
+    const successAlert = document.querySelector<HTMLElement>('#admin-success');
 
-    function showError(message: string) {
-      if (!errorAlert) return;
-      errorAlert.textContent = message;
-      errorAlert.dataset.visible = message ? 'true' : 'false';
+    function setMessage(element: HTMLElement | null, message: string) {
+      if (!element) return;
+      element.textContent = message;
+      element.dataset.visible = message ? 'true' : 'false';
     }
 
     function formatDate(value: string): string {
@@ -68,9 +96,43 @@ import PortalLayout from '../../../layouts/PortalLayout.astro';
       }).format(new Date(value));
     }
 
+    function slugify(value: string): string {
+      return value
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 80);
+    }
+
+    function createField(labelText: string, input: HTMLElement): HTMLElement {
+      const field = document.createElement('div');
+      field.className = 'portal-field';
+      const label = document.createElement('label');
+      label.textContent = labelText;
+      label.append(input);
+      field.append(label);
+      return field;
+    }
+
+    function createSelect(options: Array<[string, string]>, selected?: string): HTMLSelectElement {
+      const select = document.createElement('select');
+      for (const [value, label] of options) {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = label;
+        option.selected = value === selected;
+        select.append(option);
+      }
+      return select;
+    }
+
     function createRequestCard(request: AccessRequestRecord): HTMLElement {
       const card = document.createElement('article');
       card.className = 'portal-card';
+      card.dataset.requestId = request.id;
 
       const header = document.createElement('div');
       header.className = 'portal-card__header-row';
@@ -94,28 +156,168 @@ import PortalLayout from '../../../layouts/PortalLayout.astro';
       purpose.style.cssText = 'color:#52667e;line-height:1.65;margin:1.2rem 0';
       purpose.textContent = request.purpose;
 
-      const apps = document.createElement('ul');
-      apps.className = 'portal-data-list';
-      for (const app of request.requested_applications) {
-        const item = document.createElement('li');
-        item.textContent = labels[app] || app;
-        apps.append(item);
+      const form = document.createElement('form');
+      form.className = 'portal-form';
+      form.dataset.adminForm = request.id;
+
+      const organizationName = document.createElement('input');
+      organizationName.name = 'organization_name';
+      organizationName.required = true;
+      organizationName.maxLength = 180;
+      organizationName.value = request.company_name || '';
+      organizationName.placeholder = 'Nombre de la empresa';
+
+      const organizationSlug = document.createElement('input');
+      organizationSlug.name = 'organization_slug';
+      organizationSlug.required = true;
+      organizationSlug.maxLength = 80;
+      organizationSlug.value = slugify(request.company_name || request.full_name);
+      organizationSlug.placeholder = 'empresa-ejemplo';
+      organizationName.addEventListener('input', () => {
+        if (!organizationSlug.dataset.edited) organizationSlug.value = slugify(organizationName.value);
+      });
+      organizationSlug.addEventListener('input', () => { organizationSlug.dataset.edited = 'true'; });
+
+      const globalRole = createSelect([
+        ['member', 'Miembro'],
+        ['coordinator', 'Coordinador general'],
+        ['read_only', 'Solo consulta general'],
+        ['admin', 'Administrador de empresa'],
+        ['owner', 'Propietario de empresa'],
+      ], 'member');
+      globalRole.name = 'global_role';
+
+      const row = document.createElement('div');
+      row.className = 'portal-form-row';
+      row.append(
+        createField('Empresa u organización', organizationName),
+        createField('Identificador de empresa', organizationSlug),
+      );
+      form.append(row, createField('Rol general en la empresa', globalRole));
+
+      const permissionTitle = document.createElement('strong');
+      permissionTitle.textContent = 'Permisos por aplicación';
+      permissionTitle.style.fontSize = '.86rem';
+      form.append(permissionTitle);
+
+      const permissionList = document.createElement('div');
+      permissionList.className = 'portal-check-list';
+      for (const appCode of request.requested_applications) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'portal-check';
+        wrapper.dataset.permission = appCode;
+        const enabled = document.createElement('input');
+        enabled.type = 'checkbox';
+        enabled.checked = true;
+        enabled.name = `permission_${appCode}`;
+        const text = document.createElement('span');
+        const appLabel = document.createElement('strong');
+        appLabel.textContent = labels[appCode] || appCode;
+        const role = createSelect(roles[appCode] || [['solo_consulta', 'Solo consulta']], 'tecnico');
+        role.name = `role_${appCode}`;
+        role.style.marginTop = '.45rem';
+        text.append(appLabel, role);
+        wrapper.append(enabled, text);
+        permissionList.append(wrapper);
+      }
+      form.append(permissionList);
+
+      const actions = document.createElement('div');
+      actions.className = 'portal-app-card__actions';
+      actions.style.marginTop = '.5rem';
+      const approve = document.createElement('button');
+      approve.type = 'submit';
+      approve.className = 'portal-button portal-button--primary';
+      approve.textContent = 'Aprobar e invitar';
+      const needsInfo = document.createElement('button');
+      needsInfo.type = 'button';
+      needsInfo.className = 'portal-button portal-button--secondary';
+      needsInfo.textContent = 'Pedir información';
+      const reject = document.createElement('button');
+      reject.type = 'button';
+      reject.className = 'portal-button portal-button--ghost';
+      reject.textContent = 'Rechazar';
+      actions.append(approve, needsInfo, reject);
+      form.append(actions);
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        setMessage(errorAlert, '');
+        setMessage(successAlert, '');
+        if (!form.reportValidity()) return;
+
+        const permissions: AdminPermissionInput[] = [];
+        for (const permission of permissionList.querySelectorAll<HTMLElement>('[data-permission]')) {
+          const appCode = permission.dataset.permission || '';
+          const enabled = permission.querySelector<HTMLInputElement>('input[type="checkbox"]');
+          const role = permission.querySelector<HTMLSelectElement>('select');
+          if (enabled?.checked && role?.value) {
+            permissions.push({ application_code: appCode, role_code: role.value });
+          }
+        }
+        if (permissions.length === 0) {
+          setMessage(errorAlert, 'Selecciona al menos una aplicación para aprobar la solicitud.');
+          return;
+        }
+
+        approve.disabled = true;
+        approve.textContent = 'Aprobando…';
+        try {
+          await approveAccessRequest({
+            request_id: request.id,
+            organization_name: organizationName.value.trim(),
+            organization_slug: organizationSlug.value.trim(),
+            global_role: globalRole.value as 'owner' | 'admin' | 'coordinator' | 'member' | 'read_only',
+            permissions,
+          });
+          card.remove();
+          setMessage(successAlert, `Solicitud de ${request.full_name} aprobada. Se ha procesado la invitación y los permisos.`);
+          if (list && list.children.length === 0) {
+            list.hidden = true;
+            if (empty) empty.hidden = false;
+          }
+        } catch (error) {
+          setMessage(errorAlert, describeClientError(error));
+          approve.disabled = false;
+          approve.textContent = 'Aprobar e invitar';
+        }
+      });
+
+      async function review(status: 'needs_information' | 'rejected') {
+        const promptText = status === 'needs_information'
+          ? 'Indica qué información falta:'
+          : 'Indica el motivo del rechazo:';
+        const notes = window.prompt(promptText)?.trim() || '';
+        if (!notes) return;
+        setMessage(errorAlert, '');
+        try {
+          await reviewAccessRequest(request.id, status, notes);
+          card.remove();
+          setMessage(successAlert, status === 'rejected'
+            ? `Solicitud de ${request.full_name} rechazada.`
+            : `Se ha marcado que la solicitud de ${request.full_name} necesita más información.`);
+          if (list && list.children.length === 0) {
+            list.hidden = true;
+            if (empty) empty.hidden = false;
+          }
+        } catch (error) {
+          setMessage(errorAlert, describeClientError(error));
+        }
       }
 
-      const note = document.createElement('p');
-      note.style.cssText = 'margin:1rem 0 0;color:#855009;font-size:.8rem';
-      note.textContent = 'Pendiente de implementar: aprobar, rechazar, pedir información e invitar desde una función de servidor.';
+      needsInfo.addEventListener('click', () => void review('needs_information'));
+      reject.addEventListener('click', () => void review('rejected'));
 
-      card.append(header, purpose, apps, note);
+      card.append(header, purpose, form);
       return card;
     }
 
     async function loadRequests() {
-      showError('');
+      setMessage(errorAlert, '');
       try {
         const owner = await isPlatformOwner();
         if (!owner) {
-          showError('Esta sección está reservada al propietario de la plataforma.');
+          setMessage(errorAlert, 'Esta sección está reservada al propietario de la plataforma.');
           window.setTimeout(() => window.location.replace(withBase('portal/apps/')), 1200);
           return;
         }
@@ -130,7 +332,7 @@ import PortalLayout from '../../../layouts/PortalLayout.astro';
           window.location.replace(withBase('portal/'));
           return;
         }
-        showError(describeClientError(error));
+        setMessage(errorAlert, describeClientError(error));
       } finally {
         if (loading) loading.hidden = true;
       }
