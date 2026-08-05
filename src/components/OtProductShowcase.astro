@@ -22,23 +22,25 @@ const workflow = [
 <section class="pv14-ot-product-hero">
   <div class="container pv14-ot-product-grid">
     <div class="pv14-ot-product-copy" data-premium-reveal>
-      <span class="pv14-operational-label"><i aria-hidden="true"></i> Aplicación operativa</span>
+      <span class="pv14-operational-label"><i aria-hidden="true"></i> Aplicación publicada</span>
       <h1>Órdenes de trabajo conectadas desde coordinación hasta el <span class="accent">técnico</span></h1>
       <p class="lead">IsiVoltPro OT organiza clientes, instalaciones, técnicos y órdenes de trabajo en una experiencia central para coordinación y otra adaptada al trabajo desde el móvil.</p>
       <div class="pv14-ot-product-badges" aria-label="Características de IsiVoltPro OT">
         <span>Panel central</span><span>Zona móvil</span><span>Estados trazables</span><span>Auditoría</span>
       </div>
       <div class="pv14-ot-product-actions">
-        <a class="button button-primary" href={withBase('/contacto')}>Solicitar demo de OT →</a>
+        <a class="button button-primary" href="https://ot.isivoltpro.com/" target="_blank" rel="noopener noreferrer">Abrir IsiVoltPro OT ↗</a>
+        <a class="button button-secondary" href={withBase('/contacto')}>Solicitar presentación</a>
         <a class="button button-secondary" href={withBase('/aplicaciones')}>Volver a aplicaciones</a>
       </div>
+      <p class="pv14-ot-public-note">Entorno publicado y operativo. Las funciones de cierre técnico avanzado continúan ampliándose por fases.</p>
     </div>
 
     <div class="pv14-ot-product-visual" data-premium-reveal>
       <div class="pv14-ot-dashboard-frame">
         <img src={`${base}media/ot-dashboard.svg`} alt="Panel central operativo de IsiVoltPro OT" loading="eager" decoding="async" />
       </div>
-      <span class="pv14-ot-live-pill"><i aria-hidden="true"></i> Seguimiento operativo</span>
+      <span class="pv14-ot-live-pill"><i aria-hidden="true"></i> Publicada en ot.isivoltpro.com</span>
       <div class="pv14-ot-phone-card" aria-label="Vista móvil de una orden de trabajo">
         <div class="pv14-ot-phone-ui">
           <small>ORDEN DE TRABAJO</small>
@@ -127,8 +129,8 @@ const workflow = [
   <div class="container">
     <div class="pv14-now-next" data-premium-reveal>
       <div class="is-now">
-        <p class="eyebrow" style="color:#8de3b9">Operativa ahora</p>
-        <h2>Una base funcional para trabajar</h2>
+        <p class="eyebrow" style="color:#8de3b9">Publicada ahora</p>
+        <h2>Una base funcional disponible</h2>
         <p>La aplicación ya permite organizar la estructura operativa y mover una OT desde su creación hasta la intervención del técnico.</p>
         <ul>
           <li>Clientes, instalaciones y técnicos</li>
@@ -136,6 +138,7 @@ const workflow = [
           <li>Panel central y zona móvil</li>
           <li>Auditoría cronológica</li>
         </ul>
+        <a class="button button-primary" href="https://ot.isivoltpro.com/" target="_blank" rel="noopener noreferrer">Entrar en IsiVoltPro OT ↗</a>
       </div>
       <div class="is-next">
         <p class="eyebrow">Evolución prevista</p>
@@ -147,8 +150,13 @@ const workflow = [
           <li>Informes versionados</li>
           <li>Conexión progresiva con QR/NFC</li>
         </ul>
-        <a class="button button-primary" href={withBase('/contacto')}>Conocer IsiVoltPro OT →</a>
+        <a class="button button-secondary" href={withBase('/contacto')}>Solicitar presentación</a>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .pv14-ot-public-note{margin-top:1rem;color:var(--ink-soft);font-size:.82rem;line-height:1.55}
+  .pv14-ot-product-actions{flex-wrap:wrap}
+</style>

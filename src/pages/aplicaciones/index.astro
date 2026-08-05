@@ -3,7 +3,13 @@ import PageLayout from '../../layouts/PageLayout.astro';
 import EcosystemRoadmap from '../../components/EcosystemRoadmap.astro';
 import { ecosystemAreas } from '../../data/catalog';
 
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
 const isOperational = (status: string) => status === 'Operativa' || status === 'Publicada';
+const publicApps: Record<string, string> = {
+  'herramientas-maletines': 'https://qr.isivoltpro.com/',
+  'mantenimiento-ot': 'https://ot.isivoltpro.com/'
+};
 ---
 
 <PageLayout title="Aplicaciones" description="Catálogo de aplicaciones y herramientas del ecosistema IsiVoltPro.">
@@ -13,12 +19,12 @@ const isOperational = (status: string) => status === 'Operativa' || status === '
         <span class="page-kicker">Catálogo de productos</span>
         <h1>Herramientas creadas para el <span class="accent">trabajo técnico real</span></h1>
         <p class="lead">Aplicaciones especializadas para gestionar mantenimiento, controlar recursos, inspeccionar, calcular, documentar y tomar mejores decisiones.</p>
-        <div class="hero-actions"><a class="button button-primary" href="#aplicaciones">Ver aplicaciones →</a><a class="button button-secondary" href="/ecosistema">Cómo encajan en el ecosistema</a></div>
+        <div class="hero-actions"><a class="button button-primary" href="#aplicaciones">Ver aplicaciones →</a><a class="button button-secondary" href={withBase('/ecosistema')}>Cómo encajan en el ecosistema</a></div>
       </div>
       <div class="page-visual reveal">
         <div class="page-visual-grid">
-          <div class="page-visual-card"><span>Operativa</span><strong>Herramientas QR/NFC</strong></div>
-          <div class="page-visual-card"><span>Operativa</span><strong>IsiVoltPro OT</strong></div>
+          <a class="page-visual-card" href="https://qr.isivoltpro.com/" target="_blank" rel="noopener noreferrer"><span>Publicada</span><strong>Herramientas QR/NFC ↗</strong></a>
+          <a class="page-visual-card" href="https://ot.isivoltpro.com/" target="_blank" rel="noopener noreferrer"><span>Publicada</span><strong>IsiVoltPro OT ↗</strong></a>
           <div class="page-visual-card"><span>En desarrollo</span><strong>Inspecciones y activos</strong></div>
           <div class="page-visual-card"><span>Planificado</span><strong>Especialidades técnicas</strong></div>
         </div>
@@ -30,16 +36,22 @@ const isOperational = (status: string) => status === 'Operativa' || status === '
     <div class="container">
       <div class="catalog-toolbar reveal">
         <div><p class="eyebrow">Modular y escalable</p><h2>Aplicaciones de IsiVoltPro</h2></div>
-        <p class="lead">Herramientas QR/NFC e IsiVoltPro OT ya están operativas. El resto del catálogo seguirá creciendo por etapas y especialidades.</p>
+        <p class="lead">Herramientas QR/NFC e IsiVoltPro OT ya están publicadas. El resto del catálogo seguirá creciendo por etapas y especialidades.</p>
       </div>
       <div class="catalog-list">
-        {ecosystemAreas.map((area) => (
-          <article class:list={['catalog-card','reveal',{featured:isOperational(area.status)}]}>
-            <span class:list={['status',{available:isOperational(area.status)}]}>{area.status}</span>
-            <div class="icon-box">{area.code}</div><h3>{area.name}</h3><p>{area.description}</p>
-            <a class="card-link" href={`/aplicaciones/${area.slug}`}>Ver aplicación →</a>
-          </article>
-        ))}
+        {ecosystemAreas.map((area) => {
+          const publicUrl = publicApps[area.slug];
+          return (
+            <article class:list={['catalog-card','reveal',{featured:isOperational(area.status)}]}>
+              <span class:list={['status',{available:isOperational(area.status)}]}>{publicUrl ? 'Publicada' : area.status}</span>
+              <div class="icon-box">{area.code}</div><h3>{area.name}</h3><p>{area.description}</p>
+              <div class="catalog-card-actions">
+                {publicUrl && <a class="card-link is-public" href={publicUrl} target="_blank" rel="noopener noreferrer">Abrir aplicación ↗</a>}
+                <a class="card-link" href={withBase(`/aplicaciones/${area.slug}`)}>{publicUrl ? 'Ver ficha' : 'Ver aplicación'} →</a>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </div>
   </section>
@@ -58,4 +70,8 @@ const isOperational = (status: string) => status === 'Operativa' || status === '
       </div>
     </div>
   </section>
+
+  <style>
+    .catalog-card-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:auto;padding-top:1rem}.catalog-card-actions .card-link{margin:0}.catalog-card-actions .is-public{padding:.48rem .7rem;border-radius:999px;background:#e7f0ff;color:#145dc7}.page-visual-card[href]{transition:transform .22s ease,box-shadow .22s ease}.page-visual-card[href]:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(11,35,65,.12)}
+  </style>
 </PageLayout>
