@@ -8,18 +8,21 @@ const requiredOutput = [
   'dist/portal/recuperar/index.html',
   'dist/portal/restablecer/index.html',
   'dist/portal/privacidad/index.html',
+  'dist/portal/mfa/index.html',
   'dist/portal/admin/index.html',
 ];
 
 const requiredSource = [
   'src/lib/platformClient.ts',
   'src/lib/platformAdminClient.ts',
+  'src/lib/platformMfaClient.ts',
   'src/layouts/PortalLayout.astro',
   'src/styles/portal.css',
   'supabase/functions/platform-admin/index.ts',
   'supabase/functions/platform-access-request/index.ts',
   'supabase/migrations/20260805223000_platform_admin_workflows.sql',
   'supabase/migrations/20260805224000_platform_public_request_guard.sql',
+  'supabase/migrations/20260805225000_platform_enforce_privileged_mfa.sql',
 ];
 
 const errors = [];
@@ -34,6 +37,9 @@ for (const path of [...requiredOutput, ...requiredSource]) {
 
 const client = await readFile('src/lib/platformClient.ts', 'utf8');
 const adminClient = await readFile('src/lib/platformAdminClient.ts', 'utf8');
+const mfaClient = await readFile('src/lib/platformMfaClient.ts', 'utf8');
+const appsPage = await readFile('src/pages/portal/apps.astro', 'utf8');
+const mfaPage = await readFile('src/pages/portal/mfa.astro', 'utf8');
 const adminFunction = await readFile('supabase/functions/platform-admin/index.ts', 'utf8');
 const requestFunction = await readFile('supabase/functions/platform-access-request/index.ts', 'utf8');
 const workflowMigration = await readFile(
@@ -42,6 +48,10 @@ const workflowMigration = await readFile(
 );
 const requestGuardMigration = await readFile(
   'supabase/migrations/20260805224000_platform_public_request_guard.sql',
+  'utf8',
+);
+const mfaMigration = await readFile(
+  'supabase/migrations/20260805225000_platform_enforce_privileged_mfa.sql',
   'utf8',
 );
 const envExample = await readFile('.env.example', 'utf8');
@@ -67,6 +77,23 @@ if (!adminClient.includes('/functions/v1/platform-admin')) {
 }
 if (!adminClient.includes('Authorization')) {
   errors.push('El cliente administrativo no transmite la sesión del usuario.');
+}
+
+const mfaChecks = [
+  ['alta TOTP', '/auth/v1/factors'],
+  ['desafío TOTP', '/challenge'],
+  ['verificación TOTP', '/verify'],
+  ['actualización de sesión AAL2', 'storeSession(nextSession)'],
+  ['rol privilegiado', 'platform_requires_mfa'],
+];
+for (const [label, marker] of mfaChecks) {
+  if (!mfaClient.includes(marker)) errors.push(`Falta ${label} en el cliente MFA.`);
+}
+if (!appsPage.includes("window.location.replace(withBase('portal/mfa/'))")) {
+  errors.push('El panel no redirige los roles privilegiados a MFA.');
+}
+if (!mfaPage.includes('verifyTotpFactor') || !mfaPage.includes('autocomplete="one-time-code"')) {
+  errors.push('La página MFA no completa el flujo TOTP accesible.');
 }
 
 const adminFunctionChecks = [
@@ -111,16 +138,25 @@ for (const marker of [
   if (!requestGuardMigration.includes(marker)) errors.push(`Falta ${marker} en la protección pública.`);
 }
 
+for (const marker of [
+  'platform_has_owner_role',
+  'platform_requires_mfa',
+  'platform_current_aal_rank() >= 2',
+  'platform_is_org_admin',
+]) {
+  if (!mfaMigration.includes(marker)) errors.push(`Falta ${marker} en la exigencia MFA.`);
+}
+
 if (!envExample.includes('PUBLIC_SUPABASE_URL=') || !envExample.includes('PUBLIC_SUPABASE_ANON_KEY=')) {
   errors.push('Faltan las variables públicas documentadas.');
 }
 
-const browserSources = `${client}\n${adminClient}`;
+const browserSources = `${client}\n${adminClient}\n${mfaClient}`;
 if (/SERVICE_ROLE|service_role_key|SUPABASE_SECRET|sb_secret_/i.test(browserSources)) {
   errors.push('Se detectó una referencia a una clave privilegiada en código de navegador.');
 }
 
-const allSource = `${browserSources}\n${adminFunction}\n${requestFunction}\n${workflowMigration}\n${requestGuardMigration}\n${envExample}`;
+const allSource = `${browserSources}\n${adminFunction}\n${requestFunction}\n${workflowMigration}\n${requestGuardMigration}\n${mfaMigration}\n${envExample}`;
 if (/eyJ[a-zA-Z0-9_-]{30,}\.[a-zA-Z0-9_-]{20,}\.[a-zA-Z0-9_-]{20,}/.test(allSource)) {
   errors.push('Se detectó un posible JWT incrustado en el repositorio.');
 }
@@ -131,4 +167,4 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log('Portal: rutas, sesión, permisos, administración y solicitudes protegidas verificados.');
+console.log('Portal: sesión, MFA, permisos, administración y solicitudes protegidas verificados.');
