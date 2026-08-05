@@ -110,6 +110,7 @@ const withBase = (href: string) => `${base}${href.replace(/^\/+/, '')}`;
     const submit = document.querySelector<HTMLButtonElement>('#request-submit');
     const errorAlert = document.querySelector<HTMLElement>('#request-error');
     const successAlert = document.querySelector<HTMLElement>('#request-success');
+    let formStartedAt = Date.now();
 
     function setMessage(element: HTMLElement | null, message: string) {
       if (!element) return;
@@ -124,14 +125,7 @@ const withBase = (href: string) => `${base}${href.replace(/^\/+/, '')}`;
       if (!form.reportValidity()) return;
 
       const data = new FormData(form);
-      const honeypot = String(data.get('website') || '');
       const applications = data.getAll('applications').map(String);
-
-      if (honeypot) {
-        setMessage(successAlert, 'Solicitud recibida. Revisaremos la información antes de responder.');
-        form.reset();
-        return;
-      }
       if (applications.length === 0) {
         setMessage(errorAlert, 'Selecciona al menos una aplicación.');
         return;
@@ -157,8 +151,11 @@ const withBase = (href: string) => `${base}${href.replace(/^\/+/, '')}`;
           purpose: String(data.get('purpose') || '').trim(),
           privacy_accepted_at: new Date().toISOString(),
           privacy_version: '1.0',
+          website: String(data.get('website') || ''),
+          form_started_at: formStartedAt,
         });
         form.reset();
+        formStartedAt = Date.now();
         setMessage(
           successAlert,
           'Solicitud recibida. Si se aprueba, recibirás una invitación en el correo indicado.',
