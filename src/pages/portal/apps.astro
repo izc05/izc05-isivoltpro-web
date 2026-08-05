@@ -48,7 +48,7 @@ import PortalLayout from '../../layouts/PortalLayout.astro';
     <section id="owner-actions" class="portal-card" hidden>
       <div class="portal-card__header-row">
         <div>
-          <p class="portal-eyebrow">Propietario de plataforma</p>
+          <p class="portal-eyebrow">Propietario de plataforma · MFA verificado</p>
           <h2 style="margin:0">Administración central</h2>
           <p style="margin:.45rem 0 0;color:#66758d">Revisa solicitudes, usuarios, permisos y auditoría.</p>
         </div>
@@ -67,6 +67,10 @@ import PortalLayout from '../../layouts/PortalLayout.astro';
       withBase,
       type PlatformApplication,
     } from '../../lib/platformClient';
+    import {
+      getMfaState,
+      platformRequiresMfa,
+    } from '../../lib/platformMfaClient';
 
     const descriptions: Record<string, string> = {
       ot: 'Clientes, instalaciones, técnicos, planificación y órdenes de trabajo.',
@@ -157,10 +161,7 @@ import PortalLayout from '../../layouts/PortalLayout.astro';
       } else if (application.can_launch) {
         actions.append(createButton('Abrir aplicación', application.launch_url));
       } else {
-        const message = document.createElement('span');
-        message.style.cssText = 'font-size:.8rem;color:#855009';
-        message.textContent = 'Se requiere reforzar la sesión con MFA.';
-        actions.append(message);
+        actions.append(createButton('Verificar sesión con MFA', withBase('portal/mfa/'), 'secondary'));
       }
 
       card.append(top, title, description, meta, actions);
@@ -170,6 +171,15 @@ import PortalLayout from '../../layouts/PortalLayout.astro';
     async function loadWorkspace() {
       showError('');
       try {
+        const [requiresMfa, mfaState] = await Promise.all([
+          platformRequiresMfa(),
+          getMfaState(),
+        ]);
+        if (requiresMfa && mfaState.currentLevel !== 'aal2') {
+          window.location.replace(withBase('portal/mfa/'));
+          return;
+        }
+
         const [user, applications, owner] = await Promise.all([
           getCurrentUser(),
           getMyApplications(),
