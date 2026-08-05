@@ -48,6 +48,14 @@ export type AccessRequestPayload = {
   privacy_version: string;
 };
 
+export type AccessRequestRecord = AccessRequestPayload & {
+  id: string;
+  status: 'pending' | 'needs_information' | 'approved' | 'rejected' | 'cancelled';
+  review_notes?: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 const apiUrl = (import.meta.env.PUBLIC_SUPABASE_URL || '').replace(/\/+$/, '');
 const anonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || '';
 const sessionKey = 'isivoltpro:platform-session:v1';
@@ -229,6 +237,44 @@ export async function sendRecoveryEmail(email: string): Promise<void> {
   );
 }
 
+export async function createRecoverySessionFromUrl(): Promise<PlatformSession> {
+  const fragment = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+  const accessToken = fragment.get('access_token') || '';
+  const refreshToken = fragment.get('refresh_token') || '';
+  const expiresIn = Number(fragment.get('expires_in') || '3600');
+  const tokenType = fragment.get('token_type') || 'bearer';
+  const flowType = fragment.get('type');
+
+  if (!accessToken || !refreshToken || flowType !== 'recovery') {
+    throw new PlatformClientError(
+      'El enlace de recuperación no es válido o ha caducado.',
+      401,
+      'INVALID_RECOVERY_LINK',
+    );
+  }
+
+  const user = await request<PlatformSession['user']>('/auth/v1/user', {}, accessToken);
+  const session = normalizeSession({
+    access_token: accessToken,
+    refresh_token: refreshToken,
+    expires_in: expiresIn,
+    token_type: tokenType,
+    user,
+  });
+  storeSession(session);
+  window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+  return session;
+}
+
+export async function updateCurrentPassword(password: string): Promise<void> {
+  const session = await requireSession();
+  await request<unknown>(
+    '/auth/v1/user',
+    { method: 'PUT', body: JSON.stringify({ password }) },
+    session.access_token,
+  );
+}
+
 export async function getCurrentUser(): Promise<PlatformSession['user']> {
   const session = await requireSession();
   return request<PlatformSession['user']>('/auth/v1/user', {}, session.access_token);
@@ -297,11 +343,21 @@ export async function submitAccessRequest(payload: AccessRequestPayload): Promis
   );
 }
 
+export async function getPendingAccessRequests(): Promise<AccessRequestRecord[]> {
+  const session = await requireSession();
+  return request<AccessRequestRecord[]>(
+    '/rest/v1/platform_access_requests?status=in.(pending,needs_information)&select=id,email,full_name,phone,company_name,job_title,requested_applications,purpose,privacy_accepted_at,privacy_version,status,review_notes,created_at,updated_at&order=created_at.asc',
+    {},
+    session.access_token,
+  );
+}
+
 export function describeClientError(error: unknown): string {
   if (error instanceof PlatformClientError) {
     if (error.status === 400 || error.status === 401) {
       return 'El correo o la contraseña no son correctos, o la cuenta todavía no está activa.';
     }
+    if (error.status === 403) return 'No tienes permiso para realizar esta operación.';
     if (error.status === 409) return 'Ya existe una solicitud pendiente para este correo.';
     return error.message;
   }
