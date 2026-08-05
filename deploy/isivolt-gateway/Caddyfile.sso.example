@@ -1,11 +1,13 @@
 # Plantilla de referencia. No copiar en producción sin ajustar puertos,
-# cabeceras, bases de Vite y pruebas de service worker.
+# bases de compilación, servicios y pruebas de recuperación.
 
 (app_security_headers) {
   header {
     X-Content-Type-Options nosniff
     Referrer-Policy strict-origin-when-cross-origin
     Permissions-Policy "camera=(self), geolocation=(self), microphone=()"
+    Cross-Origin-Opener-Policy same-origin
+    X-Permitted-Cross-Domain-Policies none
     -Server
   }
 }
@@ -14,8 +16,16 @@ app.isivoltpro.com {
   import app_security_headers
   encode zstd gzip
 
-  # Cada frontend debe compilarse con su base correspondiente y aceptar
-  # la ruta completa. No usar handle_path si el frontend necesita conservarla.
+  # El navegador utiliza PUBLIC_SUPABASE_URL=https://app.isivoltpro.com/api.
+  # handle_path elimina /api antes de enviar a Kong:
+  # /api/auth/v1/*      -> /auth/v1/*
+  # /api/rest/v1/*      -> /rest/v1/*
+  # /api/functions/v1/* -> /functions/v1/*
+  handle_path /api/* {
+    reverse_proxy 127.0.0.1:54321
+  }
+
+  # Cada módulo conserva su contenedor y se compila con su ruta base.
   handle /ot/* {
     reverse_proxy 127.0.0.1:8082
   }
@@ -28,8 +38,22 @@ app.isivoltpro.com {
     reverse_proxy 127.0.0.1:8084
   }
 
-  handle {
+  # Portal estático. Sus assets compartidos se sirven desde /assets/.
+  handle /portal/* {
     reverse_proxy 127.0.0.1:8085
+  }
+  handle /assets/* {
+    reverse_proxy 127.0.0.1:8085
+  }
+  handle /favicon.svg {
+    reverse_proxy 127.0.0.1:8085
+  }
+
+  @app_root path /
+  redir @app_root /portal/ 302
+
+  handle {
+    respond "Ruta privada no disponible" 404
   }
 
   log {
