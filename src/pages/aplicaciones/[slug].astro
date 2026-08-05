@@ -2,6 +2,7 @@
 import PageLayout from '../../layouts/PageLayout.astro';
 import ToolsProductShowcase from '../../components/ToolsProductShowcase.astro';
 import OtProductShowcase from '../../components/OtProductShowcase.astro';
+import BtProductShowcase from '../../components/BtProductShowcase.astro';
 import { ecosystemAreas, type EcosystemArea } from '../../data/catalog';
 
 export function getStaticPaths() {
@@ -14,19 +15,12 @@ const isOperationalOT = area.slug === 'mantenimiento-ot';
 const isInspection = area.slug === 'inspecciones-bt';
 const isToolsProduct = area.slug === 'herramientas-maletines';
 
-const workflow = isInspection
-  ? [
-      ['01 · Datos', 'Identificar la instalación', 'Tipo de inspección, reglamento aplicable, titular, emplazamiento, características y documentación disponible.'],
-      ['02 · Revisión', 'Trabajar por bloques', 'Unifilar, protecciones, puesta a tierra, locales especiales, checklist y puntos de inspección ordenados.'],
-      ['03 · Campo', 'Registrar mediciones y defectos', 'Valores medidos, observaciones, clasificación de defectos y evidencias fotográficas desde móvil o tableta.'],
-      ['04 · Informe', 'Construir el resultado final', 'Resumen de defectos, conclusión, fotografías, mediciones e informe profesional preparado para revisar y exportar.']
-    ]
-  : [
-      ['01 · Descubrir', 'Entender el trabajo actual', 'Analizamos quién utiliza la herramienta, dónde trabaja, qué información necesita y qué errores queremos evitar.'],
-      ['02 · Simplificar', 'Diseñar el flujo mínimo', 'El objetivo no es digitalizar formularios complicados, sino reducir pasos y hacer más clara cada decisión.'],
-      ['03 · Validar', 'Probar antes de ampliar', 'Primero se construye un recorrido completo y útil. Después se añaden automatizaciones, informes e integraciones.'],
-      ['04 · Conectar', 'Integrarse con el ecosistema', 'Cuando aporte valor, podrá compartir técnicos, ubicaciones, activos, documentos y permisos con otros módulos IsiVoltPro.']
-    ];
+const workflow = [
+  ['01 · Descubrir', 'Entender el trabajo actual', 'Analizamos quién utiliza la herramienta, dónde trabaja, qué información necesita y qué errores queremos evitar.'],
+  ['02 · Simplificar', 'Diseñar el flujo mínimo', 'El objetivo no es digitalizar formularios complicados, sino reducir pasos y hacer más clara cada decisión.'],
+  ['03 · Validar', 'Probar antes de ampliar', 'Primero se construye un recorrido completo y útil. Después se añaden automatizaciones, informes e integraciones.'],
+  ['04 · Conectar', 'Integrarse con el ecosistema', 'Cuando aporte valor, podrá compartir técnicos, ubicaciones, activos, documentos y permisos con otros módulos IsiVoltPro.']
+];
 ---
 
 <PageLayout title={area.name} description={area.description}>
@@ -34,6 +28,8 @@ const workflow = isInspection
     <ToolsProductShowcase area={area} />
   ) : isOperationalOT ? (
     <OtProductShowcase />
+  ) : isInspection ? (
+    <BtProductShowcase />
   ) : (
     <>
       <section class="detail-hero">
@@ -55,11 +51,9 @@ const workflow = isInspection
       <section class="section">
         <div class="container content-split">
           <div class="content-sticky reveal">
-            <p class="eyebrow">{isInspection ? 'Flujo de trabajo' : 'Enfoque de producto'}</p>
-            <h2>{isInspection ? 'De los datos de la instalación al informe' : 'Del problema técnico a una herramienta sencilla'}</h2>
-            <p class="lead">{isInspection
-              ? 'La inspección se divide en pasos claros para evitar omisiones y convertir el trabajo de campo en un informe coherente.'
-              : 'La aplicación se construirá a partir de situaciones reales, reduciendo pasos y mostrando solamente la información necesaria en cada momento.'}</p>
+            <p class="eyebrow">Enfoque de producto</p>
+            <h2>Del problema técnico a una herramienta sencilla</h2>
+            <p class="lead">La aplicación se construirá a partir de situaciones reales, reduciendo pasos y mostrando solamente la información necesaria en cada momento.</p>
           </div>
           <div class="feature-list">{workflow.map((step) => <article class="feature-row reveal"><span>{step[0]}</span><h3>{step[1]}</h3><p>{step[2]}</p></article>)}</div>
         </div>
