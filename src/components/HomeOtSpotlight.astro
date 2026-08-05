@@ -5,16 +5,26 @@ const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(
 
 <section class="pv14-ot-strip" aria-labelledby="pv14-ot-strip-title">
   <div class="container">
-    <a class="pv14-ot-strip-card" href={withBase('/aplicaciones/mantenimiento-ot')} data-premium-reveal>
+    <article class="pv14-ot-strip-card" data-premium-reveal>
       <div class="pv14-ot-strip-copy">
-        <span class="pv14-ot-status"><i aria-hidden="true"></i> Aplicación operativa</span>
+        <span class="pv14-ot-status"><i aria-hidden="true"></i> Aplicación publicada</span>
         <h2 id="pv14-ot-strip-title">IsiVoltPro OT ya conecta coordinación y técnicos</h2>
         <p>Clientes, instalaciones, asignación, estados, zona móvil y auditoría cronológica dentro de una misma orden de trabajo.</p>
+        <div class="pv14-ot-strip-actions">
+          <a class="button button-primary" href="https://ot.isivoltpro.com/" target="_blank" rel="noopener noreferrer">Abrir IsiVoltPro OT ↗</a>
+          <a class="button button-secondary" href={withBase('/aplicaciones/mantenimiento-ot')}>Conocer la aplicación</a>
+        </div>
       </div>
       <div class="pv14-ot-mini-flow" aria-label="Flujo de IsiVoltPro OT">
         <span>Panel central</span><b aria-hidden="true">→</b><span>Zona técnico</span><b aria-hidden="true">→</b><span>Seguimiento</span>
       </div>
-      <span class="pv14-ot-strip-cta">Ver IsiVoltPro OT <i aria-hidden="true">→</i></span>
-    </a>
+      <a class="pv14-ot-strip-cta" href="https://ot.isivoltpro.com/" target="_blank" rel="noopener noreferrer">Aplicación disponible <i aria-hidden="true">↗</i></a>
+    </article>
   </div>
 </section>
+
+<style>
+  .pv14-ot-strip-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.15rem}
+  .pv14-ot-strip-actions .button{min-height:44px}
+  @media(max-width:680px){.pv14-ot-strip-actions .button{width:100%;justify-content:center}.pv14-ot-strip-cta{display:none}}
+</style>
