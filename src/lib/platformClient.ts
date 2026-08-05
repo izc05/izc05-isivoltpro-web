@@ -46,10 +46,21 @@ export type AccessRequestPayload = {
   purpose: string;
   privacy_accepted_at: string;
   privacy_version: string;
+  website?: string;
+  form_started_at: number;
 };
 
-export type AccessRequestRecord = AccessRequestPayload & {
+export type AccessRequestRecord = {
   id: string;
+  email: string;
+  full_name: string;
+  phone?: string | null;
+  company_name?: string | null;
+  job_title?: string | null;
+  requested_applications: string[];
+  purpose: string;
+  privacy_accepted_at: string;
+  privacy_version: string;
   status: 'pending' | 'needs_information' | 'approved' | 'rejected' | 'cancelled';
   review_notes?: string | null;
   created_at: string;
@@ -101,6 +112,16 @@ function parseResponseError(payload: unknown, fallback: string): string {
   return fallback;
 }
 
+function parseResponseCode(payload: unknown): string | undefined {
+  if (!payload || typeof payload !== 'object') return undefined;
+  const candidate = payload as Record<string, unknown>;
+  for (const key of ['code', 'error_code', 'error']) {
+    const value = candidate[key];
+    if (typeof value === 'string' && value.trim()) return value.trim();
+  }
+  return undefined;
+}
+
 async function request<T>(
   path: string,
   init: RequestInit = {},
@@ -135,9 +156,7 @@ async function request<T>(
     throw new PlatformClientError(
       parseResponseError(payload, `El servidor ha rechazado la operación (${response.status}).`),
       response.status,
-      typeof payload === 'object' && payload && 'code' in payload
-        ? String((payload as Record<string, unknown>).code)
-        : undefined,
+      parseResponseCode(payload),
     );
   }
   return payload as T;
@@ -333,14 +352,24 @@ export async function acceptApplicationConsent(
 }
 
 export async function submitAccessRequest(payload: AccessRequestPayload): Promise<void> {
-  await request<unknown>(
-    '/rest/v1/platform_access_requests',
-    {
-      method: 'POST',
-      headers: { Prefer: 'return=minimal' },
-      body: JSON.stringify(payload),
-    },
-  );
+  try {
+    await request<unknown>(
+      '/functions/v1/platform-access-request',
+      {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      },
+    );
+  } catch (error) {
+    if (error instanceof PlatformClientError && error.status === 400) {
+      throw new PlatformClientError(
+        'Revisa los datos de la solicitud y vuelve a intentarlo.',
+        400,
+        error.code,
+      );
+    }
+    throw error;
+  }
 }
 
 export async function getPendingAccessRequests(): Promise<AccessRequestRecord[]> {
@@ -355,7 +384,9 @@ export async function getPendingAccessRequests(): Promise<AccessRequestRecord[]>
 export function describeClientError(error: unknown): string {
   if (error instanceof PlatformClientError) {
     if (error.status === 400 || error.status === 401) {
-      return 'El correo o la contraseña no son correctos, o la cuenta todavía no está activa.';
+      return error.message.startsWith('Revisa los datos')
+        ? error.message
+        : 'El correo o la contraseña no son correctos, o la cuenta todavía no está activa.';
     }
     if (error.status === 403) return 'No tienes permiso para realizar esta operación.';
     if (error.status === 409) return 'Ya existe una solicitud pendiente para este correo.';
