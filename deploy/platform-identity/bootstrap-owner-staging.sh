@@ -18,7 +18,7 @@ for value_name in SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY PLATFORM_OWNER_EMAIL; d
     exit 1
   fi
 done
-for command in curl jq; do
+for command in curl jq python3; do
   command -v "$command" >/dev/null 2>&1 || {
     echo "ERROR: falta $command" >&2
     exit 1
@@ -30,6 +30,8 @@ if [[ ! "$OWNER_EMAIL" =~ ^[^[:space:]@]+@[^[:space:]@]+\.[^[:space:]@]+$ ]]; th
 fi
 
 API="${SUPABASE_URL%/}"
+REDIRECT_URL="${PORTAL_URL%/}/portal/restablecer/"
+REDIRECT_ENCODED="$(python3 -c 'import sys,urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$REDIRECT_URL")"
 AUTH_HEADERS=(
   -H "Authorization: Bearer $SERVICE_KEY"
   -H "apikey: $SERVICE_KEY"
@@ -63,8 +65,7 @@ if [[ -z "$OWNER_ID" ]]; then
     --arg name "$OWNER_NAME" \
     '{email:$email,data:{display_name:$name,invited_from:"platform_owner_bootstrap"}}')"
   RESPONSE="$(curl -fsS -X POST "${AUTH_HEADERS[@]}" \
-    "$API/auth/v1/invite?redirect_to=$(python3 -c 'import os,urllib.parse; print(urllib.parse.quote(os.environ["PLATFORM_REDIRECT"], safe=""))' \
-      PLATFORM_REDIRECT="${PORTAL_URL%/}/portal/restablecer/")" \
+    "$API/auth/v1/invite?redirect_to=$REDIRECT_ENCODED" \
     --data "$PAYLOAD")"
   OWNER_ID="$(jq -r '.id // empty' <<<"$RESPONSE")"
   if [[ -z "$OWNER_ID" ]]; then
@@ -83,8 +84,9 @@ PROFILE_PAYLOAD="$(jq -n \
   --arg now "$NOW" \
   '{display_name:$name,platform_role:"owner",account_status:"active",approved_by:$owner_id,approved_at:$now,suspended_at:null}')"
 
-# El trigger de auth crea el perfil. Se reintenta brevemente por si Auth todavía
+# El trigger de Auth crea el perfil. Se reintenta brevemente por si Auth todavía
 # está terminando la transacción del usuario.
+STATUS="000"
 for attempt in 1 2 3 4 5; do
   STATUS="$(curl -sS -o /tmp/isivolt-owner-profile-response.json -w '%{http_code}' \
     -X PATCH "${AUTH_HEADERS[@]}" \
