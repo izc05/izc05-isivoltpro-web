@@ -1,0 +1,170 @@
+---
+import PortalLayout from '../../layouts/PortalLayout.astro';
+---
+
+<PortalLayout
+  title="Verificación en dos pasos"
+  description="Configuración y comprobación MFA de la cuenta IsiVoltPro."
+  section="Seguridad de la cuenta"
+  compact
+>
+  <section class="portal-card portal-card--narrow" aria-labelledby="mfa-title">
+    <header class="portal-card__header">
+      <p class="portal-eyebrow">Segundo factor obligatorio</p>
+      <h1 id="mfa-title">Protege tu cuenta</h1>
+      <p id="mfa-description">
+        Comprobando si ya tienes una aplicación autenticadora vinculada.
+      </p>
+    </header>
+
+    <div id="mfa-error" class="portal-alert portal-alert--error" role="alert"></div>
+    <div id="mfa-success" class="portal-alert portal-alert--success" role="status"></div>
+
+    <section id="mfa-loading" class="portal-loading">
+      <div>
+        <div class="portal-spinner" aria-hidden="true"></div>
+        <p>Preparando verificación…</p>
+      </div>
+    </section>
+
+    <section id="mfa-enroll" hidden>
+      <div class="portal-summary-box">
+        <h3>1. Escanea el código</h3>
+        <p>Utiliza Google Authenticator, Microsoft Authenticator, 2FAS u otra aplicación TOTP.</p>
+      </div>
+      <div style="display:grid;place-items:center;margin:1.2rem 0">
+        <img id="mfa-qr" alt="Código QR para configurar el segundo factor" width="220" height="220" style="max-width:100%;height:auto;border:1px solid #dbe4ef;border-radius:18px;padding:.7rem;background:#fff" />
+      </div>
+      <div class="portal-field">
+        <label for="mfa-secret">Clave manual</label>
+        <input id="mfa-secret" type="text" readonly autocomplete="off" />
+        <small>Utilízala solo cuando no puedas escanear el QR. No la compartas ni la guardes en una captura.</small>
+      </div>
+    </section>
+
+    <form id="mfa-form" class="portal-form" hidden novalidate>
+      <div class="portal-summary-box">
+        <h3 id="mfa-step-title">2. Confirma el código</h3>
+        <p>Introduce el código temporal de seis cifras que muestra tu aplicación.</p>
+      </div>
+      <div class="portal-field">
+        <label for="mfa-code">Código de verificación</label>
+        <input
+          id="mfa-code"
+          name="code"
+          type="text"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+          pattern="[0-9]{6}"
+          minlength="6"
+          maxlength="6"
+          required
+          placeholder="000000"
+        />
+      </div>
+      <button id="mfa-submit" class="portal-button portal-button--primary" type="submit">
+        Verificar y continuar
+      </button>
+    </form>
+
+    <div class="portal-links">
+      <button id="mfa-sign-out" class="portal-button portal-button--ghost portal-button--small" type="button">
+        Cerrar sesión
+      </button>
+      <a href="../../contacto/">He perdido mi segundo factor</a>
+    </div>
+  </section>
+
+  <script>
+    import {
+      describeClientError,
+      signOut,
+      withBase,
+    } from '../../lib/platformClient';
+    import {
+      enrollTotpFactor,
+      getMfaState,
+      verifyTotpFactor,
+    } from '../../lib/platformMfaClient';
+
+    const loading = document.querySelector<HTMLElement>('#mfa-loading');
+    const enrollmentSection = document.querySelector<HTMLElement>('#mfa-enroll');
+    const form = document.querySelector<HTMLFormElement>('#mfa-form');
+    const description = document.querySelector<HTMLElement>('#mfa-description');
+    const stepTitle = document.querySelector<HTMLElement>('#mfa-step-title');
+    const qr = document.querySelector<HTMLImageElement>('#mfa-qr');
+    const secret = document.querySelector<HTMLInputElement>('#mfa-secret');
+    const submit = document.querySelector<HTMLButtonElement>('#mfa-submit');
+    const errorAlert = document.querySelector<HTMLElement>('#mfa-error');
+    const successAlert = document.querySelector<HTMLElement>('#mfa-success');
+    let factorId = '';
+
+    function setMessage(element: HTMLElement | null, message: string) {
+      if (!element) return;
+      element.textContent = message;
+      element.dataset.visible = message ? 'true' : 'false';
+    }
+
+    async function prepareMfa() {
+      try {
+        const state = await getMfaState();
+        if (state.currentLevel === 'aal2') {
+          setMessage(successAlert, 'La sesión ya está verificada con el segundo factor.');
+          window.setTimeout(() => window.location.replace(withBase('portal/apps/')), 650);
+          return;
+        }
+
+        if (state.verifiedTotp.length > 0) {
+          factorId = state.verifiedTotp[0].id;
+          if (description) description.textContent = 'Introduce el código de tu aplicación autenticadora para reforzar esta sesión.';
+          if (stepTitle) stepTitle.textContent = 'Verifica el inicio de sesión';
+        } else {
+          const enrollment = await enrollTotpFactor();
+          factorId = enrollment.id;
+          if (qr) qr.src = enrollment.totp.qr_code;
+          if (secret) secret.value = enrollment.totp.secret;
+          if (enrollmentSection) enrollmentSection.hidden = false;
+          if (description) description.textContent = 'Vincula una aplicación autenticadora y confirma el primer código.';
+        }
+        if (form) form.hidden = false;
+      } catch (error) {
+        if (error instanceof Error && 'status' in error && Number((error as { status?: number }).status) === 401) {
+          window.location.replace(withBase('portal/'));
+          return;
+        }
+        setMessage(errorAlert, describeClientError(error));
+      } finally {
+        if (loading) loading.hidden = true;
+      }
+    }
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      setMessage(errorAlert, '');
+      if (!form.reportValidity() || !factorId) return;
+      const code = String(new FormData(form).get('code') || '').replace(/\s+/g, '');
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = 'Verificando…';
+      }
+      try {
+        await verifyTotpFactor(factorId, code);
+        setMessage(successAlert, 'Segundo factor verificado. La sesión ya tiene nivel AAL2.');
+        window.setTimeout(() => window.location.replace(withBase('portal/apps/')), 700);
+      } catch (error) {
+        setMessage(errorAlert, describeClientError(error));
+        if (submit) {
+          submit.disabled = false;
+          submit.textContent = 'Verificar y continuar';
+        }
+      }
+    });
+
+    document.querySelector('#mfa-sign-out')?.addEventListener('click', async () => {
+      await signOut().catch(() => undefined);
+      window.location.replace(withBase('portal/'));
+    });
+
+    void prepareMfa();
+  </script>
+</PortalLayout>
