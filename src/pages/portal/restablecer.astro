@@ -61,6 +61,12 @@ import PortalLayout from '../../layouts/PortalLayout.astro';
       element.dataset.visible = message ? 'true' : 'false';
     }
 
+    const authFragment = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+    if (authFragment.get('type') === 'invite') {
+      authFragment.set('type', 'recovery');
+      window.location.hash = authFragment.toString();
+    }
+
     createRecoverySessionFromUrl()
       .then(() => {
         if (loading) loading.hidden = true;
