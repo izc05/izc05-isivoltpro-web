@@ -5,7 +5,7 @@ export type EcosystemArea = {
   family: 'Operaciones' | 'Recursos' | 'Ingeniería' | 'Especialidades' | 'Conocimiento';
   short: string;
   description: string;
-  status: 'Operativa' | 'Publicada' | 'Próxima publicación' | 'En desarrollo' | 'Planificado';
+  status: 'Operativa' | 'Beta operativa' | 'Publicada' | 'Próxima publicación' | 'En desarrollo' | 'Planificado';
   audience: string;
   highlights: string[];
   previewLabel: string;
@@ -47,12 +47,12 @@ export const ecosystemAreas: EcosystemArea[] = [
     previewLabel: 'Identidad digital', previewValue: 'QR/NFC', previewItems: ['Ficha técnica', 'Historial', 'Documentación']
   },
   {
-    slug: 'inspecciones-bt', code: 'BT', name: 'Inspecciones BT', family: 'Ingeniería',
-    short: 'Datos, bloques, checklist, mediciones, defectos e informe.',
-    description: 'Digitaliza inspecciones de baja tensión con datos de instalación, bloques de revisión, mediciones, defectos, fotografías y resultado final.',
-    status: 'En desarrollo', audience: 'Inspectores, instaladores y responsables eléctricos',
-    highlights: ['REBT y criterios técnicos', 'Mediciones y defectos', 'Evidencias fotográficas', 'Informe profesional'],
-    previewLabel: 'Flujo técnico', previewValue: 'BT', previewItems: ['Checklist', 'Mediciones', 'Informe']
+    slug: 'inspecciones-bt', code: 'BT', name: 'Preinspecciones BT', family: 'Ingeniería',
+    short: 'Preinspección local-first, mediciones, evidencias, sincronización e informe.',
+    description: 'Prepara y documenta preinspecciones de baja tensión con trabajo offline, checklist, mediciones, defectos, fotografías, firmas, continuidad móvil–PC e informe profesional.',
+    status: 'Beta operativa', audience: 'Inspectores, instaladores y responsables eléctricos',
+    highlights: ['REBT y criterios técnicos', 'Trabajo offline móvil y PC', 'Evidencias y cierre GPS', 'Informe profesional'],
+    previewLabel: 'Estado actual', previewValue: 'Beta', previewItems: ['Local-first operativo', 'Sincronización validada', 'Servidor pendiente de despliegue']
   },
   {
     slug: 'calculos-electricos', code: 'kW', name: 'Cálculos eléctricos', family: 'Ingeniería',
