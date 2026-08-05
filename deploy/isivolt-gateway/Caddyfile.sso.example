@@ -1,0 +1,62 @@
+# Plantilla de referencia. No copiar en producción sin ajustar puertos,
+# cabeceras, bases de Vite y pruebas de service worker.
+
+(app_security_headers) {
+  header {
+    X-Content-Type-Options nosniff
+    Referrer-Policy strict-origin-when-cross-origin
+    Permissions-Policy "camera=(self), geolocation=(self), microphone=()"
+    -Server
+  }
+}
+
+app.isivoltpro.com {
+  import app_security_headers
+  encode zstd gzip
+
+  # Cada frontend debe compilarse con su base correspondiente y aceptar
+  # la ruta completa. No usar handle_path si el frontend necesita conservarla.
+  handle /ot/* {
+    reverse_proxy 127.0.0.1:8082
+  }
+
+  handle /preinspecciones/* {
+    reverse_proxy 127.0.0.1:8083
+  }
+
+  handle /herramientas/* {
+    reverse_proxy 127.0.0.1:8084
+  }
+
+  handle {
+    reverse_proxy 127.0.0.1:8085
+  }
+
+  log {
+    output file /var/log/caddy/isivoltpro-app-access.log {
+      roll_size 20mb
+      roll_keep 10
+      roll_keep_for 720h
+    }
+    format filter {
+      wrap json
+      fields {
+        request>headers>Authorization delete
+        request>headers>Cookie delete
+        response>headers>Set-Cookie delete
+      }
+    }
+  }
+}
+
+ot.isivoltpro.com {
+  redir https://app.isivoltpro.com/ot{uri} 308
+}
+
+bt.isivoltpro.com {
+  redir https://app.isivoltpro.com/preinspecciones{uri} 308
+}
+
+qr.isivoltpro.com {
+  redir https://app.isivoltpro.com/herramientas{uri} 308
+}
