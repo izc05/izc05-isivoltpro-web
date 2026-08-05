@@ -1,0 +1,65 @@
+name: Validate Preinspecciones BT portal
+
+on:
+  push:
+    branches:
+      - feat/preinspecciones-bt-beta
+    paths:
+      - src/components/BtProductShowcase.astro
+      - src/data/catalog.ts
+      - src/pages/aplicaciones/[slug].astro
+      - src/pages/index.astro
+      - .github/workflows/validate-bt-beta.yml
+  pull_request:
+    paths:
+      - src/components/BtProductShowcase.astro
+      - src/data/catalog.ts
+      - src/pages/aplicaciones/[slug].astro
+      - src/pages/index.astro
+      - .github/workflows/validate-bt-beta.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: isivoltpro-portal-preinspecciones-bt-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Validate BT catalogue claims
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          grep -Fq "name: 'Preinspecciones BT'" src/data/catalog.ts
+          grep -Fq "status: 'Beta operativa'" src/data/catalog.ts
+          grep -Fq "Servidor pendiente de despliegue" src/data/catalog.ts
+          grep -Fq "<BtProductShowcase />" 'src/pages/aplicaciones/[slug].astro'
+          grep -Fq "No sustituye una inspección reglamentaria oficial" src/components/BtProductShowcase.astro
+          grep -Fq "Preinspecciones BT</span><strong>Beta" src/pages/index.astro
+
+      - name: Build and check Astro portal
+        run: npm run check
+
+      - name: Check diff formatting
+        run: git diff --check origin/main...HEAD
