@@ -1,0 +1,95 @@
+---
+import PortalLayout from '../../layouts/PortalLayout.astro';
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => `${base}${href.replace(/^\/+/, '')}`;
+---
+
+<PortalLayout
+  title="Recuperar acceso"
+  description="Recuperación segura de la cuenta central IsiVoltPro."
+  section="Recuperación de cuenta"
+  compact
+>
+  <section class="portal-card portal-card--narrow" aria-labelledby="recover-title">
+    <header class="portal-card__header">
+      <p class="portal-eyebrow">Recuperación segura</p>
+      <h1 id="recover-title">Restablecer contraseña</h1>
+      <p>
+        Introduce el correo de tu cuenta. La respuesta será la misma exista o no una cuenta,
+        para evitar revelar usuarios registrados.
+      </p>
+    </header>
+
+    <div id="recover-error" class="portal-alert portal-alert--error" role="alert"></div>
+    <div id="recover-success" class="portal-alert portal-alert--success" role="status"></div>
+
+    <form id="recover-form" class="portal-form" novalidate>
+      <div class="portal-field">
+        <label for="email">Correo electrónico</label>
+        <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="320" />
+      </div>
+      <button id="recover-submit" class="portal-button portal-button--primary" type="submit">
+        Enviar instrucciones
+      </button>
+    </form>
+
+    <div class="portal-links">
+      <a href={withBase('portal/')}>Volver al inicio de sesión</a>
+      <a href={withBase('contacto/')}>Contactar con soporte</a>
+    </div>
+  </section>
+
+  <script>
+    import {
+      describeClientError,
+      isPlatformConfigured,
+      sendRecoveryEmail,
+    } from '../../lib/platformClient';
+
+    const form = document.querySelector<HTMLFormElement>('#recover-form');
+    const submit = document.querySelector<HTMLButtonElement>('#recover-submit');
+    const errorAlert = document.querySelector<HTMLElement>('#recover-error');
+    const successAlert = document.querySelector<HTMLElement>('#recover-success');
+
+    function setMessage(element: HTMLElement | null, message: string) {
+      if (!element) return;
+      element.textContent = message;
+      element.dataset.visible = message ? 'true' : 'false';
+    }
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      setMessage(errorAlert, '');
+      setMessage(successAlert, '');
+      if (!form.reportValidity()) return;
+      if (!isPlatformConfigured()) {
+        setMessage(errorAlert, 'La recuperación todavía no está conectada al servidor de identidad.');
+        return;
+      }
+
+      const data = new FormData(form);
+      const email = String(data.get('email') || '');
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = 'Enviando…';
+      }
+
+      try {
+        await sendRecoveryEmail(email);
+        form.reset();
+        setMessage(
+          successAlert,
+          'Si el correo corresponde a una cuenta activa, recibirás instrucciones para restablecerla.',
+        );
+      } catch (error) {
+        setMessage(errorAlert, describeClientError(error));
+      } finally {
+        if (submit) {
+          submit.disabled = false;
+          submit.textContent = 'Enviar instrucciones';
+        }
+      }
+    });
+  </script>
+</PortalLayout>

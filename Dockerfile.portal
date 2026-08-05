@@ -1,0 +1,28 @@
+FROM node:22-alpine AS build
+
+WORKDIR /app
+
+ARG PUBLIC_SUPABASE_URL
+ARG PUBLIC_SUPABASE_ANON_KEY
+ARG PUBLIC_SITE_URL=https://app.isivoltpro.com
+ARG PUBLIC_BASE_PATH=/
+
+ENV PUBLIC_SUPABASE_URL=${PUBLIC_SUPABASE_URL}
+ENV PUBLIC_SUPABASE_ANON_KEY=${PUBLIC_SUPABASE_ANON_KEY}
+ENV PUBLIC_SITE_URL=${PUBLIC_SITE_URL}
+ENV PUBLIC_BASE_PATH=${PUBLIC_BASE_PATH}
+
+COPY package*.json ./
+RUN npm ci --no-audit --no-fund
+COPY . .
+RUN npm run check
+
+FROM caddy:2-alpine
+
+COPY deploy/platform-identity/Caddyfile.portal /etc/caddy/Caddyfile
+COPY --from=build /app/dist /srv
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=15s --timeout=5s --start-period=10s --retries=5 \
+  CMD wget -qO- http://127.0.0.1:8080/portal/ >/dev/null || exit 1

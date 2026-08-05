@@ -7,7 +7,9 @@
     "dev": "astro dev --host 0.0.0.0",
     "build": "astro build",
     "verify": "node scripts/verify-build.mjs",
-    "check": "npm run build && npm run verify",
+    "verify:identity": "node scripts/verify-platform-identity.mjs",
+    "verify:portal": "node scripts/verify-platform-portal.mjs",
+    "check": "npm run build && npm run verify && npm run verify:identity && npm run verify:portal",
     "preview": "astro preview --host 0.0.0.0",
     "astro": "astro"
   },

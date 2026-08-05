@@ -1,0 +1,108 @@
+---
+import PortalLayout from '../../layouts/PortalLayout.astro';
+---
+
+<PortalLayout
+  title="Nueva contraseña"
+  description="Creación segura de una nueva contraseña para la cuenta IsiVoltPro."
+  section="Recuperación de cuenta"
+  compact
+>
+  <section class="portal-card portal-card--narrow" aria-labelledby="reset-title">
+    <header class="portal-card__header">
+      <p class="portal-eyebrow">Enlace temporal</p>
+      <h1 id="reset-title">Crear nueva contraseña</h1>
+      <p>El enlace se valida antes de permitir el cambio y se elimina de la barra del navegador.</p>
+    </header>
+
+    <div id="reset-error" class="portal-alert portal-alert--error" role="alert"></div>
+    <div id="reset-success" class="portal-alert portal-alert--success" role="status"></div>
+
+    <section id="reset-loading" class="portal-loading">
+      <div>
+        <div class="portal-spinner" aria-hidden="true"></div>
+        <p>Validando enlace…</p>
+      </div>
+    </section>
+
+    <form id="reset-form" class="portal-form" hidden novalidate>
+      <div class="portal-field">
+        <label for="password">Nueva contraseña</label>
+        <input id="password" name="password" type="password" autocomplete="new-password" required minlength="12" maxlength="200" />
+        <small>Utiliza al menos 12 caracteres y evita reutilizar contraseñas.</small>
+      </div>
+      <div class="portal-field">
+        <label for="password_confirm">Repetir contraseña</label>
+        <input id="password_confirm" name="password_confirm" type="password" autocomplete="new-password" required minlength="12" maxlength="200" />
+      </div>
+      <button id="reset-submit" class="portal-button portal-button--primary" type="submit">
+        Guardar nueva contraseña
+      </button>
+    </form>
+  </section>
+
+  <script>
+    import {
+      createRecoverySessionFromUrl,
+      describeClientError,
+      updateCurrentPassword,
+      withBase,
+    } from '../../lib/platformClient';
+
+    const loading = document.querySelector<HTMLElement>('#reset-loading');
+    const form = document.querySelector<HTMLFormElement>('#reset-form');
+    const submit = document.querySelector<HTMLButtonElement>('#reset-submit');
+    const errorAlert = document.querySelector<HTMLElement>('#reset-error');
+    const successAlert = document.querySelector<HTMLElement>('#reset-success');
+
+    function setMessage(element: HTMLElement | null, message: string) {
+      if (!element) return;
+      element.textContent = message;
+      element.dataset.visible = message ? 'true' : 'false';
+    }
+
+    const authFragment = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+    if (authFragment.get('type') === 'invite') {
+      authFragment.set('type', 'recovery');
+      window.location.hash = authFragment.toString();
+    }
+
+    createRecoverySessionFromUrl()
+      .then(() => {
+        if (loading) loading.hidden = true;
+        if (form) form.hidden = false;
+      })
+      .catch((error) => {
+        if (loading) loading.hidden = true;
+        setMessage(errorAlert, describeClientError(error));
+      });
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      setMessage(errorAlert, '');
+      if (!form.reportValidity()) return;
+      const data = new FormData(form);
+      const password = String(data.get('password') || '');
+      const confirmation = String(data.get('password_confirm') || '');
+      if (password !== confirmation) {
+        setMessage(errorAlert, 'Las contraseñas no coinciden.');
+        return;
+      }
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = 'Guardando…';
+      }
+      try {
+        await updateCurrentPassword(password);
+        setMessage(successAlert, 'Contraseña actualizada. Entrarás en tu panel de aplicaciones.');
+        window.setTimeout(() => window.location.replace(withBase('portal/apps/')), 900);
+      } catch (error) {
+        setMessage(errorAlert, describeClientError(error));
+        if (submit) {
+          submit.disabled = false;
+          submit.textContent = 'Guardar nueva contraseña';
+        }
+      }
+    });
+  </script>
+</PortalLayout>
