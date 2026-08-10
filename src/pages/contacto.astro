@@ -2,6 +2,9 @@
 import PageLayout from '../layouts/PageLayout.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { brand, contactMailto } from '../data/brand';
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
 ---
 
 <PageLayout title="Contacto" description="Contacta con IsiVoltPro para hablar de mantenimiento, órdenes de trabajo, inspecciones técnicas y herramientas digitales.">
@@ -9,11 +12,11 @@ import { brand, contactMailto } from '../data/brand';
     <div class="container page-hero-grid">
       <div class="reveal">
         <span class="page-kicker">Contacto directo</span>
-        <h1>Cuéntame el problema técnico. <span class="accent">Buscamos una solución útil.</span></h1>
-        <p class="lead">IsiVoltPro nace de necesidades reales de mantenimiento, coordinación, inspección y trabajo de campo. Puedes escribir para valorar una aplicación, una demostración o una idea concreta.</p>
+        <h1>Cuéntanos el problema técnico. <span class="accent">Buscamos una solución útil.</span></h1>
+        <p class="lead">IsiVoltPro nace de necesidades reales de mantenimiento, coordinación, inspección y trabajo de campo. Puedes escribir para valorar una aplicación, una demostración o un flujo concreto.</p>
         <div class="hero-actions">
           <a class="button button-primary" href={contactMailto}>Escribir a IsiVoltPro →</a>
-          <a class="button button-secondary" href="/aplicaciones">Explorar aplicaciones</a>
+          <a class="button button-secondary" href={withBase('/aplicaciones')}>Explorar aplicaciones</a>
         </div>
       </div>
       <div class="page-visual reveal">
@@ -30,9 +33,9 @@ import { brand, contactMailto } from '../data/brand';
   <section class="section">
     <div class="container contact-grid">
       <div class="reveal">
-        <p class="eyebrow">Datos reales del proyecto</p>
-        <h2>IsiVoltPro ya tiene dominio propio</h2>
-        <p class="lead">La web continúa en evolución, pero la identidad y el canal de contacto ya están definidos.</p>
+        <p class="eyebrow">Canales del proyecto</p>
+        <h2>Un punto de contacto para todo el ecosistema</h2>
+        <p class="lead">La web, las aplicaciones operativas y las próximas especialidades comparten la misma identidad IsiVoltPro.</p>
 
         <div class="contact-list">
           <div><b>Correo</b><br /><a class="brand-email" href={`mailto:${brand.email}`}>{brand.email}</a></div>
@@ -43,7 +46,7 @@ import { brand, contactMailto } from '../data/brand';
 
         <div class="contact-domain-card">
           <span class="contact-domain-mark">IP</span>
-          <div><small>Identidad digital registrada</small><strong>{brand.domain}</strong></div>
+          <div><small>Identidad digital</small><strong>{brand.domain}</strong></div>
         </div>
       </div>
 
@@ -61,7 +64,7 @@ import { brand, contactMailto } from '../data/brand';
       <div class="section-heading reveal">
         <p class="eyebrow">Qué puedes plantear</p>
         <h2>Desde una incidencia concreta hasta una aplicación completa</h2>
-        <p class="lead">La idea es entender primero el flujo real y después decidir qué merece digitalizarse.</p>
+        <p class="lead">Primero entendemos el flujo real. Después decidimos qué merece digitalizarse y cómo encaja con el resto del ecosistema.</p>
       </div>
       <div class="feature-list">
         <div class="feature-row reveal"><span>01</span><h3>Gestión de mantenimiento</h3><p>Avisos, OT, técnicos, instalaciones, prioridades, evidencias e informes.</p></div>
