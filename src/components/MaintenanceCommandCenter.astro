@@ -1,0 +1,131 @@
+---
+import '../styles/maintenance-command-center.css';
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
+---
+
+<section class="ivp-mcc" data-maintenance-center aria-labelledby="ivp-mcc-title">
+  <div class="ivp-mcc-ambient" aria-hidden="true"><span></span><i></i><b></b></div>
+  <div class="container ivp-mcc-shell">
+    <div class="ivp-mcc-copy" data-premium-reveal>
+      <p class="eyebrow">Centro operativo de mantenimiento</p>
+      <h1 id="ivp-mcc-title">Cada trabajo necesita un flujo. <span class="accent">El contexto debe ser el mismo.</span></h1>
+      <p class="lead">Correctivos, preventivos e inspecciones reglamentarias no se gestionan igual. IsiVoltPro adapta la operación sin perder activos, ubicaciones, técnicos, evidencias ni histórico.</p>
+      <div class="ivp-mcc-actions">
+        <a class="button button-primary" href={withBase('/aplicaciones/mantenimiento-ot')}>Conocer IsiVoltPro OT →</a>
+        <a class="button button-secondary" href={withBase('/contacto')}>Plantear un flujo real</a>
+      </div>
+      <div class="ivp-mcc-mode-tabs" role="tablist" aria-label="Tipo de mantenimiento">
+        <button class="is-active" type="button" role="tab" aria-selected="true" data-maintenance-mode="corrective">Correctivo</button>
+        <button type="button" role="tab" aria-selected="false" data-maintenance-mode="preventive">Preventivo</button>
+        <button type="button" role="tab" aria-selected="false" data-maintenance-mode="regulatory">Reglamentario</button>
+      </div>
+    </div>
+
+    <div class="ivp-mcc-console" data-premium-reveal aria-live="polite">
+      <div class="ivp-mcc-topbar"><span>ISIVOLTPRO · MANTENIMIENTO</span><small><i></i> Sistema operativo</small></div>
+
+      <div class="ivp-mcc-view is-active" data-maintenance-view="corrective">
+        <div class="ivp-mcc-kpis">
+          <article><small>OT abiertas</small><strong>18</strong><span>4 urgentes</span></article>
+          <article><small>En curso</small><strong>07</strong><span>técnicos activos</span></article>
+          <article><small>Tiempo medio</small><strong>42m</strong><span>primera actuación</span></article>
+        </div>
+        <div class="ivp-mcc-main-grid">
+          <div class="ivp-mcc-card ivp-mcc-order">
+            <div class="ivp-mcc-card-head"><span>OT-2026-00482</span><b class="is-alert">Urgente</b></div>
+            <h3>Temperatura de impulsión fuera de rango</h3>
+            <dl><div><dt>Activo</dt><dd>UTA-02</dd></div><div><dt>Ubicación</dt><dd>Cubierta técnica</dd></div><div><dt>Técnico</dt><dd>Miguel A.</dd></div><div><dt>Estado</dt><dd>En curso</dd></div></dl>
+            <div class="ivp-mcc-progress"><span style="width:64%"></span></div>
+            <p>Último evento · técnico registra comprobación de filtros y temperatura.</p>
+          </div>
+          <div class="ivp-mcc-card ivp-mcc-timeline">
+            <span>10:02 · Aviso creado</span><span>10:05 · Prioridad validada</span><span>10:08 · Técnico asignado</span><span class="is-current">10:21 · Intervención en curso</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ivp-mcc-view" data-maintenance-view="preventive">
+        <div class="ivp-mcc-kpis">
+          <article><small>Plan mensual</small><strong>126</strong><span>tareas previstas</span></article>
+          <article><small>Completadas</small><strong>82%</strong><span>103 tareas</span></article>
+          <article><small>Próximas</small><strong>14</strong><span>en 7 días</span></article>
+        </div>
+        <div class="ivp-mcc-main-grid">
+          <div class="ivp-mcc-card ivp-mcc-plan">
+            <div class="ivp-mcc-card-head"><span>PLAN HVAC · AGOSTO</span><b class="is-ok">En plazo</b></div>
+            <div class="ivp-mcc-task is-done"><i>✓</i><span><strong>UTA-01</strong><small>Filtros · correas · drenaje</small></span><b>Completado</b></div>
+            <div class="ivp-mcc-task is-active"><i>→</i><span><strong>UTA-02</strong><small>Temperaturas · filtros · ventiladores</small></span><b>Hoy</b></div>
+            <div class="ivp-mcc-task"><i>•</i><span><strong>UTA-03</strong><small>Filtros · batería · sifón</small></span><b>13 ago</b></div>
+          </div>
+          <div class="ivp-mcc-card ivp-mcc-calendar">
+            <strong>Frecuencia vinculada al activo</strong><p>La tarea terminada actualiza automáticamente la próxima fecha y conserva evidencias en el histórico.</p><div class="ivp-mcc-date"><span>Última</span><b>10 AGO</b><i>→</i><span>Próxima</span><b>10 SEP</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ivp-mcc-view" data-maintenance-view="regulatory">
+        <div class="ivp-mcc-kpis">
+          <article><small>Revisiones</small><strong>34</strong><span>periodo activo</span></article>
+          <article><small>Conforme</small><strong>91%</strong><span>31 revisiones</span></article>
+          <article><small>Hallazgos</small><strong>05</strong><span>requieren seguimiento</span></article>
+        </div>
+        <div class="ivp-mcc-main-grid">
+          <div class="ivp-mcc-card ivp-mcc-checklist">
+            <div class="ivp-mcc-card-head"><span>INSPECCIÓN BT · QGBT-01</span><b class="is-review">En revisión</b></div>
+            <div><i>✓</i><span>Identificación y accesibilidad</span><b>Conforme</b></div>
+            <div><i>✓</i><span>Protecciones y señalización</span><b>Conforme</b></div>
+            <div class="is-warning"><i>!</i><span>Estado de envolvente</span><b>Observación</b></div>
+            <div><i>✓</i><span>Mediciones registradas</span><b>4 valores</b></div>
+          </div>
+          <div class="ivp-mcc-card ivp-mcc-evidence">
+            <strong>Evidencia verificable</strong><p>Checklist, mediciones, fotografías, defectos y resultado quedan ligados al activo y al periodo de revisión.</p><div class="ivp-mcc-evidence-row"><span>Fotos <b>06</b></span><span>Mediciones <b>04</b></span><span>Defectos <b>01</b></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ivp-mcc-footer"><span><i></i> Activos conectados</span><span><i></i> Técnicos y responsables</span><span><i></i> Evidencias e histórico</span></div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const center = document.querySelector('[data-maintenance-center]');
+    if (!center || center.dataset.ready === 'true') return;
+    center.dataset.ready = 'true';
+    const buttons = [...center.querySelectorAll('[data-maintenance-mode]')];
+    const views = [...center.querySelectorAll('[data-maintenance-view]')];
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let current = 'corrective';
+    let timer;
+
+    const activate = (mode, userInitiated = false) => {
+      current = mode;
+      buttons.forEach((button) => {
+        const active = button.dataset.maintenanceMode === mode;
+        button.classList.toggle('is-active', active);
+        button.setAttribute('aria-selected', String(active));
+      });
+      views.forEach((view) => view.classList.toggle('is-active', view.dataset.maintenanceView === mode));
+      if (userInitiated) restart();
+    };
+
+    const restart = () => {
+      clearInterval(timer);
+      if (reduced) return;
+      timer = setInterval(() => {
+        const order = ['corrective','preventive','regulatory'];
+        activate(order[(order.indexOf(current)+1)%order.length]);
+      }, 6200);
+    };
+
+    buttons.forEach((button) => button.addEventListener('click', () => activate(button.dataset.maintenanceMode, true)));
+    center.addEventListener('mouseenter', () => clearInterval(timer), { passive:true });
+    center.addEventListener('mouseleave', restart, { passive:true });
+    center.addEventListener('focusin', () => clearInterval(timer));
+    center.addEventListener('focusout', restart);
+    activate(current); restart();
+  })();
+</script>
