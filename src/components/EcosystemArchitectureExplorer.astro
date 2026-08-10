@@ -132,6 +132,7 @@ const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(
     const groups = [...explorer.querySelectorAll('[data-arch-group]')];
     const panels = [...explorer.querySelectorAll('[data-arch-panel]')];
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
     let current = 'context';
     let timer;
 
@@ -150,7 +151,7 @@ const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(
 
     const restart = () => {
       window.clearInterval(timer);
-      if (reduced) return;
+      if (reduced || coarse || document.hidden) return;
       timer = window.setInterval(() => {
         const order = ['context', 'operations', 'specialties'];
         activate(order[(order.indexOf(current) + 1) % order.length]);
@@ -162,6 +163,7 @@ const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(
     explorer.addEventListener('mouseleave', restart, { passive: true });
     explorer.addEventListener('focusin', () => window.clearInterval(timer));
     explorer.addEventListener('focusout', restart);
+    document.addEventListener('visibilitychange', () => document.hidden ? window.clearInterval(timer) : restart());
 
     activate('context');
     restart();
