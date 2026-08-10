@@ -1,5 +1,6 @@
 ---
 import '../styles/building-scroll-experience.css';
+import '../styles/building-scroll-focus.css';
 ---
 
 <section class="ivp-building-story" data-building-story aria-labelledby="ivp-building-title">
@@ -33,6 +34,12 @@ import '../styles/building-scroll-experience.css';
           <p class="eyebrow">04 · Conectamos</p>
           <h2>Del activo nace el trabajo.</h2>
           <p>Incidencias, órdenes de trabajo y mantenimiento preventivo forman un único ecosistema.</p>
+        </div>
+
+        <div class="ivp-building-copy-stage is-stage-five">
+          <p class="eyebrow">05 · Un activo, todo su contexto</p>
+          <h2>Entramos en UTA-02.</h2>
+          <p>El equipo físico queda conectado con su identificación, estado, documentación y la siguiente actuación que debe realizar mantenimiento.</p>
         </div>
 
         <div class="ivp-building-progress" aria-hidden="true"><span></span></div>
@@ -79,6 +86,29 @@ import '../styles/building-scroll-experience.css';
           <span class="ivp-flow-node node-maintenance">Mantenimiento</span>
         </div>
 
+        <div class="ivp-focus-panel">
+          <div class="ivp-focus-panel__head">
+            <div>
+              <span class="ivp-focus-panel__eyebrow">Activo conectado</span>
+              <strong>UTA-02 · Climatización</strong>
+            </div>
+            <span class="ivp-focus-panel__status">Operativo</span>
+          </div>
+          <div class="ivp-focus-panel__body">
+            <div class="ivp-focus-qr"><span>QR / NFC</span></div>
+            <dl>
+              <div><dt>Ubicación</dt><dd>Cubierta técnica</dd></div>
+              <div><dt>Última revisión</dt><dd>08/08/2026</dd></div>
+              <div><dt>Documentación</dt><dd>Ficha + manual</dd></div>
+              <div><dt>Próxima tarea</dt><dd>Preventivo</dd></div>
+            </dl>
+          </div>
+          <div class="ivp-focus-panel__event">
+            <i></i>
+            <span><strong>Incidencia detectada</strong><br />Temperatura de impulsión fuera de rango → generar OT</span>
+          </div>
+        </div>
+
         <span class="ivp-building-status">Instalación conectada</span>
       </div>
     </div>
@@ -105,6 +135,12 @@ import '../styles/building-scroll-experience.css';
         story.style.setProperty('--open-progress', '1');
         story.style.setProperty('--asset-progress', '1');
         story.style.setProperty('--flow-progress', '1');
+        story.style.setProperty('--focus-progress', '1');
+        story.style.setProperty('--stage-one', '0');
+        story.style.setProperty('--stage-two', '0');
+        story.style.setProperty('--stage-three', '0');
+        story.style.setProperty('--stage-four', '0');
+        story.style.setProperty('--stage-five', '1');
         return;
       }
 
@@ -113,15 +149,17 @@ import '../styles/building-scroll-experience.css';
       const progress = clamp(-rect.top / distance);
 
       story.style.setProperty('--story-progress', progress.toFixed(4));
-      story.style.setProperty('--enter-progress', segment(progress, 0.04, 0.32).toFixed(4));
-      story.style.setProperty('--open-progress', segment(progress, 0.22, 0.50).toFixed(4));
-      story.style.setProperty('--asset-progress', segment(progress, 0.48, 0.72).toFixed(4));
-      story.style.setProperty('--flow-progress', segment(progress, 0.70, 0.94).toFixed(4));
+      story.style.setProperty('--enter-progress', segment(progress, 0.03, 0.25).toFixed(4));
+      story.style.setProperty('--open-progress', segment(progress, 0.18, 0.40).toFixed(4));
+      story.style.setProperty('--asset-progress', segment(progress, 0.38, 0.58).toFixed(4));
+      story.style.setProperty('--flow-progress', segment(progress, 0.56, 0.75).toFixed(4));
+      story.style.setProperty('--focus-progress', segment(progress, 0.76, 0.96).toFixed(4));
 
-      story.style.setProperty('--stage-one', (1 - segment(progress, 0.12, 0.27)).toFixed(4));
-      story.style.setProperty('--stage-two', (segment(progress, 0.19, 0.31) * (1 - segment(progress, 0.39, 0.51))).toFixed(4));
-      story.style.setProperty('--stage-three', (segment(progress, 0.45, 0.57) * (1 - segment(progress, 0.64, 0.76))).toFixed(4));
-      story.style.setProperty('--stage-four', segment(progress, 0.73, 0.86).toFixed(4));
+      story.style.setProperty('--stage-one', (1 - segment(progress, 0.10, 0.22)).toFixed(4));
+      story.style.setProperty('--stage-two', (segment(progress, 0.16, 0.26) * (1 - segment(progress, 0.31, 0.42))).toFixed(4));
+      story.style.setProperty('--stage-three', (segment(progress, 0.36, 0.46) * (1 - segment(progress, 0.52, 0.62))).toFixed(4));
+      story.style.setProperty('--stage-four', (segment(progress, 0.57, 0.67) * (1 - segment(progress, 0.73, 0.82))).toFixed(4));
+      story.style.setProperty('--stage-five', segment(progress, 0.79, 0.90).toFixed(4));
     };
 
     const requestRender = () => {
