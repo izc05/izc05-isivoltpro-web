@@ -123,12 +123,15 @@ for (const file of htmlFiles) {
 
 const robotsPath = resolve(distDir, 'robots.txt');
 const sitemapPath = resolve(distDir, 'sitemap.xml');
+const securityPath = resolve(distDir, '.well-known', 'security.txt');
+
 if (!await exists(robotsPath)) {
   errors.push('Falta dist/robots.txt');
 } else {
   const robots = await readFile(robotsPath, 'utf8');
   if (!/^Sitemap:\s+https:\/\//im.test(robots)) errors.push('robots.txt no declara un sitemap HTTPS');
 }
+
 if (!await exists(sitemapPath)) {
   errors.push('Falta dist/sitemap.xml');
 } else {
@@ -143,6 +146,23 @@ if (!await exists(sitemapPath)) {
     for (const url of sitemapUrls) {
       if (!indexableCanonicals.has(url)) errors.push(`sitemap.xml incluye URL sin canonical indexable equivalente: ${url}`);
     }
+  }
+}
+
+if (!await exists(securityPath)) {
+  errors.push('Falta dist/.well-known/security.txt');
+} else {
+  const security = await readFile(securityPath, 'utf8');
+  if (!/^Contact:\s+mailto:/im.test(security)) errors.push('security.txt no declara Contact por correo');
+  if (!/^Canonical:\s+https:\/\//im.test(security)) errors.push('security.txt no declara Canonical HTTPS');
+  if (!/^Policy:\s+https:\/\//im.test(security)) errors.push('security.txt no declara Policy HTTPS');
+  const expires = security.match(/^Expires:\s+([^\r\n]+)/im)?.[1]?.trim();
+  if (!expires) {
+    errors.push('security.txt no declara Expires');
+  } else {
+    const expiryTime = Date.parse(expires);
+    if (Number.isNaN(expiryTime)) errors.push('security.txt contiene una fecha Expires inválida');
+    else if (expiryTime <= Date.now()) errors.push('security.txt está caducado');
   }
 }
 
