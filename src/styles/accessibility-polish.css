@@ -17,6 +17,57 @@ html {
   }
 }
 
+@media (max-width: 480px) {
+  .privacy-banner {
+    bottom: 8px;
+    width: calc(100% - 16px);
+    gap: 10px;
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .privacy-banner-copy {
+    gap: 9px;
+  }
+
+  .privacy-status-dot {
+    width: 9px;
+    height: 9px;
+    margin-top: 4px;
+    box-shadow: 0 0 0 5px rgba(43, 210, 156, .11);
+  }
+
+  .privacy-banner-copy strong {
+    font-size: .82rem;
+  }
+
+  .privacy-banner-copy p {
+    font-size: .7rem;
+    line-height: 1.35;
+  }
+
+  .privacy-banner-actions {
+    grid-template-columns: .78fr 1fr 1fr;
+    gap: 6px;
+  }
+
+  .privacy-banner-actions > a {
+    grid-column: auto;
+    display: grid;
+    place-items: center;
+    min-height: 40px;
+    font-size: .66rem;
+    text-align: center;
+  }
+
+  .privacy-banner-actions .button {
+    min-height: 40px;
+    padding-inline: 8px;
+    border-radius: 10px;
+    font-size: .7rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
