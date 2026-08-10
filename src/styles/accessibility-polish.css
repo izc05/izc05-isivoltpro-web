@@ -1,0 +1,24 @@
+html {
+  scroll-padding-top: 8rem;
+}
+
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid #2166f3;
+  outline-offset: 3px;
+}
+
+:where(.site-header, .site-footer, .ivp-building-story, .ivp-work-story, .ivp-eco-story, .ivp-arch, .ivp-mcc) :where(a, button, [tabindex]):focus-visible {
+  outline-color: #7ee6f2;
+}
+
+@media (max-width: 760px) {
+  html {
+    scroll-padding-top: 6.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
