@@ -8,6 +8,7 @@ const errors = [];
 const indexableCanonicals = new Set();
 let htmlCount = 0;
 let checkedReferences = 0;
+let structuredDataBlocks = 0;
 
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -102,6 +103,20 @@ for (const file of htmlFiles) {
     errors.push(`${displayName}: usa summary_large_image sin og:image`);
   }
 
+  const jsonLdScripts = [...html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+  if (jsonLdScripts.length === 0) {
+    errors.push(`${displayName}: falta JSON-LD`);
+  } else {
+    structuredDataBlocks += jsonLdScripts.length;
+    jsonLdScripts.forEach((match, index) => {
+      try {
+        JSON.parse(match[1]);
+      } catch {
+        errors.push(`${displayName}: JSON-LD ${index + 1} no es JSON válido`);
+      }
+    });
+  }
+
   for (const id of duplicateIds(html)) errors.push(`${displayName}: id duplicado "${id}"`);
 
   const references = [...html.matchAll(/\s(?:href|src)=["']([^"']+)["']/g)].map((match) => match[1]);
@@ -174,4 +189,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`Verificación correcta: ${htmlCount} páginas HTML, ${indexableCanonicals.size} canonicals indexables y ${checkedReferences} referencias internas revisadas.`);
+console.log(`Verificación correcta: ${htmlCount} páginas HTML, ${indexableCanonicals.size} canonicals indexables, ${structuredDataBlocks} bloques JSON-LD y ${checkedReferences} referencias internas revisadas.`);
