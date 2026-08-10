@@ -36,7 +36,7 @@ export const GET: APIRoute = ({ site }) => {
   ];
 
   const urls = [...new Set(paths)].map((path) => {
-    const relative = path === '/' ? '' : path.replace(/^\/+/, '');
+    const relative = path === '/' ? '' : `${path.replace(/^\/+|\/+$/g, '')}/`;
     return `  <url><loc>${escapeXml(new URL(relative, root).toString())}</loc></url>`;
   });
 
