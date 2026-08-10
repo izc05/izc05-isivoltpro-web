@@ -20,8 +20,10 @@ El mini PC no se actualiza durante el desarrollo visual. Solo se sincroniza cuan
 - [ ] `npm run check` correcto.
 - [ ] `robots.txt` generado.
 - [ ] `sitemap.xml` generado.
+- [ ] `.well-known/security.txt` válido y no caducado.
 - [ ] Enlaces internos compatibles con `BASE_URL`.
 - [ ] Canonical y meta description presentes.
+- [ ] URLs canónicas indexables y sitemap coinciden exactamente.
 - [ ] Sin IDs duplicados.
 - [ ] Enlaces externos con `target="_blank"` protegidos con `noopener` o `noreferrer`.
 - [ ] Revisión visual de Home, Ecosistema, Mantenimiento y Aplicaciones en escritorio.
@@ -38,14 +40,15 @@ Solo después de una aprobación explícita:
 
 1. Comprobar el SHA final de la PR.
 2. Confirmar que la última ejecución de `Validar web` está en verde.
-3. Fusionar la PR en `main` con el método acordado.
-4. Esperar a que el workflow `Publicar GitHub Pages` termine correctamente.
-5. Abrir la URL publicada.
-6. Verificar Home y navegación principal.
-7. Verificar `/ecosistema`, `/mantenimiento`, `/aplicaciones` y `/recursos`.
-8. Verificar las fichas de Herramientas QR/NFC, IsiVoltPro OT y Preinspecciones BT.
-9. Revisar escritorio y móvil.
-10. No actualizar todavía el mini PC hasta aprobar esta revisión pública.
+3. Para una PR visual larga como #35, usar **squash merge** salvo decisión explícita en contrario. Así `main` recibe un único commit de release y el PR conserva todo el historial de trabajo paso a paso.
+4. Fusionar la PR en `main` con el SHA final comprobado.
+5. Esperar a que el workflow `Publicar GitHub Pages` termine correctamente.
+6. Abrir la URL publicada.
+7. Verificar Home y navegación principal.
+8. Verificar `/ecosistema`, `/mantenimiento`, `/aplicaciones` y `/recursos`.
+9. Verificar las fichas de Herramientas QR/NFC, IsiVoltPro OT y Preinspecciones BT.
+10. Revisar escritorio y móvil.
+11. No actualizar todavía el mini PC hasta aprobar esta revisión pública.
 
 ## 4. Revisión posterior a la publicación
 
@@ -54,12 +57,13 @@ Comprobar especialmente:
 - [ ] Hero y CTA principal.
 - [ ] Recorrido inmersivo completo.
 - [ ] Scroll y sticky scenes.
-- [ ] Navegación móvil.
+- [ ] Navegación móvil y tablet.
 - [ ] 404.
 - [ ] Contacto y `mailto:`.
 - [ ] Aplicaciones externas operativas.
 - [ ] `robots.txt`.
 - [ ] `sitemap.xml`.
+- [ ] `.well-known/security.txt`.
 - [ ] Consola del navegador sin errores relevantes.
 - [ ] Sin cortes o solapamientos en 390 px.
 
