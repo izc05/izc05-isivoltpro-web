@@ -27,13 +27,6 @@ const solutions = [
   { icon: '◇', title: 'Gestión de activos', text: 'Identifica herramientas, equipos e instalaciones mediante QR/NFC y consulta su contexto.' }
 ];
 
-const workflow = [
-  { icon: '⌕', title: 'Detectar', text: 'Identificamos necesidades, evaluamos instalaciones y capturamos los datos importantes.' },
-  { icon: '⚙', title: 'Gestionar', text: 'Organizamos tareas, técnicos y recursos con control y trazabilidad.' },
-  { icon: '↗', title: 'Optimizar', text: 'Analizamos resultados para reducir tiempos, pérdidas y trabajo repetido.' },
-  { icon: '◎', title: 'Evolucionar', text: 'Conectamos nuevas aplicaciones sin perder la información ya creada.' }
-];
-
 const applications = [
   { icon: '▣', name: 'Herramientas QR/NFC', copy: 'Inventario, préstamos y trazabilidad.', status: 'Operativa', live: true, href: '/aplicaciones/herramientas-maletines' },
   { icon: '⌑', name: 'IsiVoltPro OT', copy: 'Clientes, instalaciones, órdenes, técnicos y auditoría.', status: 'Operativa', live: true, href: '/aplicaciones/mantenimiento-ot' },
@@ -102,7 +95,7 @@ const structuredData = {
             <h1>Mantenimiento inteligente y aplicaciones digitales para el <span class="accent">trabajo técnico</span></h1>
             <p class="lead">Digitalizamos procesos, conectamos equipos y damos a técnicos y responsables herramientas potentes, sencillas y seguras. Todo el mantenimiento, en un solo ecosistema.</p>
             <div class="pv12-hero-actions">
-              <a class="button button-primary" href={withBase('/mantenimiento')}>Ver soluciones →</a>
+              <a class="button button-primary" href="#experiencia">Entrar en la instalación ↓</a>
               <a class="button button-secondary" href={withBase('/aplicaciones')}>Explorar aplicaciones</a>
             </div>
             <div class="pv13-live-apps" aria-label="Aplicaciones operativas">
@@ -124,28 +117,20 @@ const structuredData = {
         </div>
       </section>
 
-      <HomeOtSpotlight />
+      <div id="experiencia">
+        <HomeOtSpotlight />
+      </div>
 
       <section class="pv12-section is-soft">
         <div class="container">
-          <div class="pv12-section-head" data-premium-reveal><h2>Todo el mantenimiento en un solo ecosistema</h2></div>
+          <div class="pv12-section-head" data-premium-reveal>
+            <h2>Qué puedes controlar con IsiVoltPro</h2>
+            <p>Después de ver el flujo completo, estas son algunas de las áreas que pueden gestionarse dentro del mismo ecosistema técnico.</p>
+          </div>
           <div class="pv12-solution-grid">
             {solutions.map((item, index) => (
               <article class="pv12-solution-card" data-premium-reveal style={`transition-delay:${index * 70}ms`}>
                 <span class="pv12-card-icon">{item.icon}</span><h3>{item.title}</h3><p>{item.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section class="pv12-section">
-        <div class="container">
-          <div class="pv12-section-head" data-premium-reveal><h2>Cómo trabajamos</h2></div>
-          <div class="pv12-workflow">
-            {workflow.map((item, index) => (
-              <article class="pv12-workflow-item" data-premium-reveal style={`transition-delay:${index * 90}ms`}>
-                <span class="pv12-workflow-number">{index + 1}</span><span class="pv12-workflow-icon">{item.icon}</span><div><h3>{item.title}</h3><p>{item.text}</p></div>
               </article>
             ))}
           </div>
@@ -169,13 +154,13 @@ const structuredData = {
         </div>
       </section>
 
-      <section class="pv12-section is-soft"><div class="container"><EcosystemRoadmap /></div></section>
+      <section class="pv12-section is-soft"><div class="container"><EcosystemRoadmap title="Qué está operativo y qué viene después" /></div></section>
 
       <section class="pv12-section">
         <div class="container">
           <div class="pv12-section-head" data-premium-reveal>
-            <h2>Aplicaciones que forman el ecosistema</h2>
-            <p>Herramientas QR/NFC e IsiVoltPro OT ya están operativas. El resto del ecosistema crecerá por especialidades conectadas.</p>
+            <h2>Explora las aplicaciones</h2>
+            <p>Entra en cada especialidad para conocer su alcance, estado actual y cómo encaja dentro de IsiVoltPro.</p>
           </div>
           <div class="pv12-app-grid">
             {applications.map((app, index) => (
