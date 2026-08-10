@@ -1,0 +1,165 @@
+---
+import '../styles/ecosystem-reveal-experience.css';
+---
+
+<section class="ivp-eco-story" data-eco-story aria-labelledby="ivp-eco-title">
+  <div class="ivp-eco-sticky">
+    <div class="ivp-eco-ambient" aria-hidden="true">
+      <span class="ivp-eco-grid"></span>
+      <span class="ivp-eco-orb eco-orb-one"></span>
+      <span class="ivp-eco-orb eco-orb-two"></span>
+    </div>
+
+    <div class="container ivp-eco-layout">
+      <div class="ivp-eco-copy">
+        <div class="ivp-eco-copy-stage eco-stage-one">
+          <p class="eyebrow">09 · Salimos de la OT</p>
+          <h2 id="ivp-eco-title">Una intervención es solo una pieza.</h2>
+          <p>IsiVoltPro conecta el trabajo diario con el resto de la instalación, sus activos, recursos y especialidades técnicas.</p>
+        </div>
+
+        <div class="ivp-eco-copy-stage eco-stage-two">
+          <p class="eyebrow">10 · Aparece la plataforma</p>
+          <h2>Todo gira alrededor de un mismo contexto.</h2>
+          <p>Cliente, instalación, activo, técnico, documentación e histórico pueden ser compartidos por distintas aplicaciones sin duplicar trabajo.</p>
+        </div>
+
+        <div class="ivp-eco-copy-stage eco-stage-three">
+          <p class="eyebrow">11 · Ecosistema modular</p>
+          <h2>Usa solo lo que necesitas. Conecta lo que aporta valor.</h2>
+          <p>Las aplicaciones funcionan por especialidades, pero nacen preparadas para colaborar dentro de IsiVoltPro.</p>
+        </div>
+
+        <div class="ivp-eco-copy-stage eco-stage-four">
+          <p class="eyebrow">12 · IsiVoltPro</p>
+          <h2>Una plataforma que puede crecer con cualquier instalación.</h2>
+          <p>Desde una herramienta o una OT hasta mantenimiento integral, inspecciones, inventario, documentación y nuevas utilidades técnicas.</p>
+          <div class="ivp-eco-legend">
+            <span><i class="is-live"></i> Operativa</span>
+            <span><i class="is-build"></i> En desarrollo</span>
+            <span><i class="is-roadmap"></i> Roadmap</span>
+          </div>
+        </div>
+
+        <div class="ivp-eco-progress" aria-hidden="true"><span></span></div>
+      </div>
+
+      <div class="ivp-eco-canvas" aria-hidden="true">
+        <svg class="ivp-eco-lines" viewBox="0 0 1000 700" preserveAspectRatio="none">
+          <path d="M500 350 L500 92" />
+          <path d="M500 350 L742 156" />
+          <path d="M500 350 L865 350" />
+          <path d="M500 350 L748 548" />
+          <path d="M500 350 L500 618" />
+          <path d="M500 350 L254 548" />
+          <path d="M500 350 L135 350" />
+          <path d="M500 350 L252 158" />
+          <path class="is-inner" d="M500 350 L625 273" />
+          <path class="is-inner" d="M500 350 L625 426" />
+          <path class="is-inner" d="M500 350 L375 426" />
+          <path class="is-inner" d="M500 350 L375 273" />
+        </svg>
+
+        <div class="ivp-eco-core">
+          <span class="ivp-eco-core-ring ring-one"></span>
+          <span class="ivp-eco-core-ring ring-two"></span>
+          <div class="ivp-eco-core-logo">
+            <small>Ecosistema</small>
+            <strong>ISIVOLTPRO</strong>
+            <span>Mantenimiento conectado</span>
+          </div>
+        </div>
+
+        <div class="ivp-eco-node node-assets is-build">
+          <span class="ivp-eco-node-icon">QR</span><strong>Activos</strong><small>Identidad · QR/NFC</small>
+        </div>
+        <div class="ivp-eco-node node-ot is-live">
+          <span class="ivp-eco-node-icon">OT</span><strong>Órdenes de trabajo</strong><small>Coordinación · Campo</small>
+        </div>
+        <div class="ivp-eco-node node-maintenance is-build">
+          <span class="ivp-eco-node-icon">MT</span><strong>Mantenimiento</strong><small>Preventivo · Histórico</small>
+        </div>
+        <div class="ivp-eco-node node-tools is-live">
+          <span class="ivp-eco-node-icon">TL</span><strong>Herramientas</strong><small>Préstamos · QR/NFC</small>
+        </div>
+        <div class="ivp-eco-node node-inventory is-roadmap">
+          <span class="ivp-eco-node-icon">AL</span><strong>Inventario</strong><small>Almacén · Stock</small>
+        </div>
+        <div class="ivp-eco-node node-inspections is-roadmap">
+          <span class="ivp-eco-node-icon">BT</span><strong>Inspecciones</strong><small>Mediciones · Informes</small>
+        </div>
+        <div class="ivp-eco-node node-specialties is-roadmap">
+          <span class="ivp-eco-node-icon">SP</span><strong>Especialidades</strong><small>RITE · PCI · Legionella</small>
+        </div>
+        <div class="ivp-eco-node node-docs is-roadmap">
+          <span class="ivp-eco-node-icon">DOC</span><strong>Documentación</strong><small>Manual · Evidencias</small>
+        </div>
+
+        <div class="ivp-eco-mini-node mini-client">Cliente</div>
+        <div class="ivp-eco-mini-node mini-site">Instalación</div>
+        <div class="ivp-eco-mini-node mini-user">Técnicos</div>
+        <div class="ivp-eco-mini-node mini-data">Datos</div>
+
+        <div class="ivp-eco-summary">
+          <span><b>2</b> aplicaciones operativas</span>
+          <span><b>1</b> contexto compartido</span>
+          <span><b>∞</b> evolución modular</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const story = document.querySelector('[data-eco-story]');
+    if (!story || story.dataset.ready === 'true') return;
+    story.dataset.ready = 'true';
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let frame = 0;
+    const clamp = (value) => Math.min(1, Math.max(0, value));
+    const segment = (value, start, end) => clamp((value - start) / (end - start));
+
+    const render = () => {
+      frame = 0;
+      if (reduced.matches) {
+        story.style.setProperty('--eco-progress', '1');
+        story.style.setProperty('--core-progress', '1');
+        story.style.setProperty('--inner-progress', '1');
+        story.style.setProperty('--outer-progress', '1');
+        story.style.setProperty('--summary-progress', '1');
+        story.style.setProperty('--eco-stage-one', '0');
+        story.style.setProperty('--eco-stage-two', '0');
+        story.style.setProperty('--eco-stage-three', '0');
+        story.style.setProperty('--eco-stage-four', '1');
+        return;
+      }
+
+      const rect = story.getBoundingClientRect();
+      const distance = Math.max(1, story.offsetHeight - window.innerHeight);
+      const progress = clamp(-rect.top / distance);
+
+      story.style.setProperty('--eco-progress', progress.toFixed(4));
+      story.style.setProperty('--core-progress', segment(progress, 0.04, 0.28).toFixed(4));
+      story.style.setProperty('--inner-progress', segment(progress, 0.22, 0.50).toFixed(4));
+      story.style.setProperty('--outer-progress', segment(progress, 0.46, 0.78).toFixed(4));
+      story.style.setProperty('--summary-progress', segment(progress, 0.78, 0.96).toFixed(4));
+
+      story.style.setProperty('--eco-stage-one', (1 - segment(progress, 0.12, 0.27)).toFixed(4));
+      story.style.setProperty('--eco-stage-two', (segment(progress, 0.20, 0.34) * (1 - segment(progress, 0.43, 0.56))).toFixed(4));
+      story.style.setProperty('--eco-stage-three', (segment(progress, 0.48, 0.60) * (1 - segment(progress, 0.70, 0.81))).toFixed(4));
+      story.style.setProperty('--eco-stage-four', segment(progress, 0.76, 0.90).toFixed(4));
+    };
+
+    const requestRender = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(render);
+    };
+
+    render();
+    window.addEventListener('scroll', requestRender, { passive: true });
+    window.addEventListener('resize', requestRender, { passive: true });
+    reduced.addEventListener?.('change', requestRender);
+  })();
+</script>
