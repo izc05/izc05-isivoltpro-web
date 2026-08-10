@@ -57,21 +57,21 @@ const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(
         </div>
 
         <div class="ivp-arch-group" data-arch-group="operations" aria-hidden="true" inert>
-          <a class="ivp-arch-node node-a is-live" href={withBase('/aplicaciones/activos-qr-nfc')}><span>QR</span><strong>Activos</strong><small>Identidad e histórico</small></a>
-          <a class="ivp-arch-node node-b is-live" href={withBase('/aplicaciones/mantenimiento-ot')}><span>OT</span><strong>Órdenes</strong><small>Coordinación y campo</small></a>
-          <a class="ivp-arch-node node-c is-build" href={withBase('/mantenimiento')}><span>MT</span><strong>Mantenimiento</strong><small>Preventivo y correctivo</small></a>
-          <a class="ivp-arch-node node-d is-live" href={withBase('/aplicaciones/herramientas-maletines')}><span>QR</span><strong>Herramientas</strong><small>Préstamos y trazabilidad</small></a>
-          <a class="ivp-arch-node node-e is-build" href={withBase('/aplicaciones')}><span>AL</span><strong>Inventario</strong><small>Material y almacén</small></a>
-          <a class="ivp-arch-node node-f is-build" href={withBase('/aplicaciones/inspecciones-bt')}><span>✓</span><strong>Inspecciones</strong><small>Medición y evidencia</small></a>
+          <a class="ivp-arch-node node-a is-build" href={withBase('/aplicaciones/activos-qr-nfc')}><span>QR</span><strong>Activos</strong><small>En desarrollo · identidad e histórico</small></a>
+          <a class="ivp-arch-node node-b is-live" href={withBase('/aplicaciones/mantenimiento-ot')}><span>OT</span><strong>Órdenes</strong><small>Operativa · coordinación y campo</small></a>
+          <a class="ivp-arch-node node-c is-build" href={withBase('/mantenimiento')}><span>MT</span><strong>Mantenimiento</strong><small>Evolución · preventivo y correctivo</small></a>
+          <a class="ivp-arch-node node-d is-live" href={withBase('/aplicaciones/herramientas-maletines')}><span>HM</span><strong>Herramientas</strong><small>Operativa · préstamos y trazabilidad</small></a>
+          <a class="ivp-arch-node node-e is-build" href={withBase('/aplicaciones/inventario-almacen')}><span>AL</span><strong>Inventario</strong><small>En desarrollo · material y almacén</small></a>
+          <a class="ivp-arch-node node-f is-build" href={withBase('/aplicaciones/inspecciones-bt')}><span>BT</span><strong>Inspecciones</strong><small>En desarrollo · medición y evidencia</small></a>
         </div>
 
         <div class="ivp-arch-group" data-arch-group="specialties" aria-hidden="true" inert>
-          <a class="ivp-arch-node node-a is-build" href={withBase('/aplicaciones/inspecciones-bt')}><span>BT</span><strong>Electricidad</strong><small>REBT · cuadros · inspección</small></a>
-          <a class="ivp-arch-node node-b is-roadmap" href={withBase('/aplicaciones/climatizacion-rite')}><span>RT</span><strong>RITE</strong><small>Climatización y térmicas</small></a>
-          <a class="ivp-arch-node node-c is-roadmap" href={withBase('/aplicaciones/pci')}><span>PCI</span><strong>PCI</strong><small>Protección contra incendios</small></a>
-          <a class="ivp-arch-node node-d is-roadmap" href={withBase('/aplicaciones/legionella-agua')}><span>H₂O</span><strong>Legionella</strong><small>Agua y controles</small></a>
-          <a class="ivp-arch-node node-e is-roadmap" href={withBase('/aplicaciones/documentacion-tecnica')}><span>DOC</span><strong>Documentación</strong><small>Informes y conocimiento</small></a>
-          <a class="ivp-arch-node node-f is-roadmap" href={withBase('/aplicaciones')}><span>AI</span><strong>IA y cálculos</strong><small>Utilidades técnicas</small></a>
+          <a class="ivp-arch-node node-a is-build" href={withBase('/aplicaciones/inspecciones-bt')}><span>BT</span><strong>Electricidad</strong><small>En desarrollo · inspección BT</small></a>
+          <a class="ivp-arch-node node-b is-roadmap" href={withBase('/aplicaciones/climatizacion-rite')}><span>RT</span><strong>RITE</strong><small>Roadmap · climatización y térmicas</small></a>
+          <a class="ivp-arch-node node-c is-roadmap" href={withBase('/aplicaciones/pci')}><span>PCI</span><strong>PCI</strong><small>Roadmap · protección contra incendios</small></a>
+          <a class="ivp-arch-node node-d is-roadmap" href={withBase('/aplicaciones/legionella-agua')}><span>H₂O</span><strong>Legionella</strong><small>Roadmap · agua y controles</small></a>
+          <a class="ivp-arch-node node-e is-roadmap" href={withBase('/aplicaciones/documentacion-tecnica')}><span>DOC</span><strong>Documentación</strong><small>Roadmap · informes y conocimiento</small></a>
+          <a class="ivp-arch-node node-f is-roadmap" href={withBase('/aplicaciones/utilidades-asistentes')}><span>AI</span><strong>IA y utilidades</strong><small>Roadmap · asistentes y cálculos</small></a>
         </div>
 
         <div class="ivp-arch-pulse" aria-hidden="true"></div>
@@ -92,7 +92,7 @@ const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(
         <div class="ivp-arch-panel-view" data-arch-panel="operations" aria-hidden="true" inert>
           <p class="eyebrow">Capa 2 · Trabajo diario</p>
           <h2>Aplicaciones independientes, datos conectables.</h2>
-          <p>Activos, OT, mantenimiento, herramientas, inventario e inspecciones pueden evolucionar por separado sin convertirse en silos.</p>
+          <p>Herramientas QR/NFC e IsiVoltPro OT ya están operativas. Activos, inventario e inspecciones avanzan como siguientes piezas del ecosistema.</p>
           <div class="ivp-arch-status-row">
             <span><i class="is-live"></i> Operativa</span>
             <span><i class="is-build"></i> En desarrollo</span>
@@ -103,7 +103,7 @@ const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(
         <div class="ivp-arch-panel-view" data-arch-panel="specialties" aria-hidden="true" inert>
           <p class="eyebrow">Capa 3 · Especialidades</p>
           <h2>El mantenimiento no es una sola disciplina.</h2>
-          <p>Electricidad, climatización, PCI, agua, documentación y futuras utilidades técnicas se incorporan como capas especializadas.</p>
+          <p>Electricidad, climatización, PCI, agua, documentación y futuras utilidades técnicas se incorporan por etapas, manteniendo una arquitectura común.</p>
           <div class="ivp-arch-status-row">
             <span><i class="is-build"></i> En desarrollo</span>
             <span><i class="is-roadmap"></i> Roadmap</span>
