@@ -1,0 +1,187 @@
+---
+import '../styles/maintenance-workflow-experience.css';
+---
+
+<section class="ivp-work-story" data-work-story aria-labelledby="ivp-work-title">
+  <div class="ivp-work-sticky">
+    <div class="ivp-work-ambient" aria-hidden="true">
+      <span class="ivp-work-grid"></span>
+      <span class="ivp-work-orb"></span>
+    </div>
+
+    <div class="container ivp-work-layout">
+      <div class="ivp-work-copy">
+        <div class="ivp-work-copy-stage stage-incident">
+          <p class="eyebrow">05 · Detectamos</p>
+          <h2 id="ivp-work-title">Una incidencia no se pierde.</h2>
+          <p>UTA-02 comunica el problema con ubicación, activo, prioridad y contexto técnico desde el primer momento.</p>
+        </div>
+
+        <div class="ivp-work-copy-stage stage-order">
+          <p class="eyebrow">06 · Generamos la OT</p>
+          <h2>El problema se convierte en trabajo organizado.</h2>
+          <p>La orden nace vinculada al activo y conserva toda la información necesaria para coordinación y campo.</p>
+        </div>
+
+        <div class="ivp-work-copy-stage stage-tech">
+          <p class="eyebrow">07 · Actuamos</p>
+          <h2>El técnico recibe solo lo que necesita.</h2>
+          <p>Acepta, inicia, registra tiempos, añade fotografías, materiales y deja constancia de la actuación.</p>
+        </div>
+
+        <div class="ivp-work-copy-stage stage-close">
+          <p class="eyebrow">08 · Cerramos y aprendemos</p>
+          <h2>Cada intervención mejora el histórico.</h2>
+          <p>El cierre actualiza el activo, conserva evidencias y alimenta el mantenimiento futuro de la instalación.</p>
+        </div>
+
+        <div class="ivp-work-progress" aria-hidden="true"><span></span></div>
+      </div>
+
+      <div class="ivp-work-console" aria-hidden="true">
+        <div class="ivp-console-topbar">
+          <span class="ivp-console-brand">ISIVOLTPRO · OPERACIONES</span>
+          <span class="ivp-console-live"><i></i> Tiempo real</span>
+        </div>
+
+        <div class="ivp-console-map">
+          <span class="ivp-map-grid"></span>
+          <div class="ivp-map-building">
+            <span class="ivp-map-floor f4"></span>
+            <span class="ivp-map-floor f3"></span>
+            <span class="ivp-map-floor f2"></span>
+            <span class="ivp-map-floor f1"></span>
+            <span class="ivp-map-target"><i></i><b>UTA-02</b><small>Climatización</small></span>
+          </div>
+        </div>
+
+        <article class="ivp-incident-card">
+          <header><span>INCIDENCIA</span><strong>Prioridad alta</strong></header>
+          <h3>Temperatura de impulsión fuera de rango</h3>
+          <dl>
+            <div><dt>Activo</dt><dd>UTA-02</dd></div>
+            <div><dt>Ubicación</dt><dd>Planta técnica</dd></div>
+            <div><dt>Origen</dt><dd>Revisión / aviso</dd></div>
+          </dl>
+          <div class="ivp-incident-actions"><span>Foto</span><span>Histórico</span><span>Documentación</span></div>
+        </article>
+
+        <article class="ivp-order-card">
+          <div class="ivp-order-head">
+            <span>OT-2026-00482</span>
+            <strong>Asignada</strong>
+          </div>
+          <h3>Revisar UTA-02 · temperatura de impulsión</h3>
+          <div class="ivp-order-meta">
+            <span><small>Cliente</small>Centro sanitario</span>
+            <span><small>Activo</small>UTA-02</span>
+            <span><small>Prioridad</small>Alta</span>
+          </div>
+          <div class="ivp-order-route">
+            <span class="is-done">Creada</span><i></i><span class="is-active">Asignada</span><i></i><span>En curso</span><i></i><span>Cerrada</span>
+          </div>
+        </article>
+
+        <div class="ivp-tech-phone">
+          <div class="ivp-phone-speaker"></div>
+          <div class="ivp-phone-screen">
+            <div class="ivp-phone-head"><span>OT-2026-00482</span><b>Alta</b></div>
+            <p class="ivp-phone-location">Planta técnica · UTA-02</p>
+            <h3>Temperatura de impulsión fuera de rango</h3>
+            <div class="ivp-phone-state"><i></i><span>En curso</span><small>00:27:14</small></div>
+            <div class="ivp-phone-checks">
+              <span class="done">✓ Revisar filtros</span>
+              <span class="done">✓ Verificar sonda</span>
+              <span>○ Comprobar compuerta</span>
+            </div>
+            <div class="ivp-phone-evidence"><span>+ Foto</span><span>+ Material</span></div>
+            <div class="ivp-phone-action">Registrar actuación</div>
+          </div>
+        </div>
+
+        <article class="ivp-close-card">
+          <span class="ivp-close-check">✓</span>
+          <div>
+            <small>OT CERRADA</small>
+            <h3>UTA-02 vuelve a operación normal</h3>
+            <p>Sonda reajustada · comprobación funcional correcta</p>
+          </div>
+          <dl>
+            <div><dt>Tiempo</dt><dd>42 min</dd></div>
+            <div><dt>Evidencias</dt><dd>3</dd></div>
+            <div><dt>Histórico</dt><dd>Actualizado</dd></div>
+          </dl>
+        </article>
+
+        <div class="ivp-history-stream">
+          <div class="ivp-history-line"></div>
+          <span class="ivp-history-event e1"><i></i><b>Incidencia</b><small>18:04</small></span>
+          <span class="ivp-history-event e2"><i></i><b>OT creada</b><small>18:06</small></span>
+          <span class="ivp-history-event e3"><i></i><b>Actuación</b><small>18:21</small></span>
+          <span class="ivp-history-event e4"><i></i><b>Cierre</b><small>19:03</small></span>
+        </div>
+
+        <span class="ivp-console-status">Activo · trabajo · histórico conectados</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const story = document.querySelector('[data-work-story]');
+    if (!story || story.dataset.ready === 'true') return;
+    story.dataset.ready = 'true';
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let frame = 0;
+    const clamp = (value) => Math.min(1, Math.max(0, value));
+    const segment = (value, start, end) => clamp((value - start) / (end - start));
+    const pulse = (value, startIn, endIn, startOut, endOut) =>
+      segment(value, startIn, endIn) * (1 - segment(value, startOut, endOut));
+
+    const render = () => {
+      frame = 0;
+      if (reduced.matches) {
+        story.style.setProperty('--work-progress', '1');
+        story.style.setProperty('--incident', '0');
+        story.style.setProperty('--order', '0');
+        story.style.setProperty('--tech', '0');
+        story.style.setProperty('--close', '1');
+        story.style.setProperty('--history', '1');
+        story.style.setProperty('--copy-incident', '0');
+        story.style.setProperty('--copy-order', '0');
+        story.style.setProperty('--copy-tech', '0');
+        story.style.setProperty('--copy-close', '1');
+        return;
+      }
+
+      const rect = story.getBoundingClientRect();
+      const distance = Math.max(1, story.offsetHeight - window.innerHeight);
+      const progress = clamp(-rect.top / distance);
+
+      story.style.setProperty('--work-progress', progress.toFixed(4));
+      story.style.setProperty('--incident', pulse(progress, .03, .13, .26, .35).toFixed(4));
+      story.style.setProperty('--order', pulse(progress, .23, .34, .48, .57).toFixed(4));
+      story.style.setProperty('--tech', pulse(progress, .45, .56, .69, .78).toFixed(4));
+      story.style.setProperty('--close', segment(progress, .70, .82).toFixed(4));
+      story.style.setProperty('--history', segment(progress, .78, .94).toFixed(4));
+      story.style.setProperty('--map-focus', segment(progress, .02, .18).toFixed(4));
+
+      story.style.setProperty('--copy-incident', pulse(progress, .01, .08, .19, .27).toFixed(4));
+      story.style.setProperty('--copy-order', pulse(progress, .23, .31, .42, .50).toFixed(4));
+      story.style.setProperty('--copy-tech', pulse(progress, .47, .55, .65, .73).toFixed(4));
+      story.style.setProperty('--copy-close', segment(progress, .73, .82).toFixed(4));
+    };
+
+    const requestRender = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(render);
+    };
+
+    render();
+    window.addEventListener('scroll', requestRender, { passive: true });
+    window.addEventListener('resize', requestRender, { passive: true });
+    reduced.addEventListener?.('change', requestRender);
+  })();
+</script>
