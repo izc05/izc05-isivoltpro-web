@@ -36,6 +36,19 @@ html {
   white-space: nowrap;
 }
 
+.footer-status.is-beta {
+  border-color: rgba(244, 183, 64, .28);
+}
+
+.footer-status.is-beta i {
+  background: #f4b740;
+  box-shadow: 0 0 0 4px rgba(244, 183, 64, .12);
+}
+
+.footer-status.is-beta strong {
+  color: #ffd584;
+}
+
 @media (max-width: 760px) {
   html {
     scroll-padding-top: 6.5rem;
