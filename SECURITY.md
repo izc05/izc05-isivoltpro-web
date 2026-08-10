@@ -18,13 +18,13 @@ No publiques información explotable en una incidencia pública de GitHub antes 
 
 ## Alcance actual
 
-La política cubre:
+Esta política cubre específicamente:
 
-- La web corporativa de IsiVoltPro.
+- La web corporativa pública de IsiVoltPro.
 - La configuración de despliegue incluida en este repositorio.
 - Los componentes estáticos y scripts propios del sitio.
 
-Las aplicaciones del ecosistema tendrán una política y un proceso de seguridad específicos antes de abrirse a usuarios externos.
+Las aplicaciones operativas y beta del ecosistema —como Herramientas QR/NFC, IsiVoltPro OT o Preinspecciones BT— tienen ciclos de desarrollo y despliegue propios. Sus incidencias de seguridad deben revisarse también en el repositorio o servicio correspondiente, sin asumir que una corrección de la web pública modifica automáticamente esas aplicaciones.
 
 ## Principios
 
@@ -32,4 +32,5 @@ Las aplicaciones del ecosistema tendrán una política y un proceso de seguridad
 - Sin analítica ni publicidad activa en la web actual.
 - Dependencias revisadas y actualizadas.
 - Cabeceras seguras en el despliegue propio.
-- Separación futura entre desarrollo, pruebas y producción.
+- Separación entre desarrollo, validación y producción.
+- Cambios pequeños, verificables y reversibles antes de publicar.
