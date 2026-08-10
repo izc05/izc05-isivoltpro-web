@@ -74,6 +74,7 @@ for (const file of htmlFiles) {
 
   if (/http:\/\//i.test(html)) errors.push(`${displayName}: contiene una URL http sin cifrar`);
   if (/<html(?![^>]*\slang=["']es["'])/i.test(html)) errors.push(`${displayName}: falta lang="es"`);
+  if (!/<title>[^<]+<\/title>/i.test(html)) errors.push(`${displayName}: falta title`);
   if (!/<meta[^>]+name=["']description["']/i.test(html)) errors.push(`${displayName}: falta meta description`);
   if (!/<link[^>]+rel=["']canonical["']/i.test(html)) errors.push(`${displayName}: falta canonical`);
 
@@ -94,6 +95,21 @@ for (const file of htmlFiles) {
       errors.push(`${displayName}: enlace target="_blank" sin rel="noopener"`);
     }
   }
+}
+
+const robotsPath = resolve(distDir, 'robots.txt');
+const sitemapPath = resolve(distDir, 'sitemap.xml');
+if (!await exists(robotsPath)) {
+  errors.push('Falta dist/robots.txt');
+} else {
+  const robots = await readFile(robotsPath, 'utf8');
+  if (!/^Sitemap:\s+https:\/\//im.test(robots)) errors.push('robots.txt no declara un sitemap HTTPS');
+}
+if (!await exists(sitemapPath)) {
+  errors.push('Falta dist/sitemap.xml');
+} else {
+  const sitemap = await readFile(sitemapPath, 'utf8');
+  if (!/<urlset\b/i.test(sitemap) || !/<loc>https:\/\//i.test(sitemap)) errors.push('sitemap.xml no contiene URLs HTTPS válidas');
 }
 
 if (htmlCount === 0) errors.push('No se generaron archivos HTML en dist');
