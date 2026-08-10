@@ -62,11 +62,11 @@ const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(
           <a class="ivp-arch-node node-c is-build" href={withBase('/mantenimiento')}><span>MT</span><strong>Mantenimiento</strong><small>Evolución · preventivo y correctivo</small></a>
           <a class="ivp-arch-node node-d is-live" href={withBase('/aplicaciones/herramientas-maletines')}><span>HM</span><strong>Herramientas</strong><small>Operativa · préstamos y trazabilidad</small></a>
           <a class="ivp-arch-node node-e is-build" href={withBase('/aplicaciones/inventario-almacen')}><span>AL</span><strong>Inventario</strong><small>En desarrollo · material y almacén</small></a>
-          <a class="ivp-arch-node node-f is-build" href={withBase('/aplicaciones/inspecciones-bt')}><span>BT</span><strong>Inspecciones</strong><small>En desarrollo · medición y evidencia</small></a>
+          <a class="ivp-arch-node node-f is-live" href={withBase('/aplicaciones/inspecciones-bt')}><span>BT</span><strong>Preinspecciones</strong><small>Beta operativa · local-first</small></a>
         </div>
 
         <div class="ivp-arch-group" data-arch-group="specialties" aria-hidden="true" inert>
-          <a class="ivp-arch-node node-a is-build" href={withBase('/aplicaciones/inspecciones-bt')}><span>BT</span><strong>Electricidad</strong><small>En desarrollo · inspección BT</small></a>
+          <a class="ivp-arch-node node-a is-live" href={withBase('/aplicaciones/inspecciones-bt')}><span>BT</span><strong>Electricidad</strong><small>Beta operativa · preinspección BT</small></a>
           <a class="ivp-arch-node node-b is-roadmap" href={withBase('/aplicaciones/climatizacion-rite')}><span>RT</span><strong>RITE</strong><small>Roadmap · climatización y térmicas</small></a>
           <a class="ivp-arch-node node-c is-roadmap" href={withBase('/aplicaciones/pci')}><span>PCI</span><strong>PCI</strong><small>Roadmap · protección contra incendios</small></a>
           <a class="ivp-arch-node node-d is-roadmap" href={withBase('/aplicaciones/legionella-agua')}><span>H₂O</span><strong>Legionella</strong><small>Roadmap · agua y controles</small></a>
@@ -92,9 +92,9 @@ const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(
         <div class="ivp-arch-panel-view" data-arch-panel="operations" aria-hidden="true" inert>
           <p class="eyebrow">Capa 2 · Trabajo diario</p>
           <h2>Aplicaciones independientes, datos conectables.</h2>
-          <p>Herramientas QR/NFC e IsiVoltPro OT ya están operativas. Activos, inventario e inspecciones avanzan como siguientes piezas del ecosistema.</p>
+          <p>Herramientas QR/NFC e IsiVoltPro OT ya están operativas. Preinspecciones BT funciona como beta local-first; Activos e Inventario continúan en desarrollo.</p>
           <div class="ivp-arch-status-row">
-            <span><i class="is-live"></i> Operativa</span>
+            <span><i class="is-live"></i> Operativa / Beta</span>
             <span><i class="is-build"></i> En desarrollo</span>
           </div>
           <a class="button button-primary" href={withBase('/aplicaciones')}>Explorar aplicaciones →</a>
@@ -103,9 +103,9 @@ const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(
         <div class="ivp-arch-panel-view" data-arch-panel="specialties" aria-hidden="true" inert>
           <p class="eyebrow">Capa 3 · Especialidades</p>
           <h2>El mantenimiento no es una sola disciplina.</h2>
-          <p>Electricidad, climatización, PCI, agua, documentación y futuras utilidades técnicas se incorporan por etapas, manteniendo una arquitectura común.</p>
+          <p>Preinspecciones BT abre la capa eléctrica en beta; climatización, PCI, agua, documentación y futuras utilidades técnicas se incorporan por etapas sobre una arquitectura común.</p>
           <div class="ivp-arch-status-row">
-            <span><i class="is-build"></i> En desarrollo</span>
+            <span><i class="is-live"></i> Beta operativa</span>
             <span><i class="is-roadmap"></i> Roadmap</span>
           </div>
           <a class="button button-secondary" href={withBase('/contacto')}>Plantear una especialidad</a>
