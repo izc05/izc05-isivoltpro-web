@@ -54,7 +54,9 @@ const section = normalizedPath.startsWith('/aplicaciones')
             : normalizedPath.startsWith('/sobre-isivoltpro')
               ? { href: '/sobre-isivoltpro', label: 'IsiVoltPro' }
               : { href: normalizedPath, label: 'Información' };
-const pageLabel = pageLabels[normalizedPath] ?? section.label;
+const pageLabel = normalizedPath.startsWith('/recursos/')
+  ? 'Recurso técnico'
+  : pageLabels[normalizedPath] ?? section.label;
 const showLocation = normalizedPath !== '/';
 const nestedLocation = normalizedPath !== section.href;
 ---
