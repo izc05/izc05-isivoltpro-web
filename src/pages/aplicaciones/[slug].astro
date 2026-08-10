@@ -2,6 +2,7 @@
 import PageLayout from '../../layouts/PageLayout.astro';
 import ToolsProductShowcase from '../../components/ToolsProductShowcase.astro';
 import OtProductShowcase from '../../components/OtProductShowcase.astro';
+import BtProductShowcase from '../../components/BtProductShowcase.astro';
 import RoadmapProductShowcase from '../../components/RoadmapProductShowcase.astro';
 import { ecosystemAreas, type EcosystemArea } from '../../data/catalog';
 
@@ -13,6 +14,7 @@ interface Props { area: EcosystemArea; }
 const { area } = Astro.props;
 const isOperationalOT = area.slug === 'mantenimiento-ot';
 const isToolsProduct = area.slug === 'herramientas-maletines';
+const isBtProduct = area.slug === 'inspecciones-bt';
 ---
 
 <PageLayout title={area.name} description={area.description}>
@@ -20,6 +22,8 @@ const isToolsProduct = area.slug === 'herramientas-maletines';
     <ToolsProductShowcase area={area} />
   ) : isOperationalOT ? (
     <OtProductShowcase />
+  ) : isBtProduct ? (
+    <BtProductShowcase />
   ) : (
     <RoadmapProductShowcase area={area} />
   )}
