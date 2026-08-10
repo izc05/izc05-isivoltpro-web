@@ -2,59 +2,100 @@
 import PageLayout from '../layouts/PageLayout.astro';
 import AppDeviceVisual from '../components/AppDeviceVisual.astro';
 import EcosystemRoadmap from '../components/EcosystemRoadmap.astro';
+import EcosystemArchitectureExplorer from '../components/EcosystemArchitectureExplorer.astro';
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
 
 const flow = [
-  { title: 'Capturar', icon: '⌗', text: 'Registra datos desde campo con QR/NFC, formularios, fotografías o integraciones.' },
-  { title: 'Organizar', icon: '▱', text: 'Centraliza activos, técnicos, documentos y configuraciones en una base común.' },
-  { title: 'Ejecutar', icon: '▷', text: 'Gestiona tareas, inspecciones y mantenimientos con flujos claros y verificables.' },
-  { title: 'Verificar', icon: '◇', text: 'Asegura el resultado con evidencias, firmas, mediciones y validaciones.' },
-  { title: 'Analizar', icon: '▥', text: 'Convierte la actividad técnica en información útil para decidir y mejorar.' }
+  { title: 'Identificar', icon: '01', text: 'Cliente, instalación, ubicación y activo crean el contexto físico sobre el que trabaja todo el ecosistema.' },
+  { title: 'Conectar', icon: '02', text: 'QR/NFC, documentos, personas y datos quedan relacionados con el elemento correcto sin duplicar información.' },
+  { title: 'Ejecutar', icon: '03', text: 'OT, mantenimiento, herramientas, inventario e inspecciones utilizan ese contexto durante el trabajo diario.' },
+  { title: 'Verificar', icon: '04', text: 'Fotografías, mediciones, checklist, materiales, firmas y resultados dejan evidencia de lo realizado.' },
+  { title: 'Reutilizar', icon: '05', text: 'El histórico vuelve al activo y queda disponible para la siguiente intervención, revisión o decisión.' }
 ];
 
 const benefits = [
-  { icon: '▤', title: 'Dato único', text: 'Una fuente común evita duplicidades y errores.' },
-  { icon: '✓', title: 'Trazabilidad total', text: 'Cada activo, tarea y movimiento conserva su contexto.' },
-  { icon: '↗', title: 'Menos papel', text: 'Procesos digitales con evidencias ordenadas.' },
-  { icon: '▯', title: 'Movilidad real', text: 'Trabajo desde cualquier lugar, online u offline.' },
-  { icon: '◉', title: 'Visibilidad operativa', text: 'Paneles e informes para tomar decisiones.' },
-  { icon: '◇', title: 'Crecimiento modular', text: 'Activa solo lo necesario y amplía a tu ritmo.' }
+  { icon: '▤', title: 'Dato único', text: 'La información esencial se registra una vez y puede reutilizarse donde aporta valor.' },
+  { icon: '✓', title: 'Trazabilidad total', text: 'Activos, órdenes, tareas y movimientos conservan su contexto e histórico.' },
+  { icon: '↗', title: 'Menos trabajo repetido', text: 'Evita reconstruir después información que ya existía durante la intervención.' },
+  { icon: '▯', title: 'Trabajo de campo', text: 'La información acompaña al técnico mediante experiencias adaptadas a móvil.' },
+  { icon: '◉', title: 'Visibilidad operativa', text: 'Coordinación y responsables pueden seguir el estado real del trabajo.' },
+  { icon: '◇', title: 'Crecimiento modular', text: 'Cada aplicación puede avanzar por separado y conectarse cuando sea útil.' }
 ];
 ---
 
-<PageLayout title="Ecosistema conectado para el mantenimiento técnico" description="IsiVoltPro conecta herramientas, activos, personas, órdenes, inspecciones y documentación en una base digital modular.">
-  <section class="pv12-eco-hero">
-    <div class="container pv12-eco-hero-grid">
-      <div data-premium-reveal>
-        <p class="eyebrow">Ecosistema IsiVoltPro</p>
-        <h1>Un ecosistema completo para el <span class="accent">mantenimiento técnico</span></h1>
-        <p class="lead">IsiVoltPro conecta operaciones, activos, técnicos, inspecciones, herramientas y conocimiento técnico en una única base digital. Empieza por una pieza y amplía sin perder el trabajo ya realizado.</p>
-        <div class="pv12-hero-actions"><a class="button button-primary" href={withBase('/aplicaciones')}>Ver aplicaciones →</a><a class="button button-secondary" href={withBase('/contacto')}>Solicitar demo</a></div>
-        <div class="pv12-pill-row"><span class="pv12-pill">◇ Todo conectado</span><span class="pv12-pill">◉ Datos en tiempo real</span><span class="pv12-pill">✓ Escalable y seguro</span></div>
-      </div>
+<PageLayout title="Ecosistema conectado para el mantenimiento técnico" description="IsiVoltPro conecta clientes, instalaciones, activos, personas, órdenes, herramientas, inspecciones, documentación y especialidades técnicas en una arquitectura modular.">
+  <EcosystemArchitectureExplorer />
 
-      <div class="pv12-network" data-premium-reveal data-parallax-root aria-label="Mapa visual del ecosistema IsiVoltPro">
-        <div class="pv12-network-lines" aria-hidden="true"></div>
-        <div class="pv12-network-core" data-parallax=".5"><div><b>I</b><strong>IsiVoltPro</strong></div></div>
-        <a class="pv12-network-node node-a" href={withBase('/aplicaciones/herramientas-maletines')} data-parallax="1.3"><i>▦</i><span><strong>Herramientas QR/NFC</strong><small>Operativa</small></span></a>
-        <a class="pv12-network-node node-b" href={withBase('/aplicaciones/activos-qr-nfc')} data-parallax="1.1"><i>◇</i><span><strong>Activos</strong><small>Identidad e historial</small></span></a>
-        <a class="pv12-network-node node-c" href={withBase('/aplicaciones/documentacion-tecnica')} data-parallax="1.5"><i>▤</i><span><strong>Documentación</strong><small>Planos e informes</small></span></a>
-        <a class="pv12-network-node node-d" href={withBase('/aplicaciones/mantenimiento-ot')} data-parallax="1.4"><i>OT</i><span><strong>IsiVoltPro OT</strong><small>Operativa</small></span></a>
-        <a class="pv12-network-node node-e" href={withBase('/aplicaciones/inspecciones-bt')} data-parallax="1.1"><i>✓</i><span><strong>Inspecciones BT</strong><small>Medición y evidencia</small></span></a>
-        <a class="pv12-network-node node-f" href={withBase('/aplicaciones/climatizacion-rite')} data-parallax="1.55"><i>▥</i><span><strong>RITE y especialidades</strong><small>Flujos técnicos</small></span></a>
+  <section class="pv12-section is-soft">
+    <div class="container">
+      <div class="pv12-section-head" data-premium-reveal>
+        <p class="eyebrow">Cómo circula el contexto</p>
+        <h2>La información acompaña al trabajo de principio a fin</h2>
+        <p>IsiVoltPro no pretende meter todo en una única pantalla. La plataforma conserva una base común y permite que cada aplicación utilice solo el contexto que necesita.</p>
+      </div>
+      <div class="pv12-flow-grid">
+        {flow.map((item,index)=><article class="pv12-flow-card" data-premium-reveal style={`transition-delay:${index*70}ms`}><b>{item.icon}</b><h3>{item.title}</h3><p>{item.text}</p></article>)}
       </div>
     </div>
   </section>
 
-  <section class="pv12-section is-soft"><div class="container"><div class="pv12-section-head" data-premium-reveal><p class="eyebrow">Cómo se conecta todo</p><h2>La información acompaña al trabajo de principio a fin</h2></div><div class="pv12-flow-grid">{flow.map((item,index)=><article class="pv12-flow-card" data-premium-reveal style={`transition-delay:${index*70}ms`}><b>{index+1}</b><h3>{item.icon} {item.title}</h3><p>{item.text}</p></article>)}</div></div></section>
+  <section class="pv12-section">
+    <div class="container">
+      <div class="pv12-section-head" data-premium-reveal>
+        <p class="eyebrow">Arquitectura pensada para mantenimiento</p>
+        <h2>Conectar no significa complicar</h2>
+        <p>Cada módulo debe resolver bien su trabajo y compartir datos solo cuando eso reduce errores, mejora trazabilidad o evita tareas repetidas.</p>
+      </div>
+      <div class="pv12-benefit-grid">
+        {benefits.map((item,index)=><article class="pv12-benefit-card" data-premium-reveal style={`transition-delay:${index*55}ms`}><i>{item.icon}</i><h3>{item.title}</h3><p>{item.text}</p></article>)}
+      </div>
+    </div>
+  </section>
 
-  <section class="pv12-section"><div class="container"><div class="pv12-section-head" data-premium-reveal><h2>Qué aporta el ecosistema</h2></div><div class="pv12-benefit-grid">{benefits.map((item,index)=><article class="pv12-benefit-card" data-premium-reveal style={`transition-delay:${index*55}ms`}><i>{item.icon}</i><h3>{item.title}</h3><p>{item.text}</p></article>)}</div></div></section>
+  <section class="pv12-section" style="padding-top:0">
+    <div class="container">
+      <div class="pv12-eco-highlight" data-premium-reveal>
+        <div class="pv12-eco-highlight-copy">
+          <p class="eyebrow" style="color:#5fe0ef">Productos disponibles</p>
+          <h2>El ecosistema ya tiene piezas reales funcionando</h2>
+          <p>Herramientas QR/NFC e IsiVoltPro OT son aplicaciones operativas. Preinspecciones BT se encuentra en beta local-first y permite validar la primera especialidad técnica del ecosistema.</p>
+          <ul class="pv12-feature-list">
+            <li>Herramientas: inventario, técnicos, préstamos y devoluciones</li>
+            <li>Identificación y trazabilidad mediante QR/NFC</li>
+            <li>OT: clientes, instalaciones, asignación y estados</li>
+            <li>Zona móvil para técnicos y seguimiento cronológico</li>
+            <li>Preinspecciones BT: checklist, mediciones, evidencias y modo offline</li>
+            <li>Base común preparada para activos, inventario y nuevas especialidades</li>
+          </ul>
+          <div class="pv12-hero-actions">
+            <a class="button button-dark" href={withBase('/aplicaciones')}>Explorar aplicaciones →</a>
+            <a class="button button-secondary" href={withBase('/mantenimiento')}>Ver mantenimiento conectado</a>
+          </div>
+        </div>
+        <AppDeviceVisual compact={true} showMetrics={false} label="Aplicaciones operativas y beta de IsiVoltPro" />
+      </div>
+    </div>
+  </section>
 
-  <section class="pv12-section" style="padding-top:0"><div class="container"><div class="pv12-eco-highlight" data-premium-reveal><div class="pv12-eco-highlight-copy"><p class="eyebrow" style="color:#5fe0ef">Primera aplicación operativa</p><h2>Herramientas QR/NFC</h2><p>La primera aplicación funcional de IsiVoltPro ya controla inventario, técnicos, préstamos, devoluciones, etiquetas QR/NFC e historial de movimientos.</p><ul class="pv12-feature-list"><li>Inventario de herramientas y equipos</li><li>Préstamos y devoluciones con historial</li><li>Etiquetado y trazabilidad QR/NFC</li><li>Rutas de trabajo y verificaciones</li><li>Preparada para crecer con más módulos</li><li>Integrada en la identidad IsiVoltPro</li></ul><a class="button button-dark" href={withBase('/aplicaciones/herramientas-maletines')}>Explorar Herramientas QR/NFC →</a></div><AppDeviceVisual compact={true} showMetrics={false} /></div></div></section>
+  <section class="pv12-section is-soft">
+    <div class="container">
+      <EcosystemRoadmap title="Dos aplicaciones operativas. Una beta. Un ecosistema preparado para crecer." />
+    </div>
+  </section>
 
-  <section class="pv12-section is-soft"><div class="container"><EcosystemRoadmap title="Herramientas y OT ya están operativas. Ahora crece el ecosistema." /></div></section>
-
-  <section class="pv12-section"><div class="container"><div class="pv12-final-cta" data-premium-reveal><span class="pv12-final-cta-icon">↗</span><div><h2>Empieza hoy. Escala mañana.</h2><p>Activa la pieza que necesitas y crece con un ecosistema diseñado para conectar personas, instalaciones y conocimiento.</p></div><a class="button button-primary" href={withBase('/contacto')}>Solicitar demo personalizada</a></div></div></section>
+  <section class="pv12-section">
+    <div class="container">
+      <div class="pv12-final-cta" data-premium-reveal>
+        <span class="pv12-final-cta-icon">↗</span>
+        <div>
+          <p class="eyebrow">IsiVoltPro crece por capas</p>
+          <h2>Empieza por una necesidad real. Conecta después.</h2>
+          <p>Una empresa puede comenzar con herramientas, OT, activos o una especialidad concreta y ampliar el ecosistema sin rehacer todo desde cero.</p>
+        </div>
+        <a class="button button-primary" href={withBase('/contacto')}>Plantear una instalación</a>
+      </div>
+    </div>
+  </section>
 </PageLayout>

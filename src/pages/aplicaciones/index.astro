@@ -1,77 +1,115 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
+import EcosystemExplorer from '../../components/EcosystemExplorer.astro';
 import EcosystemRoadmap from '../../components/EcosystemRoadmap.astro';
 import { ecosystemAreas } from '../../data/catalog';
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
-const isOperational = (status: string) => status === 'Operativa' || status === 'Publicada';
-const publicApps: Record<string, string> = {
-  'herramientas-maletines': 'https://qr.isivoltpro.com/',
-  'mantenimiento-ot': 'https://ot.isivoltpro.com/'
-};
+const operational = ecosystemAreas.filter((area) => area.status === 'Operativa' || area.status === 'Publicada');
+const betaOperational = ecosystemAreas.filter((area) => area.status === 'Beta operativa');
+const inDevelopment = ecosystemAreas.filter((area) => area.status === 'En desarrollo' || area.status === 'Próxima publicación');
+const families = new Set(ecosystemAreas.map((area) => area.family)).size;
 ---
 
-<PageLayout title="Aplicaciones" description="Catálogo de aplicaciones y herramientas del ecosistema IsiVoltPro.">
-  <section class="page-hero">
+<PageLayout title="Aplicaciones" description="Catálogo interactivo de aplicaciones, especialidades y herramientas del ecosistema IsiVoltPro.">
+  <section class="page-hero ivp-catalog-hero">
     <div class="container page-hero-grid">
       <div class="reveal">
-        <span class="page-kicker">Catálogo de productos</span>
-        <h1>Herramientas creadas para el <span class="accent">trabajo técnico real</span></h1>
-        <p class="lead">Aplicaciones especializadas para gestionar mantenimiento, controlar recursos, inspeccionar, calcular, documentar y tomar mejores decisiones.</p>
-        <div class="hero-actions"><a class="button button-primary" href="#aplicaciones">Ver aplicaciones →</a><a class="button button-secondary" href={withBase('/ecosistema')}>Cómo encajan en el ecosistema</a></div>
+        <span class="page-kicker">Biblioteca de producto IsiVoltPro</span>
+        <h1>Una aplicación para cada trabajo. <span class="accent">Un contexto para conectarlas.</span></h1>
+        <p class="lead">Explora las herramientas que forman IsiVoltPro, filtra por familia y entra en la ficha de cada producto. Hay aplicaciones operativas, una beta funcional y nuevas piezas avanzando por fases.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#catalogo">Explorar catálogo →</a>
+          <a class="button button-secondary" href={withBase('/ecosistema')}>Ver arquitectura del ecosistema</a>
+        </div>
+        <div class="ecosystem-stat-strip">
+          <div><strong>{ecosystemAreas.length}</strong><span>áreas del catálogo</span></div>
+          <div><strong>{families}</strong><span>familias</span></div>
+          <div><strong>{operational.length}</strong><span>operativas</span></div>
+          <div><strong>{betaOperational.length}</strong><span>beta operativa</span></div>
+        </div>
       </div>
-      <div class="page-visual reveal">
-        <div class="page-visual-grid">
-          <a class="page-visual-card" href="https://qr.isivoltpro.com/" target="_blank" rel="noopener noreferrer"><span>Publicada</span><strong>Herramientas QR/NFC ↗</strong></a>
-          <a class="page-visual-card" href="https://ot.isivoltpro.com/" target="_blank" rel="noopener noreferrer"><span>Publicada</span><strong>IsiVoltPro OT ↗</strong></a>
-          <div class="page-visual-card"><span>En desarrollo</span><strong>Inspecciones y activos</strong></div>
-          <div class="page-visual-card"><span>Planificado</span><strong>Especialidades técnicas</strong></div>
+
+      <div class="page-visual ivp-product-library reveal" aria-label="Estado de aplicaciones IsiVoltPro">
+        <div class="ivp-library-head"><span>CATÁLOGO ISIVOLTPRO</span><b><i></i> evolución continua</b></div>
+        <div class="ivp-library-featured">
+          <a href="https://qr.isivoltpro.com/" target="_blank" rel="noopener noreferrer">
+            <span class="ivp-library-code">HM</span><div><small>Recursos · Operativa</small><strong>Herramientas QR/NFC</strong><p>Inventario, préstamos y trazabilidad.</p></div><b>↗</b>
+          </a>
+          <a href="https://ot.isivoltpro.com/" target="_blank" rel="noopener noreferrer">
+            <span class="ivp-library-code">OT</span><div><small>Operaciones · Operativa</small><strong>IsiVoltPro OT</strong><p>Órdenes, técnicos y seguimiento.</p></div><b>↗</b>
+          </a>
+          <a href={withBase('/aplicaciones/inspecciones-bt')}>
+            <span class="ivp-library-code">BT</span><div><small>Ingeniería · Beta operativa</small><strong>Preinspecciones BT</strong><p>Local-first, mediciones, evidencias e informe.</p></div><b>→</b>
+          </a>
+        </div>
+        <div class="ivp-library-next">
+          <span><b>QR</b> Activos <small>En desarrollo</small></span>
+          <span><b>AL</b> Inventario <small>En desarrollo</small></span>
+          <span><b>RT</b> RITE <small>Roadmap</small></span>
+          <span><b>+</b> Especialidades <small>Roadmap</small></span>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="aplicaciones">
+  <section class="section" id="catalogo">
     <div class="container">
       <div class="catalog-toolbar reveal">
-        <div><p class="eyebrow">Modular y escalable</p><h2>Aplicaciones de IsiVoltPro</h2></div>
-        <p class="lead">Herramientas QR/NFC e IsiVoltPro OT ya están publicadas. El resto del catálogo seguirá creciendo por etapas y especialidades.</p>
+        <div><p class="eyebrow">Catálogo interactivo</p><h2>Explora IsiVoltPro por familia</h2></div>
+        <p class="lead">Selecciona una familia o una aplicación para ver su objetivo, estado, funciones previstas y ficha detallada.</p>
       </div>
-      <div class="catalog-list">
-        {ecosystemAreas.map((area) => {
-          const publicUrl = publicApps[area.slug];
-          return (
-            <article class:list={['catalog-card','reveal',{featured:isOperational(area.status)}]}>
-              <span class:list={['status',{available:isOperational(area.status)}]}>{publicUrl ? 'Publicada' : area.status}</span>
-              <div class="icon-box">{area.code}</div><h3>{area.name}</h3><p>{area.description}</p>
-              <div class="catalog-card-actions">
-                {publicUrl && <a class="card-link is-public" href={publicUrl} target="_blank" rel="noopener noreferrer">Abrir aplicación ↗</a>}
-                <a class="card-link" href={withBase(`/aplicaciones/${area.slug}`)}>{publicUrl ? 'Ver ficha' : 'Ver aplicación'} →</a>
-              </div>
-            </article>
-          );
-        })}
+      <EcosystemExplorer areas={ecosystemAreas} />
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading reveal"><p class="eyebrow">Productos disponibles</p><h2>Dos aplicaciones operativas y una beta en validación</h2><p class="lead">El ecosistema crece desde productos utilizables, incorporando nuevas capacidades con estados claros antes de considerarlas producción.</p></div>
+      <div class="ivp-operational-grid">
+        <article class="ivp-operational-card reveal">
+          <div class="ivp-operational-top"><span>HM</span><b>Operativa</b></div>
+          <h3>Herramientas QR/NFC</h3><p>Control de herramientas, maletines, responsables, préstamos, devoluciones e identificación QR/NFC.</p>
+          <div class="ivp-operational-actions"><a class="button button-primary" href="https://qr.isivoltpro.com/" target="_blank" rel="noopener noreferrer">Abrir aplicación ↗</a><a class="button button-secondary" href={withBase('/aplicaciones/herramientas-maletines')}>Ver ficha</a></div>
+        </article>
+        <article class="ivp-operational-card reveal">
+          <div class="ivp-operational-top"><span>OT</span><b>Operativa</b></div>
+          <h3>IsiVoltPro OT</h3><p>Clientes, instalaciones, órdenes de trabajo, asignación, estados, zona móvil del técnico y auditoría cronológica.</p>
+          <div class="ivp-operational-actions"><a class="button button-primary" href="https://ot.isivoltpro.com/" target="_blank" rel="noopener noreferrer">Abrir aplicación ↗</a><a class="button button-secondary" href={withBase('/aplicaciones/mantenimiento-ot')}>Ver ficha</a></div>
+        </article>
+        <article class="ivp-operational-card is-beta reveal">
+          <div class="ivp-operational-top"><span>BT</span><b>Beta operativa</b></div>
+          <h3>Preinspecciones BT</h3><p>Trabajo local-first para checklist, mediciones, defectos, evidencias y continuidad entre campo y oficina.</p>
+          <div class="ivp-operational-actions"><a class="button button-primary" href="https://izc05.github.io/isivolpro-inspecciones/" target="_blank" rel="noopener noreferrer">Abrir beta web ↗</a><a class="button button-secondary" href={withBase('/aplicaciones/inspecciones-bt')}>Ver ficha</a></div>
+        </article>
       </div>
     </div>
   </section>
 
-  <section class="section section-soft"><div class="container"><EcosystemRoadmap /></div></section>
+  <section class="section"><div class="container"><EcosystemRoadmap title="Productos operativos hoy. Especialidades conectadas mañana." /></div></section>
 
-  <section class="section">
+  <section class="section section-soft">
     <div class="container">
-      <div class="section-heading reveal"><p class="eyebrow">Principios del producto</p><h2>Qué debe tener cualquier aplicación IsiVoltPro</h2><p class="lead">Una experiencia profesional, simple en campo y preparada para crecer.</p></div>
+      <div class="section-heading reveal"><p class="eyebrow">Principios del producto</p><h2>Qué debe mantener cualquier aplicación IsiVoltPro</h2><p class="lead">Aunque cada especialidad tenga su propio flujo, todas deben compartir una experiencia profesional y coherente.</p></div>
       <div class="maintenance-grid">
-        <article class="maintenance-item reveal"><div class="icon-box">UX</div><h3>Fácil de usar</h3><p>Menos pasos y decisiones claras.</p></article>
-        <article class="maintenance-item reveal"><div class="icon-box">M</div><h3>Móvil primero</h3><p>Diseñada para trabajar en campo.</p></article>
-        <article class="maintenance-item reveal"><div class="icon-box">↺</div><h3>Trazable</h3><p>Histórico y evidencias cuando importan.</p></article>
-        <article class="maintenance-item reveal"><div class="icon-box">🔒</div><h3>Controlada</h3><p>Permisos, seguridad y datos propios.</p></article>
-        <article class="maintenance-item reveal"><div class="icon-box">+</div><h3>Ampliable</h3><p>Nuevos módulos sin rehacer lo anterior.</p></article>
+        <article class="maintenance-item reveal"><div class="icon-box">UX</div><h3>Fácil de usar</h3><p>Menos pasos, información clara y decisiones visibles.</p></article>
+        <article class="maintenance-item reveal"><div class="icon-box">M</div><h3>Móvil cuando toca</h3><p>Experiencias específicas para el trabajo real de campo.</p></article>
+        <article class="maintenance-item reveal"><div class="icon-box">↺</div><h3>Trazable</h3><p>Histórico y evidencias vinculados al contexto correcto.</p></article>
+        <article class="maintenance-item reveal"><div class="icon-box">🔒</div><h3>Controlada</h3><p>Permisos, seguridad y propiedad de la información.</p></article>
+        <article class="maintenance-item reveal"><div class="icon-box">+</div><h3>Ampliable</h3><p>Nuevos módulos sin rehacer el trabajo ya realizado.</p></article>
       </div>
     </div>
   </section>
 
   <style>
-    .catalog-card-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:auto;padding-top:1rem}.catalog-card-actions .card-link{margin:0}.catalog-card-actions .is-public{padding:.48rem .7rem;border-radius:999px;background:#e7f0ff;color:#145dc7}.page-visual-card[href]{transition:transform .22s ease,box-shadow .22s ease}.page-visual-card[href]:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(11,35,65,.12)}
+    .ivp-catalog-hero{padding-top:clamp(7rem,11vw,10rem)}
+    .ivp-product-library{display:flex;flex-direction:column;gap:1rem;min-height:430px;background:linear-gradient(165deg,#071a33,#0a2743)}
+    .ivp-library-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-bottom:.9rem;border-bottom:1px solid rgba(255,255,255,.1);color:#aebfd4;font-size:.62rem;font-weight:850;letter-spacing:.1em}.ivp-library-head b{display:flex;align-items:center;gap:.4rem;color:#8fa9bd;font-size:.56rem;letter-spacing:0}.ivp-library-head i{width:.42rem;height:.42rem;border-radius:50%;background:#55d7af;box-shadow:0 0 .7rem rgba(85,215,175,.75)}
+    .ivp-library-featured{display:grid;gap:.65rem}.ivp-library-featured>a{display:grid;grid-template-columns:auto 1fr auto;gap:.8rem;align-items:center;padding:.9rem;border:1px solid rgba(255,255,255,.1);border-radius:1rem;background:rgba(255,255,255,.055);color:#fff;transition:transform .22s ease,border-color .22s ease,background .22s ease}.ivp-library-featured>a:hover{transform:translateY(-3px);border-color:rgba(108,214,230,.28);background:rgba(255,255,255,.08)}.ivp-library-code{display:grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:.8rem;background:rgba(82,197,217,.12);color:#75dbe9;font-size:.7rem;font-weight:900}.ivp-library-featured small{display:block;color:#7f9cad;font-size:.56rem}.ivp-library-featured strong{display:block;margin:.12rem 0;font-size:.82rem}.ivp-library-featured p{margin:0;color:#9db0c2;font-size:.62rem}.ivp-library-featured>a>b{color:#70d4e3}
+    .ivp-library-next{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-top:auto}.ivp-library-next span{display:grid;grid-template-columns:auto 1fr;gap:.1rem .5rem;align-items:center;padding:.7rem;border:1px solid rgba(255,255,255,.08);border-radius:.8rem;background:rgba(255,255,255,.035);color:#d8e7f2;font-size:.63rem}.ivp-library-next b{grid-row:1/span 2;display:grid;place-items:center;width:1.8rem;height:1.8rem;border-radius:.55rem;background:rgba(255,255,255,.06);color:#8bb8ca;font-size:.56rem}.ivp-library-next small{color:#70899c;font-size:.5rem}
+    .ivp-operational-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.ivp-operational-card{padding:clamp(1.4rem,3vw,2rem);border:1px solid var(--line);border-radius:1.6rem;background:#fff;box-shadow:0 18px 45px rgba(11,35,65,.06)}.ivp-operational-card.is-beta{border-color:rgba(33,102,243,.24);background:linear-gradient(180deg,#fff,#f6f9ff)}.ivp-operational-top{display:flex;align-items:center;justify-content:space-between;gap:1rem}.ivp-operational-top>span{display:grid;place-items:center;width:3rem;height:3rem;border-radius:.9rem;background:#071a33;color:#fff;font-size:.72rem;font-weight:900}.ivp-operational-top>b{padding:.35rem .55rem;border-radius:999px;background:#e8f9f1;color:#137a52;font-size:.62rem}.ivp-operational-card.is-beta .ivp-operational-top>b{background:#eaf1ff;color:#245fc5}.ivp-operational-card h3{margin:1.2rem 0 .5rem;font-size:1.5rem}.ivp-operational-card p{color:var(--ink-soft)}.ivp-operational-actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.2rem}
+    @media(max-width:980px){.ivp-operational-grid{grid-template-columns:1fr 1fr}.ivp-operational-card.is-beta{grid-column:1/-1}}
+    @media(max-width:760px){.ivp-library-next,.ivp-operational-grid{grid-template-columns:1fr}.ivp-operational-card.is-beta{grid-column:auto}.ivp-operational-actions .button{width:100%;justify-content:center}}
   </style>
 </PageLayout>

@@ -5,8 +5,10 @@ const distDir = resolve('dist');
 const configuredBase = process.env.PUBLIC_BASE_PATH || (process.env.GITHUB_ACTIONS === 'true' ? '/izc05-isivoltpro-web' : '/');
 const basePath = configuredBase === '/' ? '/' : `/${configuredBase.replace(/^\/+|\/+$/g, '')}/`;
 const errors = [];
+const indexableCanonicals = new Set();
 let htmlCount = 0;
 let checkedReferences = 0;
+let structuredDataBlocks = 0;
 
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -64,6 +66,14 @@ function duplicateIds(html) {
   return [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
 }
 
+function metaContent(html, name) {
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const direct = html.match(new RegExp(`<meta[^>]+name=["']${escaped}["'][^>]+content=["']([^"']*)["']`, 'i'));
+  if (direct) return direct[1];
+  const reversed = html.match(new RegExp(`<meta[^>]+content=["']([^"']*)["'][^>]+name=["']${escaped}["']`, 'i'));
+  return reversed?.[1] ?? null;
+}
+
 const files = await walk(distDir);
 const htmlFiles = files.filter((file) => file.endsWith('.html'));
 
@@ -74,8 +84,38 @@ for (const file of htmlFiles) {
 
   if (/http:\/\//i.test(html)) errors.push(`${displayName}: contiene una URL http sin cifrar`);
   if (/<html(?![^>]*\slang=["']es["'])/i.test(html)) errors.push(`${displayName}: falta lang="es"`);
+  if (!/<title>[^<]+<\/title>/i.test(html)) errors.push(`${displayName}: falta title`);
   if (!/<meta[^>]+name=["']description["']/i.test(html)) errors.push(`${displayName}: falta meta description`);
-  if (!/<link[^>]+rel=["']canonical["']/i.test(html)) errors.push(`${displayName}: falta canonical`);
+
+  const canonicalMatch = html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i)
+    ?? html.match(/<link[^>]+href=["']([^"']+)["'][^>]+rel=["']canonical["']/i);
+  if (!canonicalMatch) {
+    errors.push(`${displayName}: falta canonical`);
+  } else {
+    const canonical = canonicalMatch[1];
+    if (!canonical.startsWith('https://')) errors.push(`${displayName}: canonical no usa HTTPS`);
+    const robots = metaContent(html, 'robots') ?? '';
+    if (!/\bnoindex\b/i.test(robots)) indexableCanonicals.add(canonical);
+  }
+
+  const twitterCard = metaContent(html, 'twitter:card');
+  if (twitterCard === 'summary_large_image' && !/<meta[^>]+property=["']og:image["']/i.test(html)) {
+    errors.push(`${displayName}: usa summary_large_image sin og:image`);
+  }
+
+  const jsonLdScripts = [...html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+  if (jsonLdScripts.length === 0) {
+    errors.push(`${displayName}: falta JSON-LD`);
+  } else {
+    structuredDataBlocks += jsonLdScripts.length;
+    jsonLdScripts.forEach((match, index) => {
+      try {
+        JSON.parse(match[1]);
+      } catch {
+        errors.push(`${displayName}: JSON-LD ${index + 1} no es JSON válido`);
+      }
+    });
+  }
 
   for (const id of duplicateIds(html)) errors.push(`${displayName}: id duplicado "${id}"`);
 
@@ -96,6 +136,51 @@ for (const file of htmlFiles) {
   }
 }
 
+const robotsPath = resolve(distDir, 'robots.txt');
+const sitemapPath = resolve(distDir, 'sitemap.xml');
+const securityPath = resolve(distDir, '.well-known', 'security.txt');
+
+if (!await exists(robotsPath)) {
+  errors.push('Falta dist/robots.txt');
+} else {
+  const robots = await readFile(robotsPath, 'utf8');
+  if (!/^Sitemap:\s+https:\/\//im.test(robots)) errors.push('robots.txt no declara un sitemap HTTPS');
+}
+
+if (!await exists(sitemapPath)) {
+  errors.push('Falta dist/sitemap.xml');
+} else {
+  const sitemap = await readFile(sitemapPath, 'utf8');
+  if (!/<urlset\b/i.test(sitemap) || !/<loc>https:\/\//i.test(sitemap)) {
+    errors.push('sitemap.xml no contiene URLs HTTPS válidas');
+  } else {
+    const sitemapUrls = new Set([...sitemap.matchAll(/<loc>(https:\/\/[^<]+)<\/loc>/gi)].map((match) => match[1]));
+    for (const canonical of indexableCanonicals) {
+      if (!sitemapUrls.has(canonical)) errors.push(`sitemap.xml no incluye canonical indexable: ${canonical}`);
+    }
+    for (const url of sitemapUrls) {
+      if (!indexableCanonicals.has(url)) errors.push(`sitemap.xml incluye URL sin canonical indexable equivalente: ${url}`);
+    }
+  }
+}
+
+if (!await exists(securityPath)) {
+  errors.push('Falta dist/.well-known/security.txt');
+} else {
+  const security = await readFile(securityPath, 'utf8');
+  if (!/^Contact:\s+mailto:/im.test(security)) errors.push('security.txt no declara Contact por correo');
+  if (!/^Canonical:\s+https:\/\//im.test(security)) errors.push('security.txt no declara Canonical HTTPS');
+  if (!/^Policy:\s+https:\/\//im.test(security)) errors.push('security.txt no declara Policy HTTPS');
+  const expires = security.match(/^Expires:\s+([^\r\n]+)/im)?.[1]?.trim();
+  if (!expires) {
+    errors.push('security.txt no declara Expires');
+  } else {
+    const expiryTime = Date.parse(expires);
+    if (Number.isNaN(expiryTime)) errors.push('security.txt contiene una fecha Expires inválida');
+    else if (expiryTime <= Date.now()) errors.push('security.txt está caducado');
+  }
+}
+
 if (htmlCount === 0) errors.push('No se generaron archivos HTML en dist');
 
 if (errors.length) {
@@ -104,4 +189,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`Verificación correcta: ${htmlCount} páginas HTML y ${checkedReferences} referencias internas revisadas.`);
+console.log(`Verificación correcta: ${htmlCount} páginas HTML, ${indexableCanonicals.size} canonicals indexables, ${structuredDataBlocks} bloques JSON-LD y ${checkedReferences} referencias internas revisadas.`);

@@ -1,0 +1,175 @@
+---
+import '../styles/building-scroll-experience.css';
+import '../styles/building-scroll-focus.css';
+---
+
+<section class="ivp-building-story" data-building-story aria-labelledby="ivp-building-title">
+  <div class="ivp-building-sticky">
+    <div class="ivp-building-ambient" aria-hidden="true">
+      <span class="ivp-building-grid"></span>
+      <span class="ivp-building-glow"></span>
+    </div>
+
+    <div class="container ivp-building-layout">
+      <div class="ivp-building-copy">
+        <div class="ivp-building-copy-stage is-stage-one">
+          <p class="eyebrow">01 · La instalación</p>
+          <h2 id="ivp-building-title">Todo empieza en un edificio real.</h2>
+          <p>Cuadros, climatización, bombeo, PCI, activos y espacios que deben mantenerse cada día.</p>
+        </div>
+
+        <div class="ivp-building-copy-stage is-stage-two">
+          <p class="eyebrow">02 · Entramos</p>
+          <h2>IsiVoltPro abre la instalación.</h2>
+          <p>La fachada deja paso a las capas técnicas y cada sistema empieza a tener contexto digital.</p>
+        </div>
+
+        <div class="ivp-building-copy-stage is-stage-three">
+          <p class="eyebrow">03 · Identificamos</p>
+          <h2>Cada activo se convierte en información útil.</h2>
+          <p>QR, NFC, documentación, estado, ubicación e histórico quedan unidos al equipo físico.</p>
+        </div>
+
+        <div class="ivp-building-copy-stage is-stage-four">
+          <p class="eyebrow">04 · Conectamos</p>
+          <h2>Del activo nace el trabajo.</h2>
+          <p>Incidencias, órdenes de trabajo y mantenimiento preventivo forman un único ecosistema.</p>
+        </div>
+
+        <div class="ivp-building-copy-stage is-stage-five">
+          <p class="eyebrow">05 · Un activo, todo su contexto</p>
+          <h2>Entramos en UTA-02.</h2>
+          <p>El equipo físico queda conectado con su identificación, estado, documentación y la siguiente actuación que debe realizar mantenimiento.</p>
+        </div>
+
+        <div class="ivp-building-progress" aria-hidden="true"><span></span></div>
+      </div>
+
+      <div class="ivp-building-viewport" aria-hidden="true">
+        <div class="ivp-building-ground"></div>
+
+        <div class="ivp-building-model">
+          <div class="ivp-building-roof"></div>
+          <div class="ivp-building-side"></div>
+          <div class="ivp-building-facade">
+            <span class="ivp-window w1"></span><span class="ivp-window w2"></span>
+            <span class="ivp-window w3"></span><span class="ivp-window w4"></span>
+            <span class="ivp-window w5"></span><span class="ivp-window w6"></span>
+            <span class="ivp-window w7"></span><span class="ivp-window w8"></span>
+          </div>
+
+          <div class="ivp-building-interior">
+            <div class="ivp-floor floor-four"><span>Cubierta técnica · HVAC</span><i></i><b></b></div>
+            <div class="ivp-floor floor-three"><span>Electricidad · Cuadros</span><i></i><b></b></div>
+            <div class="ivp-floor floor-two"><span>Instalaciones · Activos</span><i></i><b></b></div>
+            <div class="ivp-floor floor-one"><span>Servicios · Bombeo · PCI</span><i></i><b></b></div>
+            <div class="ivp-building-riser"></div>
+          </div>
+        </div>
+
+        <div class="ivp-system-marker marker-hvac"><i></i><span>UTA-02</span><small>Climatización</small></div>
+        <div class="ivp-system-marker marker-electric"><i></i><span>CG-01</span><small>Cuadro general</small></div>
+        <div class="ivp-system-marker marker-water"><i></i><span>BOM-04</span><small>Bombeo / ACS</small></div>
+        <div class="ivp-system-marker marker-fire"><i></i><span>PCI-12</span><small>Protección contra incendios</small></div>
+
+        <div class="ivp-asset-card">
+          <div class="ivp-asset-code"><span>ACTIVO</span><strong>UTA-02</strong></div>
+          <div class="ivp-asset-meta"><span>QR / NFC</span><span>Operativo</span></div>
+          <div class="ivp-asset-lines"><i></i><i></i><i></i></div>
+        </div>
+
+        <div class="ivp-workflow-nodes">
+          <span class="ivp-flow-node node-assets">Activos</span>
+          <span class="ivp-flow-line line-one"></span>
+          <span class="ivp-flow-node node-ot">OT</span>
+          <span class="ivp-flow-line line-two"></span>
+          <span class="ivp-flow-node node-maintenance">Mantenimiento</span>
+        </div>
+
+        <div class="ivp-focus-panel">
+          <div class="ivp-focus-panel__head">
+            <div>
+              <span class="ivp-focus-panel__eyebrow">Activo conectado</span>
+              <strong>UTA-02 · Climatización</strong>
+            </div>
+            <span class="ivp-focus-panel__status">Operativo</span>
+          </div>
+          <div class="ivp-focus-panel__body">
+            <div class="ivp-focus-qr"><span>QR / NFC</span></div>
+            <dl>
+              <div><dt>Ubicación</dt><dd>Cubierta técnica</dd></div>
+              <div><dt>Última revisión</dt><dd>08/08/2026</dd></div>
+              <div><dt>Documentación</dt><dd>Ficha + manual</dd></div>
+              <div><dt>Próxima tarea</dt><dd>Preventivo</dd></div>
+            </dl>
+          </div>
+          <div class="ivp-focus-panel__event">
+            <i></i>
+            <span><strong>Incidencia detectada</strong><br />Temperatura de impulsión fuera de rango → generar OT</span>
+          </div>
+        </div>
+
+        <span class="ivp-building-status">Instalación conectada</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const story = document.querySelector('[data-building-story]');
+    if (!story || story.dataset.ready === 'true') return;
+    story.dataset.ready = 'true';
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let frame = 0;
+
+    const clamp = (value) => Math.min(1, Math.max(0, value));
+    const segment = (value, start, end) => clamp((value - start) / (end - start));
+
+    const render = () => {
+      frame = 0;
+      if (reduced.matches) {
+        story.style.setProperty('--story-progress', '1');
+        story.style.setProperty('--enter-progress', '1');
+        story.style.setProperty('--open-progress', '1');
+        story.style.setProperty('--asset-progress', '1');
+        story.style.setProperty('--flow-progress', '1');
+        story.style.setProperty('--focus-progress', '1');
+        story.style.setProperty('--stage-one', '0');
+        story.style.setProperty('--stage-two', '0');
+        story.style.setProperty('--stage-three', '0');
+        story.style.setProperty('--stage-four', '0');
+        story.style.setProperty('--stage-five', '1');
+        return;
+      }
+
+      const rect = story.getBoundingClientRect();
+      const distance = Math.max(1, story.offsetHeight - window.innerHeight);
+      const progress = clamp(-rect.top / distance);
+
+      story.style.setProperty('--story-progress', progress.toFixed(4));
+      story.style.setProperty('--enter-progress', segment(progress, 0.03, 0.25).toFixed(4));
+      story.style.setProperty('--open-progress', segment(progress, 0.18, 0.40).toFixed(4));
+      story.style.setProperty('--asset-progress', segment(progress, 0.38, 0.58).toFixed(4));
+      story.style.setProperty('--flow-progress', segment(progress, 0.56, 0.75).toFixed(4));
+      story.style.setProperty('--focus-progress', segment(progress, 0.76, 0.96).toFixed(4));
+
+      story.style.setProperty('--stage-one', (1 - segment(progress, 0.10, 0.22)).toFixed(4));
+      story.style.setProperty('--stage-two', (segment(progress, 0.16, 0.26) * (1 - segment(progress, 0.31, 0.42))).toFixed(4));
+      story.style.setProperty('--stage-three', (segment(progress, 0.36, 0.46) * (1 - segment(progress, 0.52, 0.62))).toFixed(4));
+      story.style.setProperty('--stage-four', (segment(progress, 0.57, 0.67) * (1 - segment(progress, 0.73, 0.82))).toFixed(4));
+      story.style.setProperty('--stage-five', segment(progress, 0.79, 0.90).toFixed(4));
+    };
+
+    const requestRender = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(render);
+    };
+
+    render();
+    window.addEventListener('scroll', requestRender, { passive: true });
+    window.addEventListener('resize', requestRender, { passive: true });
+    reduced.addEventListener?.('change', requestRender);
+  })();
+</script>

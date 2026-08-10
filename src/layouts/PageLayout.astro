@@ -19,21 +19,39 @@ interface Props {
   title: string;
   description: string;
   noindex?: boolean;
+  ogType?: 'website' | 'article';
+  structuredData?: Record<string, unknown>;
 }
 
-const { title, description, noindex = false } = Astro.props;
+const {
+  title,
+  description,
+  noindex = false,
+  ogType = 'website',
+  structuredData: pageStructuredData
+} = Astro.props;
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const fullTitle = `${title} · ${brand.name}`;
-const structuredData = {
-  '@context': 'https://schema.org',
+const organizationUrl = new URL(base, Astro.site).toString();
+const organizationData = {
   '@type': 'Organization',
+  '@id': `${organizationUrl}#organization`,
   name: brand.name,
-  url: new URL(base, Astro.site).toString(),
+  url: organizationUrl,
   email: brand.email,
   areaServed: brand.location,
   description: brand.description
 };
+const structuredData = pageStructuredData
+  ? {
+      '@context': 'https://schema.org',
+      '@graph': [organizationData, pageStructuredData]
+    }
+  : {
+      '@context': 'https://schema.org',
+      ...organizationData
+    };
 ---
 
 <!doctype html>
@@ -47,13 +65,13 @@ const structuredData = {
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:locale" content="es_ES" />
     <meta property="og:site_name" content={brand.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <title>{fullTitle}</title>
@@ -69,14 +87,45 @@ const structuredData = {
     <script is:inline>
       const toggle = document.querySelector('.menu-toggle');
       const nav = document.querySelector('.nav-links');
+
+      const setMenuState = (open, { returnFocus = false } = {}) => {
+        if (!toggle || !nav) return;
+        nav.classList.toggle('open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        toggle.textContent = open ? '×' : '☰';
+        document.documentElement.toggleAttribute('data-mobile-menu-open', open);
+        if (!open && returnFocus) toggle.focus();
+      };
+
       toggle?.addEventListener('click', () => {
-        const open = nav?.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', String(Boolean(open)));
+        setMenuState(!nav?.classList.contains('open'));
       });
+
       nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-        nav.classList.remove('open');
-        toggle?.setAttribute('aria-expanded', 'false');
+        setMenuState(false);
       }));
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && nav?.classList.contains('open')) {
+          setMenuState(false, { returnFocus: true });
+        }
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!nav?.classList.contains('open')) return;
+        const target = event.target;
+        if (!(target instanceof Node)) return;
+        if (nav.contains(target) || toggle?.contains(target)) return;
+        setMenuState(false);
+      });
+
+      const desktopNavigation = window.matchMedia('(min-width: 1051px)');
+      const resetDesktopMenu = (event) => {
+        if (event.matches) setMenuState(false);
+      };
+      desktopNavigation.addEventListener?.('change', resetDesktopMenu);
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {

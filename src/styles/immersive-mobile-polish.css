@@ -1,0 +1,43 @@
+/* Shared layout and mobile pacing overrides for the immersive home story. */
+.ivp-building-layout.container,
+.ivp-work-layout.container,
+.ivp-eco-layout.container {
+  width: min(calc(100% - 40px), var(--max));
+}
+
+@media (max-width: 900px) {
+  .ivp-building-story.ivp-building-story { min-height: 320svh; }
+  .ivp-work-story.ivp-work-story { min-height: 330svh; }
+  .ivp-eco-story.ivp-eco-story { min-height: 325svh; }
+}
+
+@media (max-width: 620px) {
+  .ivp-building-layout.container,
+  .ivp-work-layout.container,
+  .ivp-eco-layout.container {
+    width: min(calc(100% - 2rem), var(--max));
+  }
+
+  .ivp-building-story.ivp-building-story { min-height: 270svh; }
+  .ivp-work-story.ivp-work-story { min-height: 285svh; }
+  .ivp-eco-story.ivp-eco-story { min-height: 275svh; }
+
+  .ivp-building-copy-stage p:not(.eyebrow),
+  .ivp-work-copy-stage p:not(.eyebrow),
+  .ivp-eco-copy-stage p:not(.eyebrow) {
+    font-size: .88rem;
+    line-height: 1.55;
+  }
+
+  .ivp-building-progress,
+  .ivp-work-progress,
+  .ivp-eco-progress {
+    bottom: -.15rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .ivp-building-story.ivp-building-story { min-height: 255svh; }
+  .ivp-work-story.ivp-work-story { min-height: 270svh; }
+  .ivp-eco-story.ivp-eco-story { min-height: 260svh; }
+}

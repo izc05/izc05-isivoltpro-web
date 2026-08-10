@@ -2,6 +2,8 @@
 
 Esta guía prepara el cambio desde la URL temporal de GitHub Pages a `https://www.isivoltpro.com` sin modificar el código en cada despliegue.
 
+> Flujo acordado: GitHub es la fuente de verdad del código. Los cambios se validan primero en una rama/PR, se revisan en la publicación web cuando se autorice y el mini PC se actualiza únicamente después de aprobar esa versión. El procedimiento detallado está en `docs/PUBLIC-WEB-RELEASE-CHECKLIST.md`.
+
 ## 1. Verificar el dominio en GitHub
 
 Antes de enlazarlo, verifica `isivoltpro.com` desde la configuración de tu cuenta de GitHub. Esto reduce el riesgo de que otro repositorio intente reclamar un subdominio.
@@ -16,6 +18,8 @@ En el repositorio:
 4. Cuando GitHub termine de emitir el certificado, activa **Enforce HTTPS**.
 
 La publicación se realiza mediante GitHub Actions. En este modo, un archivo `CNAME` dentro del repositorio se ignora y no es necesario.
+
+GitHub Pages puede utilizarse como publicación pública o como mecanismo de revisión/recuperación durante la transición al servidor propio. No debe actualizarse el mini PC automáticamente por el mero hecho de fusionar una PR de la web.
 
 ## 3. Configurar DNS
 
@@ -55,10 +59,17 @@ De esta forma la URL pública actual no se rompe durante la preparación del DNS
 
 ## 6. Despliegue propio posterior
 
-Cuando la web pase al mini PC:
+Solo después de aprobar la versión pública correspondiente:
 
+- Identificar el commit exacto de `main` aprobado.
 - Mantener `PUBLIC_SITE_URL=https://www.isivoltpro.com`.
 - Mantener `PUBLIC_BASE_PATH=/`.
-- Conectar el dominio mediante Cloudflare Tunnel o proxy inverso.
+- Actualizar únicamente el servicio de la web pública en el mini PC.
+- Conectar el dominio mediante Cloudflare Tunnel o proxy inverso cuando corresponda.
 - Verificar las cabeceras de seguridad definidas en `Caddyfile`.
-- Mantener GitHub Pages temporalmente como mecanismo de recuperación durante la transición.
+- Confirmar que OT, Herramientas, Preinspecciones y otros subdominios continúan funcionando.
+- Mantener GitHub Pages temporalmente como mecanismo de recuperación durante la transición cuando resulte útil.
+
+## 7. Rollback
+
+Si una publicación falla, revertir el commit/merge de forma controlada en GitHub y volver al commit del mini PC previamente registrado. No corregir producción mediante cambios manuales que no queden reflejados en el repositorio.

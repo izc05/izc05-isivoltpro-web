@@ -8,13 +8,26 @@ export function getStaticPaths() {
 
 interface Props { article: ResourceArticle; }
 const { article } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
+const siteRoot = new URL(base, Astro.site);
+const pageUrl = new URL(`recursos/${article.slug}/`, siteRoot).toString();
+const structuredData = {
+  '@type': 'Article',
+  headline: article.title,
+  description: article.summary,
+  articleSection: article.category,
+  mainEntityOfPage: pageUrl,
+  author: { '@id': `${siteRoot.toString()}#organization` },
+  publisher: { '@id': `${siteRoot.toString()}#organization` }
+};
 ---
 
-<PageLayout title={article.title} description={article.summary}>
+<PageLayout title={article.title} description={article.summary} ogType="article" structuredData={structuredData}>
   <article>
     <header class="article-hero">
       <div class="container article-hero-inner reveal">
-        <a class="article-back" href="/recursos">← Centro de conocimiento</a>
+        <a class="article-back" href={withBase('/recursos')}>← Centro de conocimiento</a>
         <span class="page-kicker">{article.category} · {article.readTime} de lectura</span>
         <h1>{article.title}</h1>
         <p class="lead">{article.summary}</p>
@@ -29,7 +42,7 @@ const { article } = Astro.props;
           <nav aria-label="Contenido del artículo">
             {article.sections.map((section, index) => <a href={`#seccion-${index + 1}`}>{index + 1}. {section.title}</a>)}
           </nav>
-          <a class="button button-secondary button-small" href={`/aplicaciones/${article.relatedArea}`}>Ver herramienta relacionada →</a>
+          <a class="button button-secondary button-small" href={withBase(`/aplicaciones/${article.relatedArea}`)}>Ver herramienta relacionada →</a>
         </aside>
 
         <div class="article-content">

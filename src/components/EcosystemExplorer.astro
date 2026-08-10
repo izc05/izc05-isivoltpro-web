@@ -7,6 +7,8 @@ interface Props {
 
 const { areas } = Astro.props;
 const families = ['Todas', ...Array.from(new Set(areas.map((area) => area.family)))];
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
 ---
 
 <div class="ecosystem-explorer reveal" data-ecosystem-explorer>
@@ -73,7 +75,7 @@ const families = ['Todas', ...Array.from(new Set(areas.map((area) => area.family
             <div class="explorer-highlights">
               {area.highlights.slice(0, 3).map((highlight) => <span>✓ {highlight}</span>)}
             </div>
-            <a class="button button-primary button-small" href={`/aplicaciones/${area.slug}`}>Abrir ficha →</a>
+            <a class="button button-primary button-small" href={withBase(`/aplicaciones/${area.slug}`)}>Abrir ficha →</a>
           </div>
         </article>
       ))}

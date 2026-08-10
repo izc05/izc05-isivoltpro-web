@@ -10,14 +10,14 @@ const dashboardImage = `${base}media/tools-dashboard.svg`;
 const appUrl = 'https://qr.isivoltpro.com/';
 
 const features = [
-  { icon: '▤', title: 'Inventario inteligente', text: 'Herramientas, equipos, EPI, maletines y materiales con código, categoría, estado y ubicación.' },
+  { icon: '▤', title: 'Inventario inteligente', text: 'Herramientas, equipos de medida, EPI y maletines con código, categoría, estado y ubicación.' },
   { icon: '♙', title: 'Asignación a técnicos', text: 'Responsables, especialidades y material entregado con consulta inmediata.' },
   { icon: '↔', title: 'Préstamos y devoluciones', text: 'Salidas, entradas, responsables, fechas y lotes con control de disponibilidad.' },
-  { icon: '▦', title: 'Etiquetado QR/NFC', text: 'Identificación rápida para consultar, prestar, devolver o revisar un equipo.' },
+  { icon: '▦', title: 'Etiquetado QR/NFC', text: 'Identificación rápida para consultar, prestar, devolver o revisar una herramienta o equipo.' },
   { icon: '◷', title: 'Historial y trazabilidad', text: 'Cronología completa de movimientos, ubicaciones, incidencias y responsables.' },
   { icon: '▧', title: 'Incidencias y evidencias', text: 'Fotografías, observaciones y estados de revisión asociados a cada elemento.' },
-  { icon: '◉', title: 'Stock y control', text: 'Disponibilidad, ubicación, stock mínimo y alertas para evitar roturas de inventario.' },
-  { icon: '⚙', title: 'Preparada para crecer', text: 'Arquitectura lista para sincronización y conexión futura con OT y activos.' }
+  { icon: '◉', title: 'Stock y control', text: 'Disponibilidad, ubicación y control de recursos para reducir pérdidas y material sin localizar.' },
+  { icon: '⚙', title: 'Preparada para crecer', text: 'Arquitectura lista para conectarse progresivamente con inventario, OT y gestión de activos.' }
 ];
 
 const dailyFlow = [
@@ -39,21 +39,21 @@ const modules = [
 ];
 
 const integrations = [
-  { icon: '▣', name: 'Operaciones OT', text: 'Órdenes y mantenimientos' },
-  { icon: '✓', name: 'Inspecciones BT', text: 'Evidencias y verificaciones' },
-  { icon: '▥', name: 'RITE', text: 'Equipos térmicos' },
-  { icon: '♨', name: 'PCI', text: 'Equipos contra incendios' },
-  { icon: '◯', name: 'Legionella', text: 'Puntos y controles' },
-  { icon: '▦', name: 'Activos QR/NFC', text: 'Esta aplicación', current: true }
+  { icon: '▦', name: 'Herramientas QR/NFC', text: 'Esta aplicación', current: true },
+  { icon: '◇', name: 'Activos QR/NFC', text: 'Identidad e histórico', href: '/aplicaciones/activos-qr-nfc' },
+  { icon: '▣', name: 'IsiVoltPro OT', text: 'Órdenes y actuaciones', href: '/aplicaciones/mantenimiento-ot' },
+  { icon: 'AL', name: 'Inventario y almacén', text: 'Stock y consumos', href: '/aplicaciones/inventario-almacen' },
+  { icon: '✓', name: 'Inspecciones BT', text: 'Evidencias y verificaciones', href: '/aplicaciones/inspecciones-bt' },
+  { icon: '▥', name: 'Especialidades', text: 'RITE · PCI · agua', href: '/ecosistema' }
 ];
 ---
 
 <section class="pv12-tools-hero">
   <div class="container pv12-tools-grid">
     <div data-premium-reveal>
-      <p class="eyebrow">Herramientas · activos QR/NFC</p>
-      <h1>Control total de herramientas y activos <span class="accent">con QR y NFC</span></h1>
-      <p class="lead">Inventario inteligente, asignación a técnicos, préstamos, devoluciones, trazabilidad e historial. La primera aplicación real del ecosistema IsiVoltPro ya está publicada y funcionando.</p>
+      <p class="eyebrow">Recursos · Herramientas QR/NFC</p>
+      <h1>Control total de herramientas y equipos <span class="accent">con QR y NFC</span></h1>
+      <p class="lead">Inventario, asignación a técnicos, préstamos, devoluciones, trazabilidad e historial. Una de las primeras aplicaciones operativas del ecosistema IsiVoltPro ya está publicada y funcionando.</p>
       <div class="pv12-hero-actions">
         <a class="button button-primary" href={appUrl} target="_blank" rel="noopener noreferrer">Abrir aplicación →</a>
         <a class="button button-secondary" href={withBase('/contacto')}>Solicitar demo</a>
@@ -71,7 +71,7 @@ const integrations = [
 <section class="pv12-section is-soft" id="funciones">
   <div class="container">
     <div class="pv12-section-head" data-premium-reveal>
-      <h2>Todo lo necesario para gestionar herramientas y activos</h2>
+      <h2>Todo lo necesario para gestionar herramientas y equipos de trabajo</h2>
       <p>La aplicación convierte altas, etiquetas y movimientos en una operación clara para almacén, coordinación y técnicos.</p>
     </div>
     <div class="pv12-tools-feature-grid">
@@ -141,10 +141,10 @@ const integrations = [
 
 <section class="pv12-section is-soft">
   <div class="container">
-    <div class="pv12-section-head" data-premium-reveal><h2>Parte del ecosistema IsiVoltPro</h2><p>Herramientas QR/NFC es la primera pieza operativa y la base de futuras conexiones.</p></div>
+    <div class="pv12-section-head" data-premium-reveal><h2>Parte del ecosistema IsiVoltPro</h2><p>Herramientas QR/NFC resuelve la gestión de recursos. Activos, OT, inventario y otras aplicaciones podrán compartir contexto cuando aporte valor.</p></div>
     <div class="pv12-integration-grid">
       {integrations.map((item, index) => (
-        <a class:list={['pv12-integration-card', item.current && 'is-current']} href={item.current ? appUrl : withBase('/ecosistema')} target={item.current ? '_blank' : undefined} rel={item.current ? 'noopener noreferrer' : undefined} data-premium-reveal style={`transition-delay:${index * 50}ms`}>
+        <a class:list={['pv12-integration-card', item.current && 'is-current']} href={item.current ? appUrl : withBase(item.href ?? '/ecosistema')} target={item.current ? '_blank' : undefined} rel={item.current ? 'noopener noreferrer' : undefined} data-premium-reveal style={`transition-delay:${index * 50}ms`}>
           <i>{item.icon}</i><strong>{item.name}</strong><small>{item.text}</small>
         </a>
       ))}

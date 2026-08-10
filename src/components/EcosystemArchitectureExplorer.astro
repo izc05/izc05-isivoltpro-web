@@ -1,0 +1,181 @@
+---
+import '../styles/ecosystem-architecture-explorer.css';
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
+---
+
+<section class="ivp-arch" data-architecture-explorer aria-labelledby="ivp-arch-title">
+  <div class="ivp-arch-ambient" aria-hidden="true">
+    <span class="ivp-arch-grid"></span>
+    <span class="ivp-arch-glow ivp-arch-glow-one"></span>
+    <span class="ivp-arch-glow ivp-arch-glow-two"></span>
+  </div>
+
+  <div class="container ivp-arch-shell">
+    <div class="ivp-arch-head" data-premium-reveal>
+      <div>
+        <p class="eyebrow">Mapa del ecosistema</p>
+        <h1 id="ivp-arch-title">De la instalación física a un <span class="accent">sistema conectado</span></h1>
+      </div>
+      <p class="lead">IsiVoltPro organiza el mantenimiento en capas. Empieza por el contexto real —cliente, instalación y activo— y conecta después trabajo, aplicaciones y especialidades técnicas.</p>
+    </div>
+
+    <div class="ivp-arch-stage" data-premium-reveal>
+      <div class="ivp-arch-toolbar" role="tablist" aria-label="Capas del ecosistema IsiVoltPro">
+        <button class="is-active" type="button" role="tab" aria-selected="true" data-arch-view="context">1 · Contexto</button>
+        <button type="button" role="tab" aria-selected="false" data-arch-view="operations">2 · Operaciones</button>
+        <button type="button" role="tab" aria-selected="false" data-arch-view="specialties">3 · Especialidades</button>
+      </div>
+
+      <div class="ivp-arch-canvas" aria-label="Arquitectura visual de IsiVoltPro">
+        <svg class="ivp-arch-lines" viewBox="0 0 1000 760" preserveAspectRatio="none" aria-hidden="true">
+          <circle cx="500" cy="380" r="125" />
+          <circle cx="500" cy="380" r="250" />
+          <circle cx="500" cy="380" r="350" />
+          <path d="M500 380 L500 95" />
+          <path d="M500 380 L805 207" />
+          <path d="M500 380 L850 520" />
+          <path d="M500 380 L500 680" />
+          <path d="M500 380 L165 520" />
+          <path d="M500 380 L190 205" />
+        </svg>
+
+        <div class="ivp-arch-core">
+          <span>PLATAFORMA</span>
+          <strong>ISIVOLTPRO</strong>
+          <small>Contexto compartido</small>
+        </div>
+
+        <div class="ivp-arch-group is-active" data-arch-group="context" aria-hidden="false">
+          <div class="ivp-arch-node node-a"><span>01</span><strong>Cliente</strong><small>Empresa · centro · contrato</small></div>
+          <div class="ivp-arch-node node-b"><span>02</span><strong>Instalación</strong><small>Edificio · planta · zona</small></div>
+          <div class="ivp-arch-node node-c"><span>03</span><strong>Activo</strong><small>QR/NFC · estado · histórico</small></div>
+          <div class="ivp-arch-node node-d"><span>04</span><strong>Personas</strong><small>Técnicos · responsables</small></div>
+          <div class="ivp-arch-node node-e"><span>05</span><strong>Documentación</strong><small>Planos · manuales · informes</small></div>
+          <div class="ivp-arch-node node-f"><span>06</span><strong>Dato único</strong><small>Sin duplicar contexto</small></div>
+        </div>
+
+        <div class="ivp-arch-group" data-arch-group="operations" aria-hidden="true" inert>
+          <a class="ivp-arch-node node-a is-build" href={withBase('/aplicaciones/activos-qr-nfc')}><span>QR</span><strong>Activos</strong><small>En desarrollo · identidad e histórico</small></a>
+          <a class="ivp-arch-node node-b is-live" href={withBase('/aplicaciones/mantenimiento-ot')}><span>OT</span><strong>Órdenes</strong><small>Operativa · coordinación y campo</small></a>
+          <a class="ivp-arch-node node-c is-build" href={withBase('/mantenimiento')}><span>MT</span><strong>Mantenimiento</strong><small>Evolución · preventivo y correctivo</small></a>
+          <a class="ivp-arch-node node-d is-live" href={withBase('/aplicaciones/herramientas-maletines')}><span>HM</span><strong>Herramientas</strong><small>Operativa · préstamos y trazabilidad</small></a>
+          <a class="ivp-arch-node node-e is-build" href={withBase('/aplicaciones/inventario-almacen')}><span>AL</span><strong>Inventario</strong><small>En desarrollo · material y almacén</small></a>
+          <a class="ivp-arch-node node-f is-live" href={withBase('/aplicaciones/inspecciones-bt')}><span>BT</span><strong>Preinspecciones</strong><small>Beta operativa · local-first</small></a>
+        </div>
+
+        <div class="ivp-arch-group" data-arch-group="specialties" aria-hidden="true" inert>
+          <a class="ivp-arch-node node-a is-live" href={withBase('/aplicaciones/inspecciones-bt')}><span>BT</span><strong>Electricidad</strong><small>Beta operativa · preinspección BT</small></a>
+          <a class="ivp-arch-node node-b is-roadmap" href={withBase('/aplicaciones/climatizacion-rite')}><span>RT</span><strong>RITE</strong><small>Roadmap · climatización y térmicas</small></a>
+          <a class="ivp-arch-node node-c is-roadmap" href={withBase('/aplicaciones/pci')}><span>PCI</span><strong>PCI</strong><small>Roadmap · protección contra incendios</small></a>
+          <a class="ivp-arch-node node-d is-roadmap" href={withBase('/aplicaciones/legionella-agua')}><span>H₂O</span><strong>Legionella</strong><small>Roadmap · agua y controles</small></a>
+          <a class="ivp-arch-node node-e is-roadmap" href={withBase('/aplicaciones/documentacion-tecnica')}><span>DOC</span><strong>Documentación</strong><small>Roadmap · informes y conocimiento</small></a>
+          <a class="ivp-arch-node node-f is-roadmap" href={withBase('/aplicaciones/utilidades-asistentes')}><span>AI</span><strong>IA y utilidades</strong><small>Roadmap · asistentes y cálculos</small></a>
+        </div>
+
+        <div class="ivp-arch-pulse" aria-hidden="true"></div>
+      </div>
+
+      <aside class="ivp-arch-panel" aria-live="polite">
+        <div class="ivp-arch-panel-view is-active" data-arch-panel="context" aria-hidden="false">
+          <p class="eyebrow">Capa 1 · Contexto común</p>
+          <h2>La información nace una vez.</h2>
+          <p>Cliente, instalación, activo, persona y documentación forman la base. Las aplicaciones reutilizan ese contexto cuando lo necesitan.</p>
+          <ul>
+            <li>Un activo mantiene identidad e histórico.</li>
+            <li>Una ubicación sirve a OT, mantenimiento e inspecciones.</li>
+            <li>Los documentos permanecen unidos al elemento correcto.</li>
+          </ul>
+        </div>
+
+        <div class="ivp-arch-panel-view" data-arch-panel="operations" aria-hidden="true" inert>
+          <p class="eyebrow">Capa 2 · Trabajo diario</p>
+          <h2>Aplicaciones independientes, datos conectables.</h2>
+          <p>Herramientas QR/NFC e IsiVoltPro OT ya están operativas. Preinspecciones BT funciona como beta local-first; Activos e Inventario continúan en desarrollo.</p>
+          <div class="ivp-arch-status-row">
+            <span><i class="is-live"></i> Operativa / Beta</span>
+            <span><i class="is-build"></i> En desarrollo</span>
+          </div>
+          <a class="button button-primary" href={withBase('/aplicaciones')}>Explorar aplicaciones →</a>
+        </div>
+
+        <div class="ivp-arch-panel-view" data-arch-panel="specialties" aria-hidden="true" inert>
+          <p class="eyebrow">Capa 3 · Especialidades</p>
+          <h2>El mantenimiento no es una sola disciplina.</h2>
+          <p>Preinspecciones BT abre la capa eléctrica en beta; climatización, PCI, agua, documentación y futuras utilidades técnicas se incorporan por etapas sobre una arquitectura común.</p>
+          <div class="ivp-arch-status-row">
+            <span><i class="is-live"></i> Beta operativa</span>
+            <span><i class="is-roadmap"></i> Roadmap</span>
+          </div>
+          <a class="button button-secondary" href={withBase('/contacto')}>Plantear una especialidad</a>
+        </div>
+      </aside>
+    </div>
+
+    <div class="ivp-arch-summary" data-premium-reveal>
+      <article><span>01</span><strong>Identifica</strong><p>Cliente, ubicación y activo.</p></article>
+      <article><span>02</span><strong>Opera</strong><p>OT, tareas, técnicos y recursos.</p></article>
+      <article><span>03</span><strong>Especializa</strong><p>Flujos técnicos por disciplina.</p></article>
+      <article><span>04</span><strong>Aprende</strong><p>Histórico, evidencia y conocimiento.</p></article>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const explorer = document.querySelector('[data-architecture-explorer]');
+    if (!explorer || explorer.dataset.ready === 'true') return;
+    explorer.dataset.ready = 'true';
+
+    const buttons = [...explorer.querySelectorAll('[data-arch-view]')];
+    const groups = [...explorer.querySelectorAll('[data-arch-group]')];
+    const panels = [...explorer.querySelectorAll('[data-arch-panel]')];
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+    let current = 'context';
+    let timer;
+
+    const activate = (view, userInitiated = false) => {
+      current = view;
+      explorer.setAttribute('data-active-view', view);
+      buttons.forEach((button) => {
+        const active = button.dataset.archView === view;
+        button.classList.toggle('is-active', active);
+        button.setAttribute('aria-selected', String(active));
+      });
+      groups.forEach((group) => {
+        const active = group.dataset.archGroup === view;
+        group.classList.toggle('is-active', active);
+        group.setAttribute('aria-hidden', String(!active));
+        group.toggleAttribute('inert', !active);
+      });
+      panels.forEach((panel) => {
+        const active = panel.dataset.archPanel === view;
+        panel.classList.toggle('is-active', active);
+        panel.setAttribute('aria-hidden', String(!active));
+        panel.toggleAttribute('inert', !active);
+      });
+      if (userInitiated) restart();
+    };
+
+    const restart = () => {
+      window.clearInterval(timer);
+      if (reduced || coarse || document.hidden) return;
+      timer = window.setInterval(() => {
+        const order = ['context', 'operations', 'specialties'];
+        activate(order[(order.indexOf(current) + 1) % order.length]);
+      }, 6200);
+    };
+
+    buttons.forEach((button) => button.addEventListener('click', () => activate(button.dataset.archView, true)));
+    explorer.addEventListener('mouseenter', () => window.clearInterval(timer), { passive: true });
+    explorer.addEventListener('mouseleave', restart, { passive: true });
+    explorer.addEventListener('focusin', () => window.clearInterval(timer));
+    explorer.addEventListener('focusout', restart);
+    document.addEventListener('visibilitychange', () => document.hidden ? window.clearInterval(timer) : restart());
+
+    activate('context');
+    restart();
+  })();
+</script>

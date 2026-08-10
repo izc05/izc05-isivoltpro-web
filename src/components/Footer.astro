@@ -18,12 +18,15 @@ const withBase = (href: string) => {
         <p>{brand.tagline} Aplicaciones profesionales, modulares y preparadas para crecer.</p>
         <div class="footer-meta-stack">
           <a class="footer-domain" href={brand.url}>{brand.domain}</a>
-          <div class="footer-statuses" aria-label="Aplicaciones operativas">
+          <div class="footer-statuses" aria-label="Productos disponibles">
             <a class="footer-status" href={withBase('/aplicaciones/herramientas-maletines')}>
               <i aria-hidden="true"></i><span>Herramientas QR/NFC</span><strong>Operativa</strong>
             </a>
             <a class="footer-status" href={withBase('/aplicaciones/mantenimiento-ot')}>
               <i aria-hidden="true"></i><span>IsiVoltPro OT</span><strong>Operativa</strong>
+            </a>
+            <a class="footer-status is-beta" href={withBase('/aplicaciones/inspecciones-bt')}>
+              <i aria-hidden="true"></i><span>Preinspecciones BT</span><strong>Beta</strong>
             </a>
           </div>
         </div>
@@ -32,11 +35,12 @@ const withBase = (href: string) => {
       <div>
         <h3>Producto</h3>
         <div class="footer-links">
+          <a href={withBase('/ecosistema')}>Ecosistema</a>
+          <a href={withBase('/mantenimiento')}>Mantenimiento</a>
           <a href={withBase('/aplicaciones')}>Aplicaciones</a>
           <a href={withBase('/aplicaciones/herramientas-maletines')}>Herramientas QR/NFC</a>
           <a href={withBase('/aplicaciones/mantenimiento-ot')}>IsiVoltPro OT</a>
-          <a href={withBase('/ecosistema')}>Ecosistema</a>
-          <a href={withBase('/mantenimiento')}>Soluciones</a>
+          <a href={withBase('/aplicaciones/inspecciones-bt')}>Preinspecciones BT</a>
         </div>
       </div>
 
@@ -51,11 +55,13 @@ const withBase = (href: string) => {
       </div>
 
       <div>
-        <h3>Contacto</h3>
+        <h3>Acceso y contacto</h3>
         <div class="footer-links">
+          <a href="https://qr.isivoltpro.com/" target="_blank" rel="noopener noreferrer">Abrir Herramientas QR ↗</a>
+          <a href="https://ot.isivoltpro.com/" target="_blank" rel="noopener noreferrer">Abrir IsiVoltPro OT ↗</a>
+          <a href="https://izc05.github.io/isivolpro-inspecciones/" target="_blank" rel="noopener noreferrer">Abrir Preinspecciones BT beta ↗</a>
           <a class="brand-email" href={`mailto:${brand.email}`}>{brand.email}</a>
           <span>{brand.location}</span>
-          <a href="https://qr.isivoltpro.com/" target="_blank" rel="noopener noreferrer">Abrir Herramientas QR</a>
           <span>Datos bajo tu control</span>
         </div>
       </div>

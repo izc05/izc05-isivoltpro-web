@@ -1,0 +1,147 @@
+html {
+  scroll-padding-top: 8rem;
+}
+
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid #2166f3;
+  outline-offset: 3px;
+}
+
+:where(.site-header, .site-footer, .ivp-building-story, .ivp-work-story, .ivp-eco-story, .ivp-arch, .ivp-mcc) :where(a, button, [tabindex]):focus-visible {
+  outline-color: #7ee6f2;
+}
+
+.menu-toggle {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.menu-toggle[aria-expanded='true'] {
+  color: #fff;
+  background: #071a33;
+}
+
+.pv13-location-inner,
+.pv13-location-current {
+  min-width: 0;
+}
+
+.pv13-location-current {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.footer-status.is-beta {
+  border-color: rgba(244, 183, 64, .28);
+}
+
+.footer-status.is-beta i {
+  background: #f4b740;
+  box-shadow: 0 0 0 4px rgba(244, 183, 64, .12);
+}
+
+.footer-status.is-beta strong {
+  color: #ffd584;
+}
+
+@media (max-width: 760px) {
+  html {
+    scroll-padding-top: 6.5rem;
+  }
+
+  .pv13-location-inner {
+    overflow: hidden;
+  }
+
+  .pv13-location-section {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-grid-expanded > div {
+    min-width: 0;
+  }
+
+  .footer-links a {
+    display: flex;
+    align-items: center;
+    min-height: 36px;
+    padding-block: 4px;
+  }
+
+  .footer-bottom-expanded nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+  }
+
+  .footer-bottom-expanded nav a,
+  .footer-bottom-expanded .footer-privacy-button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .privacy-banner {
+    bottom: 8px;
+    width: calc(100% - 16px);
+    gap: 10px;
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .privacy-banner-copy {
+    gap: 9px;
+  }
+
+  .privacy-status-dot {
+    width: 9px;
+    height: 9px;
+    margin-top: 4px;
+    box-shadow: 0 0 0 5px rgba(43, 210, 156, .11);
+  }
+
+  .privacy-banner-copy strong {
+    font-size: .82rem;
+  }
+
+  .privacy-banner-copy p {
+    font-size: .7rem;
+    line-height: 1.35;
+  }
+
+  .privacy-banner-actions {
+    grid-template-columns: .78fr 1fr 1fr;
+    gap: 6px;
+  }
+
+  .privacy-banner-actions > a {
+    grid-column: auto;
+    display: grid;
+    place-items: center;
+    min-height: 40px;
+    font-size: .66rem;
+    text-align: center;
+  }
+
+  .privacy-banner-actions .button {
+    min-height: 40px;
+    padding-inline: 8px;
+    border-radius: 10px;
+    font-size: .7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -30,11 +30,11 @@ const slides = [
   },
   {
     image: `${base}media/inspections-dashboard.svg`,
-    eyebrow: 'Ingeniería · En desarrollo',
-    title: 'Inspecciones BT',
-    short: 'Inspecciones',
-    state: 'En desarrollo',
-    alt: 'Panel de inspecciones eléctricas de baja tensión IsiVoltPro'
+    eyebrow: 'Ingeniería · Beta operativa',
+    title: 'Preinspecciones BT',
+    short: 'Preinspecciones',
+    state: 'Beta',
+    alt: 'Panel de preinspecciones eléctricas de baja tensión IsiVoltPro'
   }
 ];
 ---
@@ -45,10 +45,10 @@ const slides = [
   {showMetrics && (
     <>
       <div class="pv12-float-metric metric-one" data-parallax="1.8">
-        <span>Aplicaciones</span><strong>2</strong><small>operativas</small>
+        <span>Productos</span><strong>3</strong><small>2 operativas + 1 beta</small>
       </div>
       <div class="pv12-float-metric metric-two" data-parallax="2.2">
-        <span>Órdenes</span><strong>Tiempo real</strong><small>coordinación y campo</small>
+        <span>Órdenes</span><strong>Seguimiento</strong><small>coordinación y campo</small>
       </div>
       <div class="pv12-float-metric metric-three" data-parallax="1.45">
         <span>Identificación</span><strong>QR / NFC</strong><small>activos y herramientas</small>
@@ -112,7 +112,7 @@ const slides = [
       </div>
 
       <div class="pv13-phone-slide" data-phone-slide="2">
-        <div class="pv12-phone-top"><span>‹</span><b>Inspección BT</b><span>•••</span></div>
+        <div class="pv12-phone-top"><span>‹</span><b>Preinspección BT</b><span>•••</span></div>
         <div class="pv12-tool-illustration" aria-hidden="true">✓</div>
         <h3>Centro sanitario</h3>
         <div class="pv13-phone-code"><span>BT-2026-018</span><b class="is-amber">71%</b></div>
@@ -121,7 +121,7 @@ const slides = [
           <div><dt>Bloque</dt><dd>Mediciones</dd></div>
           <div><dt>Defectos</dt><dd>3 registrados</dd></div>
         </dl>
-        <button type="button" tabindex="-1">Continuar inspección</button>
+        <button type="button" tabindex="-1">Continuar preinspección</button>
       </div>
     </div>
   </div>
@@ -156,11 +156,12 @@ const slides = [
     if (window.__pv13DeviceCarouselInit) return;
     window.__pv13DeviceCarouselInit = true;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
     const mobile = window.matchMedia('(max-width: 560px)').matches;
     const labels = [
       ['Recursos · Operativa', 'Herramientas QR/NFC'],
       ['Operaciones · Operativa', 'IsiVoltPro OT'],
-      ['Ingeniería · En desarrollo', 'Inspecciones BT']
+      ['Ingeniería · Beta operativa', 'Preinspecciones BT']
     ];
 
     document.querySelectorAll('[data-device-carousel]').forEach((scene) => {
@@ -197,7 +198,7 @@ const slides = [
       const stop = () => window.clearInterval(timer);
       const start = () => {
         stop();
-        if (!reduced && slides.length > 1) timer = window.setInterval(() => show(current + 1), 4300);
+        if (!reduced && !coarse && slides.length > 1) timer = window.setInterval(() => show(current + 1), 4300);
       };
 
       dots.forEach((dot, index) => dot.addEventListener('click', () => { show(index); start(); }));

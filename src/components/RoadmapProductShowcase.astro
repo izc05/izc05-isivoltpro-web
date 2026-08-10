@@ -1,0 +1,75 @@
+---
+import type { EcosystemArea } from '../data/catalog';
+import '../styles/roadmap-product-showcase.css';
+
+interface Props { area: EcosystemArea; }
+const { area } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
+const isInspection = area.slug === 'inspecciones-bt';
+const isInDevelopment = area.status === 'En desarrollo' || area.status === 'Próxima publicación';
+const workflow = isInspection
+  ? [
+      ['01', 'Datos de instalación', 'Tipo de inspección, reglamento aplicable, titular, emplazamiento, características y documentación disponible.'],
+      ['02', 'Revisión por bloques', 'Unifilar, protecciones, puesta a tierra, locales especiales, checklist y puntos de inspección ordenados.'],
+      ['03', 'Campo y evidencias', 'Valores medidos, observaciones, clasificación de defectos y fotografías desde móvil o tableta.'],
+      ['04', 'Resultado e informe', 'Resumen de defectos, conclusión, fotografías, mediciones e informe profesional preparado para revisar.']
+    ]
+  : [
+      ['01', 'Contexto real', 'Partimos de quién utilizará la aplicación, dónde trabaja, qué necesita consultar y qué errores queremos reducir.'],
+      ['02', 'Flujo mínimo útil', 'Diseñamos el recorrido principal antes de añadir automatizaciones, paneles o integraciones secundarias.'],
+      ['03', 'Validación en campo', 'La herramienta debe demostrar utilidad en situaciones reales antes de ampliar su alcance.'],
+      ['04', 'Conexión progresiva', 'Cuando aporte valor podrá compartir instalaciones, activos, técnicos, documentos e histórico con IsiVoltPro.']
+    ];
+---
+
+<section class="ivp-roadmap-product">
+  <div class="ivp-roadmap-product-ambient" aria-hidden="true"><span></span><i></i></div>
+  <div class="container ivp-roadmap-product-grid">
+    <div class="ivp-roadmap-product-copy" data-premium-reveal>
+      <div class="ivp-roadmap-badges"><span>{area.family}</span><b class:list={[isInDevelopment ? 'is-build' : 'is-roadmap']}>{area.status}</b></div>
+      <p class="eyebrow">{area.code} · Ecosistema IsiVoltPro</p>
+      <h1>{area.name}</h1>
+      <p class="lead">{area.description}</p>
+      <div class="ivp-roadmap-meta"><span><small>Dirigida a</small><strong>{area.audience}</strong></span><span><small>{area.previewLabel}</small><strong>{area.previewValue}</strong></span></div>
+      <div class="ivp-roadmap-actions"><a class="button button-primary" href={withBase('/contacto')}>Seguir su desarrollo →</a><a class="button button-secondary" href={withBase('/aplicaciones')}>Volver al catálogo</a></div>
+    </div>
+
+    <div class="ivp-roadmap-product-preview" data-premium-reveal>
+      <div class="ivp-roadmap-preview-head"><span>VISTA CONCEPTUAL</span><b>{area.code}</b></div>
+      <div class="ivp-roadmap-preview-screen">
+        <div class="ivp-roadmap-preview-title"><small>{area.family}</small><strong>{area.name}</strong></div>
+        <div class="ivp-roadmap-preview-kpi"><span>{area.previewLabel}</span><strong>{area.previewValue}</strong></div>
+        <div class="ivp-roadmap-preview-list">{area.previewItems.map((item,index)=><div><i>{String(index+1).padStart(2,'0')}</i><span>{item}</span><b>→</b></div>)}</div>
+      </div>
+      <div class="ivp-roadmap-preview-foot"><span><i class:list={[isInDevelopment ? 'is-build' : 'is-roadmap']}></i>{area.status}</span><small>Diseño sujeto a evolución</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-heading" data-premium-reveal><p class="eyebrow">Objetivo del producto</p><h2>Resolver una necesidad concreta antes de crecer</h2><p class="lead">La ficha define el alcance previsto. El producto se ampliará únicamente cuando el flujo principal sea claro, útil y coherente con el ecosistema.</p></div>
+    <div class="ivp-roadmap-highlight-grid">{area.highlights.map((highlight,index)=><article data-premium-reveal style={`transition-delay:${index*60}ms`}><span>{String(index+1).padStart(2,'0')}</span><h3>{highlight}</h3><p>Función prioritaria dentro del alcance de {area.name}.</p></article>)}</div>
+  </div>
+</section>
+
+<section class="section section-dark">
+  <div class="container content-split">
+    <div class="content-sticky" data-premium-reveal><p class="eyebrow">{isInspection ? 'Flujo previsto' : 'Cómo se construirá'}</p><h2>{isInspection ? 'De la instalación al resultado técnico' : 'Primero el trabajo real. Después la complejidad.'}</h2><p class="lead">{isInspection ? 'La inspección se organiza por etapas claras para evitar omisiones y mantener coherencia entre campo, defectos y resultado.' : 'Cada nueva aplicación seguirá un desarrollo progresivo: contexto, flujo mínimo, validación y conexión con el resto de IsiVoltPro.'}</p></div>
+    <div class="feature-list">{workflow.map((step)=><article class="feature-row" data-premium-reveal><span>{step[0]}</span><h3>{step[1]}</h3><p>{step[2]}</p></article>)}</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="ivp-roadmap-context" data-premium-reveal>
+      <div><p class="eyebrow">Contexto compartido</p><h2>No será una isla dentro de IsiVoltPro</h2><p>Cuando sea útil, esta aplicación podrá reutilizar elementos de la plataforma sin duplicarlos.</p></div>
+      <div class="ivp-roadmap-context-nodes"><span>Cliente</span><span>Instalación</span><span>Activo</span><span>Técnico</span><span>Documentos</span><span>Histórico</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-soft">
+  <div class="container"><div class="cta" data-premium-reveal><div><p class="eyebrow">{area.status}</p><h2>{isInDevelopment ? 'Esta aplicación ya forma parte del desarrollo activo' : 'Esta especialidad forma parte del roadmap de IsiVoltPro'}</h2><p>El catálogo evoluciona de forma progresiva para mantener calidad, coherencia y una arquitectura conectable.</p></div><a class="button button-dark" href={withBase('/ecosistema')}>Ver cómo encaja →</a></div></div>
+</section>

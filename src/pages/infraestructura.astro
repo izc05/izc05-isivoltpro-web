@@ -1,28 +1,31 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import { brand } from '../data/brand';
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
 ---
 
 <PageLayout
   title="Infraestructura y control"
-  description="Arquitectura prevista para desplegar IsiVoltPro con dominio propio, aplicaciones separadas, control de accesos, copias de seguridad y datos bajo control."
+  description="Arquitectura de IsiVoltPro para separar web pública, aplicaciones, accesos y datos técnicos con una evolución controlada."
 >
   <section class="page-hero infrastructure-page-hero">
     <div class="container page-hero-grid">
       <div class="reveal">
         <span class="page-kicker">La tecnología también debe ser mantenible</span>
         <h1>Aplicaciones útiles sobre una infraestructura <span class="accent">clara, controlada y ampliable.</span></h1>
-        <p class="lead">IsiVoltPro se prepara para funcionar con dominio propio, servicios separados y una arquitectura que pueda crecer sin mezclar la web pública, las aplicaciones y los datos técnicos.</p>
+        <p class="lead">IsiVoltPro separa la presencia pública, las aplicaciones operativas y los datos técnicos para que cada capa pueda evolucionar sin convertir todo el ecosistema en un único bloque difícil de mantener.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#arquitectura">Ver arquitectura →</a>
-          <a class="button button-secondary" href="/contacto">Hablar del despliegue</a>
+          <a class="button button-secondary" href={withBase('/contacto')}>Hablar del despliegue</a>
         </div>
       </div>
 
       <div class="infrastructure-stack reveal" aria-label="Capas de infraestructura IsiVoltPro">
         <div><small>Entrada pública</small><strong>{brand.domain}</strong><span>Marca · productos · recursos</span></div>
         <i></i>
-        <div><small>Aplicaciones</small><strong>OT · Activos · Inspecciones</strong><span>Servicios y permisos separados</span></div>
+        <div><small>Aplicaciones</small><strong>Herramientas · OT · Preinspecciones BT</strong><span>Operativas, beta y próximas áreas</span></div>
         <i></i>
         <div><small>Datos</small><strong>Base técnica controlada</strong><span>Usuarios · activos · históricos · documentos</span></div>
       </div>
@@ -32,15 +35,15 @@ import { brand } from '../data/brand';
   <section class="section" id="arquitectura">
     <div class="container">
       <div class="section-heading reveal">
-        <p class="eyebrow">Arquitectura propuesta</p>
+        <p class="eyebrow">Arquitectura por capas</p>
         <h2>Una dirección clara para cada parte del ecosistema</h2>
-        <p class="lead">Los nombres son una propuesta de organización. Se activarán progresivamente conforme cada aplicación esté preparada para producción.</p>
+        <p class="lead">Las aplicaciones pueden publicarse y evolucionar por separado mientras conservan una identidad y una estrategia de datos comunes.</p>
       </div>
       <div class="domain-grid">
-        <article class="domain-card reveal"><span>Web pública</span><h3>www.isivoltpro.com</h3><p>Marca, ecosistema, catálogo, recursos, contacto y documentación pública.</p><b>Visible para cualquier visitante</b></article>
-        <article class="domain-card reveal"><span>Acceso general</span><h3>app.isivoltpro.com</h3><p>Punto de entrada para identificar al usuario y mostrar las aplicaciones autorizadas.</p><b>Acceso autenticado</b></article>
-        <article class="domain-card reveal"><span>Operaciones</span><h3>ot.isivoltpro.com</h3><p>Clientes, instalaciones, técnicos, avisos, órdenes, evidencias e informes.</p><b>Primer módulo operativo</b></article>
-        <article class="domain-card reveal"><span>Especialistas</span><h3>activos / inspecciones</h3><p>Servicios dedicados para identificación QR/NFC e inspecciones técnicas.</p><b>Activación progresiva</b></article>
+        <article class="domain-card reveal"><span>Web pública</span><h3>isivoltpro.com</h3><p>Marca, ecosistema, catálogo, recursos, contacto y documentación pública.</p><b>Presencia pública</b></article>
+        <article class="domain-card reveal"><span>Plataforma</span><h3>Acceso IsiVoltPro</h3><p>Punto de entrada futuro para identificar al usuario, su organización y las aplicaciones autorizadas.</p><b>En desarrollo</b></article>
+        <article class="domain-card reveal"><span>Operaciones</span><h3>ot.isivoltpro.com</h3><p>Clientes, instalaciones, técnicos, avisos, órdenes y seguimiento operativo.</p><b>Aplicación operativa</b></article>
+        <article class="domain-card reveal"><span>Recursos</span><h3>qr.isivoltpro.com</h3><p>Herramientas, responsables, movimientos, préstamos, devoluciones e identificación QR/NFC.</p><b>Aplicación operativa</b></article>
       </div>
     </div>
   </section>
@@ -71,9 +74,9 @@ import { brand } from '../data/brand';
       </div>
       <div class="feature-list">
         <article class="feature-row reveal"><span>Web estática</span><h3>GitHub Pages para la presencia pública</h3><p>Rápida, sencilla y con poco mantenimiento. Adecuada para páginas corporativas y recursos que no necesiten backend.</p></article>
-        <article class="feature-row reveal"><span>Servidor propio</span><h3>Mini PC con Docker y proxy seguro</h3><p>Mayor control y posibilidad de alojar servicios internos, siempre con actualizaciones, monitorización y copias correctamente gestionadas.</p></article>
+        <article class="feature-row reveal"><span>Servidor propio</span><h3>Mini PC con contenedores y proxy seguro</h3><p>Mayor control y posibilidad de alojar servicios operativos, siempre con actualizaciones, monitorización y copias correctamente gestionadas.</p></article>
         <article class="feature-row reveal"><span>Servicio gestionado</span><h3>Nube o plataforma administrada</h3><p>Reduce tareas de infraestructura y facilita disponibilidad, escalado y servicios de base de datos.</p></article>
-        <article class="feature-row reveal"><span>Modelo híbrido</span><h3>Web pública separada de las aplicaciones</h3><p>La opción recomendada: contenido público estático y servicios operativos en una infraestructura con autenticación y datos.</p></article>
+        <article class="feature-row reveal"><span>Modelo híbrido</span><h3>Web pública separada de las aplicaciones</h3><p>Contenido público estático y servicios operativos en una infraestructura con autenticación y datos.</p></article>
       </div>
     </div>
   </section>
@@ -96,8 +99,8 @@ import { brand } from '../data/brand';
   <section class="section">
     <div class="container">
       <div class="cta reveal">
-        <div><p class="eyebrow">Estado actual</p><h2>La web pública está preparada; las aplicaciones se desplegarán por fases</h2><p>El objetivo es avanzar sin prometer una infraestructura de producción que todavía no haya sido probada, protegida y documentada.</p></div>
-        <a class="button button-dark" href="/contacto">Consultar el proyecto →</a>
+        <div><p class="eyebrow">Estado actual</p><h2>La web pública, dos aplicaciones y una beta ya forman una base real</h2><p>Herramientas QR/NFC e IsiVoltPro OT están operativas. Preinspecciones BT funciona como beta local-first. El resto de la arquitectura continuará incorporándose por fases, con validación antes de cada publicación.</p></div>
+        <a class="button button-dark" href={withBase('/contacto')}>Consultar el proyecto →</a>
       </div>
     </div>
   </section>
