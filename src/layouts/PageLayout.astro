@@ -69,14 +69,45 @@ const structuredData = {
     <script is:inline>
       const toggle = document.querySelector('.menu-toggle');
       const nav = document.querySelector('.nav-links');
+
+      const setMenuState = (open, { returnFocus = false } = {}) => {
+        if (!toggle || !nav) return;
+        nav.classList.toggle('open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        toggle.textContent = open ? '×' : '☰';
+        document.documentElement.toggleAttribute('data-mobile-menu-open', open);
+        if (!open && returnFocus) toggle.focus();
+      };
+
       toggle?.addEventListener('click', () => {
-        const open = nav?.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', String(Boolean(open)));
+        setMenuState(!nav?.classList.contains('open'));
       });
+
       nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-        nav.classList.remove('open');
-        toggle?.setAttribute('aria-expanded', 'false');
+        setMenuState(false);
       }));
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && nav?.classList.contains('open')) {
+          setMenuState(false, { returnFocus: true });
+        }
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!nav?.classList.contains('open')) return;
+        const target = event.target;
+        if (!(target instanceof Node)) return;
+        if (nav.contains(target) || toggle?.contains(target)) return;
+        setMenuState(false);
+      });
+
+      const desktopNavigation = window.matchMedia('(min-width: 1051px)');
+      const resetDesktopMenu = (event) => {
+        if (event.matches) setMenuState(false);
+      };
+      desktopNavigation.addEventListener?.('change', resetDesktopMenu);
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
