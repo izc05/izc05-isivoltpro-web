@@ -156,6 +156,7 @@ const slides = [
     if (window.__pv13DeviceCarouselInit) return;
     window.__pv13DeviceCarouselInit = true;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
     const mobile = window.matchMedia('(max-width: 560px)').matches;
     const labels = [
       ['Recursos · Operativa', 'Herramientas QR/NFC'],
@@ -197,7 +198,7 @@ const slides = [
       const stop = () => window.clearInterval(timer);
       const start = () => {
         stop();
-        if (!reduced && slides.length > 1) timer = window.setInterval(() => show(current + 1), 4300);
+        if (!reduced && !coarse && slides.length > 1) timer = window.setInterval(() => show(current + 1), 4300);
       };
 
       dots.forEach((dot, index) => dot.addEventListener('click', () => { show(index); start(); }));
