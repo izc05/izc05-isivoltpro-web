@@ -27,7 +27,7 @@ const pageLabels: Record<string, string> = {
   '/aplicaciones/legionella-agua': 'Legionella y agua',
   '/aplicaciones/documentacion-tecnica': 'Documentación técnica',
   '/aplicaciones/utilidades-asistentes': 'Utilidades y asistentes',
-  '/mantenimiento': 'Soluciones de mantenimiento',
+  '/mantenimiento': 'Mantenimiento',
   '/recursos': 'Blog técnico',
   '/contacto': 'Contacto',
   '/infraestructura': 'Infraestructura',
@@ -42,7 +42,7 @@ const section = normalizedPath.startsWith('/aplicaciones')
   : normalizedPath.startsWith('/recursos')
     ? { href: '/recursos', label: 'Blog técnico' }
     : normalizedPath.startsWith('/mantenimiento')
-      ? { href: '/mantenimiento', label: 'Soluciones' }
+      ? { href: '/mantenimiento', label: 'Mantenimiento' }
       : normalizedPath.startsWith('/ecosistema')
         ? { href: '/ecosistema', label: 'Ecosistema' }
         : normalizedPath.startsWith('/contacto')
@@ -66,7 +66,7 @@ const nestedLocation = normalizedPath !== section.href;
       <a href={withBase('/')} aria-current={active('/') ? 'page' : undefined}>Inicio</a>
       <a href={withBase('/ecosistema')} aria-current={active('/ecosistema') ? 'page' : undefined}>Ecosistema</a>
       <a href={withBase('/aplicaciones')} aria-current={active('/aplicaciones') ? 'page' : undefined}>Aplicaciones</a>
-      <a href={withBase('/mantenimiento')} aria-current={active('/mantenimiento') ? 'page' : undefined}>Soluciones</a>
+      <a href={withBase('/mantenimiento')} aria-current={active('/mantenimiento') ? 'page' : undefined}>Mantenimiento</a>
       <a href={withBase('/recursos')} aria-current={active('/recursos') ? 'page' : undefined}>Blog</a>
       <a href={withBase('/contacto')} aria-current={active('/contacto') ? 'page' : undefined}>Contacto</a>
     </nav>
