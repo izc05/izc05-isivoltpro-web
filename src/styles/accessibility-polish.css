@@ -11,9 +11,42 @@ html {
   outline-color: #7ee6f2;
 }
 
+.menu-toggle {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.menu-toggle[aria-expanded='true'] {
+  color: #fff;
+  background: #071a33;
+}
+
+.pv13-location-inner,
+.pv13-location-current {
+  min-width: 0;
+}
+
+.pv13-location-current {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 @media (max-width: 760px) {
   html {
     scroll-padding-top: 6.5rem;
+  }
+
+  .pv13-location-inner {
+    overflow: hidden;
+  }
+
+  .pv13-location-section {
+    flex: 0 0 auto;
   }
 }
 
