@@ -98,6 +98,7 @@ const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(
     const buttons = [...center.querySelectorAll('[data-maintenance-mode]')];
     const views = [...center.querySelectorAll('[data-maintenance-view]')];
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
     let current = 'corrective';
     let timer;
 
@@ -114,7 +115,7 @@ const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(
 
     const restart = () => {
       clearInterval(timer);
-      if (reduced) return;
+      if (reduced || coarse || document.hidden) return;
       timer = setInterval(() => {
         const order = ['corrective','preventive','regulatory'];
         activate(order[(order.indexOf(current)+1)%order.length]);
@@ -126,6 +127,7 @@ const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(
     center.addEventListener('mouseleave', restart, { passive:true });
     center.addEventListener('focusin', () => clearInterval(timer));
     center.addEventListener('focusout', restart);
+    document.addEventListener('visibilitychange', () => document.hidden ? clearInterval(timer) : restart());
     activate(current); restart();
   })();
 </script>
