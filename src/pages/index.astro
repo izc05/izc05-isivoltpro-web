@@ -30,7 +30,7 @@ const solutions = [
 const applications = [
   { icon: '▣', name: 'Herramientas QR/NFC', copy: 'Inventario, préstamos y trazabilidad.', status: 'Operativa', live: true, href: '/aplicaciones/herramientas-maletines' },
   { icon: '⌑', name: 'IsiVoltPro OT', copy: 'Clientes, instalaciones, órdenes, técnicos y auditoría.', status: 'Operativa', live: true, href: '/aplicaciones/mantenimiento-ot' },
-  { icon: '✓', name: 'Inspecciones BT', copy: 'Mediciones, defectos e informes.', status: 'En desarrollo', href: '/aplicaciones/inspecciones-bt' },
+  { icon: '✓', name: 'Preinspecciones BT', copy: 'Trabajo local-first, mediciones, evidencias e informe.', status: 'Beta operativa', live: true, href: '/aplicaciones/inspecciones-bt' },
   { icon: '▤', name: 'RITE', copy: 'Instalaciones térmicas y climatización.', status: 'Planificado', href: '/aplicaciones/climatizacion-rite' },
   { icon: '♨', name: 'PCI', copy: 'Equipos, revisiones y mantenimientos.', status: 'Planificado', href: '/aplicaciones/pci' },
   { icon: '◯', name: 'Legionella', copy: 'Controles, muestras y registros.', status: 'Planificado', href: '/aplicaciones/legionella-agua' }
@@ -98,9 +98,10 @@ const structuredData = {
               <a class="button button-primary" href="#experiencia">Entrar en la instalación ↓</a>
               <a class="button button-secondary" href={withBase('/aplicaciones')}>Explorar aplicaciones</a>
             </div>
-            <div class="pv13-live-apps" aria-label="Aplicaciones operativas">
+            <div class="pv13-live-apps" aria-label="Aplicaciones disponibles">
               <a class="pv13-live-app" href={withBase('/aplicaciones/herramientas-maletines')}><i aria-hidden="true"></i><span>Herramientas QR/NFC</span><strong>Operativa</strong></a>
               <a class="pv13-live-app" href={withBase('/aplicaciones/mantenimiento-ot')}><i aria-hidden="true"></i><span>IsiVoltPro OT</span><strong>Operativa</strong></a>
+              <a class="pv13-live-app" href={withBase('/aplicaciones/inspecciones-bt')}><i aria-hidden="true"></i><span>Preinspecciones BT</span><strong>Beta</strong></a>
             </div>
           </div>
 
@@ -199,8 +200,37 @@ const structuredData = {
     <script is:inline>
       const toggle = document.querySelector('.menu-toggle');
       const nav = document.querySelector('.nav-links');
-      toggle?.addEventListener('click', () => { const open = nav?.classList.toggle('open'); toggle.setAttribute('aria-expanded', String(Boolean(open))); });
-      nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => { nav.classList.remove('open'); toggle?.setAttribute('aria-expanded', 'false'); }));
+      const desktopNav = window.matchMedia('(min-width: 901px)');
+
+      const setMenuState = (open) => {
+        nav?.classList.toggle('open', open);
+        toggle?.setAttribute('aria-expanded', String(open));
+        toggle?.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        if (toggle) toggle.textContent = open ? '×' : '☰';
+      };
+
+      toggle?.addEventListener('click', () => setMenuState(!nav?.classList.contains('open')));
+      nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenuState(false)));
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && nav?.classList.contains('open')) {
+          setMenuState(false);
+          toggle?.focus();
+        }
+      });
+
+      document.addEventListener('pointerdown', (event) => {
+        if (!nav?.classList.contains('open')) return;
+        const target = event.target;
+        if (!(target instanceof Node)) return;
+        if (nav.contains(target) || toggle?.contains(target)) return;
+        setMenuState(false);
+      });
+
+      const handleViewportChange = (event) => {
+        if (event.matches) setMenuState(false);
+      };
+      desktopNav.addEventListener?.('change', handleViewportChange);
     </script>
   </body>
 </html>
