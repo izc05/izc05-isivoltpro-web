@@ -32,11 +32,11 @@ const withBase = (href: string) => {
       <div>
         <h3>Producto</h3>
         <div class="footer-links">
+          <a href={withBase('/ecosistema')}>Ecosistema</a>
+          <a href={withBase('/mantenimiento')}>Mantenimiento</a>
           <a href={withBase('/aplicaciones')}>Aplicaciones</a>
           <a href={withBase('/aplicaciones/herramientas-maletines')}>Herramientas QR/NFC</a>
           <a href={withBase('/aplicaciones/mantenimiento-ot')}>IsiVoltPro OT</a>
-          <a href={withBase('/ecosistema')}>Ecosistema</a>
-          <a href={withBase('/mantenimiento')}>Soluciones</a>
         </div>
       </div>
 
@@ -51,11 +51,12 @@ const withBase = (href: string) => {
       </div>
 
       <div>
-        <h3>Contacto</h3>
+        <h3>Acceso y contacto</h3>
         <div class="footer-links">
+          <a href="https://qr.isivoltpro.com/" target="_blank" rel="noopener noreferrer">Abrir Herramientas QR ↗</a>
+          <a href="https://ot.isivoltpro.com/" target="_blank" rel="noopener noreferrer">Abrir IsiVoltPro OT ↗</a>
           <a class="brand-email" href={`mailto:${brand.email}`}>{brand.email}</a>
           <span>{brand.location}</span>
-          <a href="https://qr.isivoltpro.com/" target="_blank" rel="noopener noreferrer">Abrir Herramientas QR</a>
           <span>Datos bajo tu control</span>
         </div>
       </div>
