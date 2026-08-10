@@ -50,6 +50,32 @@ html {
   }
 }
 
+@media (max-width: 560px) {
+  .footer-grid-expanded > div {
+    min-width: 0;
+  }
+
+  .footer-links a {
+    display: flex;
+    align-items: center;
+    min-height: 36px;
+    padding-block: 4px;
+  }
+
+  .footer-bottom-expanded nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+  }
+
+  .footer-bottom-expanded nav a,
+  .footer-bottom-expanded .footer-privacy-button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+  }
+}
+
 @media (max-width: 480px) {
   .privacy-banner {
     bottom: 8px;
