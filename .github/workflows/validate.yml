@@ -40,5 +40,6 @@ jobs:
         with:
           name: site-preview
           path: dist
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 3
