@@ -81,7 +81,7 @@ const workflow = [
     <div class="bt-device-grid">
       <article data-premium-reveal><span>APK</span><h3>Trabajo de campo</h3><p>Captura mediciones, observaciones, fotografías y firmas con una interfaz preparada para móvil y funcionamiento offline.</p><ul><li>Datos siempre disponibles en local</li><li>Cola de cambios pendientes</li><li>GPS y permisos nativos</li></ul></article>
       <article data-premium-reveal><span>PC</span><h3>Revisión y documentación</h3><p>Continúa el mismo expediente desde navegador para revisar bloques, completar información y preparar el informe.</p><ul><li>Vista amplia del expediente</li><li>Control de revisiones</li><li>Informe y evidencias reunidos</li></ul></article>
-      <article class="is-dark" data-premium-reveal><span>SYNC</span><h3>Servidor propio</h3><p>La arquitectura prevista utiliza PocketBase en infraestructura IsiVoltPro, con separación por empresa y acceso mediante la misma cuenta.</p><ul><li>Sin segunda contraseña</li><li>Archivos privados y verificados</li><li>Auditoría de sincronización y cierre</li></ul></article>
+      <article class="is-dark" data-premium-reveal><span>SYNC</span><h3>Infraestructura conectada</h3><p>La capa conectada se desplegará en infraestructura IsiVoltPro, con separación por empresa y acceso coordinado con la identidad central de la plataforma.</p><ul><li>Acceso coordinado con el portal IsiVoltPro</li><li>Archivos privados y verificados</li><li>Auditoría de sincronización y cierre</li></ul></article>
     </div>
   </div>
 </section>
@@ -114,11 +114,11 @@ const workflow = [
       <div>
         <p class="eyebrow">Estado del producto</p>
         <h2>Beta funcional con integración conectada preparada</h2>
-        <p>La versión pública actual funciona como aplicación local-first. La rama conectada ya ha superado pruebas de sincronización, archivos protegidos, PocketBase, compilación web y APK Android.</p>
+        <p>La versión pública actual funciona como aplicación local-first. La rama conectada ya ha superado pruebas de sincronización, archivos protegidos, almacenamiento técnico, compilación web y APK Android. La identidad central y el despliegue definitivo se validarán juntos antes de producción.</p>
       </div>
       <div>
         <strong>Pendiente antes de producción</strong>
-        <ul><li>Desplegar el servidor en el mini PC</li><li>Publicar los dominios BT</li><li>Prueba real móvil–PC y cierre GPS</li><li>APK release firmada</li></ul>
+        <ul><li>Desplegar la capa conectada en el mini PC</li><li>Integrar acceso central y permisos</li><li>Prueba real móvil–PC y cierre GPS</li><li>APK release firmada</li></ul>
         <a class="button button-primary" href={withBase('/contacto')}>Participar en la validación →</a>
       </div>
     </div>
