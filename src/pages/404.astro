@@ -1,5 +1,8 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
 ---
 
 <PageLayout title="Página no encontrada" description="La dirección solicitada no existe o ha cambiado dentro de IsiVoltPro." noindex={true}>
@@ -10,14 +13,14 @@ import PageLayout from '../layouts/PageLayout.astro';
       <h1>Esta página no forma parte del plano actual.</h1>
       <p class="lead">Puede que el enlace haya cambiado, que una aplicación siga en desarrollo o que la dirección no sea correcta.</p>
       <div class="hero-actions">
-        <a class="button button-primary" href="/">Volver al inicio →</a>
-        <a class="button button-secondary" href="/ecosistema">Explorar el ecosistema</a>
+        <a class="button button-primary" href={withBase('/')}>Volver al inicio →</a>
+        <a class="button button-secondary" href={withBase('/ecosistema')}>Explorar el ecosistema</a>
       </div>
       <div class="not-found-links">
-        <a href="/mantenimiento">Mantenimiento</a>
-        <a href="/aplicaciones">Aplicaciones</a>
-        <a href="/recursos">Recursos</a>
-        <a href="/contacto">Contacto</a>
+        <a href={withBase('/mantenimiento')}>Mantenimiento</a>
+        <a href={withBase('/aplicaciones')}>Aplicaciones</a>
+        <a href={withBase('/recursos')}>Recursos</a>
+        <a href={withBase('/contacto')}>Contacto</a>
       </div>
     </div>
   </section>
