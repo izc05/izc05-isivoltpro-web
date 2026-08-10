@@ -71,7 +71,7 @@ const structuredData = {
     <meta property="og:title" content="IsiVoltPro · Mantenimiento inteligente y aplicaciones técnicas" />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <title>IsiVoltPro · Mantenimiento inteligente y aplicaciones técnicas</title>
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
@@ -200,13 +200,14 @@ const structuredData = {
     <script is:inline>
       const toggle = document.querySelector('.menu-toggle');
       const nav = document.querySelector('.nav-links');
-      const desktopNav = window.matchMedia('(min-width: 901px)');
+      const desktopNav = window.matchMedia('(min-width: 1051px)');
 
       const setMenuState = (open) => {
         nav?.classList.toggle('open', open);
         toggle?.setAttribute('aria-expanded', String(open));
         toggle?.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
         if (toggle) toggle.textContent = open ? '×' : '☰';
+        document.documentElement.toggleAttribute('data-mobile-menu-open', open);
       };
 
       toggle?.addEventListener('click', () => setMenuState(!nav?.classList.contains('open')));
