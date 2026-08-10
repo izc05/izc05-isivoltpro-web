@@ -14,6 +14,7 @@ import AppDeviceVisual from '../components/AppDeviceVisual.astro';
 import EcosystemRoadmap from '../components/EcosystemRoadmap.astro';
 import HomeOtSpotlight from '../components/HomeOtSpotlight.astro';
 import { brand } from '../data/brand';
+import { resourceArticles } from '../data/resources';
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const withBase = (href: string) => href === '/' ? base : `${base}${href.replace(/^\/+/, '')}`;
@@ -36,13 +37,13 @@ const applications = [
   { icon: '◯', name: 'Legionella', copy: 'Controles, muestras y registros.', status: 'Planificado', href: '/aplicaciones/legionella-agua' }
 ];
 
-const resources = [
-  { art: '🏥', title: 'Mantenimiento hospitalario: continuidad y trazabilidad', meta: 'Mantenimiento' },
-  { art: '▥', title: 'Digitalización: del papel a una operación conectada', meta: 'Transformación digital' },
-  { art: '⚡', title: 'Cuadros eléctricos: revisión y puntos críticos', meta: 'Instalaciones' },
-  { art: '❄', title: 'RITE: qué revisar en instalaciones térmicas', meta: 'Climatización' },
-  { art: '✓', title: 'Checklists digitales: menos errores y más control', meta: 'Buenas prácticas' }
-];
+const resourceIcons = ['▣', '✓', '❄', '◇', '♨'];
+const resources = resourceArticles.slice(0, 5).map((resource, index) => ({
+  art: resourceIcons[index] ?? '▤',
+  title: resource.title,
+  meta: `${resource.category} · ${resource.readTime}`,
+  href: `/recursos/${resource.slug}`
+}));
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -175,10 +176,10 @@ const structuredData = {
 
       <section class="pv12-section is-soft">
         <div class="container">
-          <div class="pv12-section-head" data-premium-reveal><h2>Novedades y recursos</h2><p>Contenido técnico para acompañar la digitalización del mantenimiento y las instalaciones.</p></div>
+          <div class="pv12-section-head" data-premium-reveal><h2>Novedades y recursos</h2><p>Contenido técnico real para acompañar la digitalización del mantenimiento y las instalaciones.</p></div>
           <div class="pv12-resource-grid">
             {resources.map((resource, index) => (
-              <a class="pv12-resource-card" href={withBase('/recursos')} data-premium-reveal style={`transition-delay:${index * 55}ms`}>
+              <a class="pv12-resource-card" href={withBase(resource.href)} data-premium-reveal style={`transition-delay:${index * 55}ms`}>
                 <div class="pv12-resource-art">{resource.art}</div><div class="pv12-resource-body"><h3>{resource.title}</h3><p>{resource.meta}</p></div>
               </a>
             ))}
