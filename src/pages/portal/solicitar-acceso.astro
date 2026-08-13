@@ -1,0 +1,173 @@
+---
+import PortalLayout from '../../layouts/PortalLayout.astro';
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => `${base}${href.replace(/^\/+/, '')}`;
+---
+
+<PortalLayout
+  title="Solicitar acceso"
+  description="Solicitud de acceso controlado al ecosistema privado IsiVoltPro."
+  section="Solicitud de acceso"
+>
+  <section class="portal-card portal-card--narrow" aria-labelledby="request-title">
+    <header class="portal-card__header">
+      <p class="portal-eyebrow">Acceso únicamente autorizado</p>
+      <h1 id="request-title">Solicitar acceso a IsiVoltPro</h1>
+      <p>
+        Envía la solicitud y revisaremos la identidad, empresa, motivo y aplicaciones.
+        La solicitud no crea una cuenta automáticamente.
+      </p>
+    </header>
+
+    <div id="request-error" class="portal-alert portal-alert--error" role="alert"></div>
+    <div id="request-success" class="portal-alert portal-alert--success" role="status"></div>
+
+    <form id="access-request-form" class="portal-form" novalidate>
+      <div class="portal-honeypot" aria-hidden="true">
+        <label for="website">No rellenar</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div class="portal-form-row">
+        <div class="portal-field">
+          <label for="full_name">Nombre y apellidos</label>
+          <input id="full_name" name="full_name" type="text" autocomplete="name" required minlength="2" maxlength="160" />
+        </div>
+        <div class="portal-field">
+          <label for="email">Correo electrónico</label>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" required maxlength="320" />
+        </div>
+      </div>
+
+      <div class="portal-form-row">
+        <div class="portal-field">
+          <label for="phone">Teléfono</label>
+          <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="40" />
+        </div>
+        <div class="portal-field">
+          <label for="company_name">Empresa u organización</label>
+          <input id="company_name" name="company_name" type="text" autocomplete="organization" maxlength="180" />
+        </div>
+      </div>
+
+      <div class="portal-field">
+        <label for="job_title">Puesto, función o especialidad</label>
+        <input id="job_title" name="job_title" type="text" autocomplete="organization-title" maxlength="160" />
+      </div>
+
+      <fieldset class="portal-field" style="border:0;padding:0;margin:0">
+        <legend>Aplicaciones solicitadas</legend>
+        <div class="portal-check-list">
+          <label class="portal-check">
+            <input type="checkbox" name="applications" value="ot" />
+            <span><strong>IsiVoltPro OT</strong><small>Órdenes, técnicos, clientes e instalaciones.</small></span>
+          </label>
+          <label class="portal-check">
+            <input type="checkbox" name="applications" value="preinspecciones_bt" />
+            <span><strong>Preinspecciones BT</strong><small>Checklist, evidencias, informe y cierre GPS.</small></span>
+          </label>
+          <label class="portal-check">
+            <input type="checkbox" name="applications" value="herramientas_qr" />
+            <span><strong>Herramientas QR/NFC</strong><small>Inventario, asignaciones y movimientos.</small></span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="portal-field">
+        <label for="purpose">Motivo y uso previsto</label>
+        <textarea id="purpose" name="purpose" required minlength="20" maxlength="1200" placeholder="Explica para qué necesitas el acceso y cómo utilizarás las aplicaciones."></textarea>
+        <small>No incluyas contraseñas, datos médicos ni información confidencial de terceros.</small>
+      </div>
+
+      <label class="portal-consent-check">
+        <input id="privacy" name="privacy" type="checkbox" required />
+        <span>
+          Confirmo que los datos enviados se utilizarán para revisar esta solicitud y gestionar una posible invitación.
+          He leído la <a href={withBase('privacidad/')}>información de privacidad</a>.
+        </span>
+      </label>
+
+      <button id="request-submit" class="portal-button portal-button--primary" type="submit">
+        Enviar solicitud
+      </button>
+    </form>
+
+    <div class="portal-links">
+      <a href={withBase('portal/')}>Ya tengo una cuenta</a>
+      <a href={withBase('contacto/')}>Necesito ayuda</a>
+    </div>
+  </section>
+
+  <script>
+    import {
+      describeClientError,
+      isPlatformConfigured,
+      submitAccessRequest,
+    } from '../../lib/platformClient';
+
+    const form = document.querySelector<HTMLFormElement>('#access-request-form');
+    const submit = document.querySelector<HTMLButtonElement>('#request-submit');
+    const errorAlert = document.querySelector<HTMLElement>('#request-error');
+    const successAlert = document.querySelector<HTMLElement>('#request-success');
+    let formStartedAt = Date.now();
+
+    function setMessage(element: HTMLElement | null, message: string) {
+      if (!element) return;
+      element.textContent = message;
+      element.dataset.visible = message ? 'true' : 'false';
+    }
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      setMessage(errorAlert, '');
+      setMessage(successAlert, '');
+      if (!form.reportValidity()) return;
+
+      const data = new FormData(form);
+      const applications = data.getAll('applications').map(String);
+      if (applications.length === 0) {
+        setMessage(errorAlert, 'Selecciona al menos una aplicación.');
+        return;
+      }
+      if (!isPlatformConfigured()) {
+        setMessage(errorAlert, 'El formulario todavía está en modo de desarrollo y no puede enviar solicitudes.');
+        return;
+      }
+
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = 'Enviando…';
+      }
+
+      try {
+        await submitAccessRequest({
+          email: String(data.get('email') || '').trim().toLowerCase(),
+          full_name: String(data.get('full_name') || '').trim(),
+          phone: String(data.get('phone') || '').trim() || undefined,
+          company_name: String(data.get('company_name') || '').trim() || undefined,
+          job_title: String(data.get('job_title') || '').trim() || undefined,
+          requested_applications: applications,
+          purpose: String(data.get('purpose') || '').trim(),
+          privacy_accepted_at: new Date().toISOString(),
+          privacy_version: '1.0',
+          website: String(data.get('website') || ''),
+          form_started_at: formStartedAt,
+        });
+        form.reset();
+        formStartedAt = Date.now();
+        setMessage(
+          successAlert,
+          'Solicitud recibida. Si se aprueba, recibirás una invitación en el correo indicado.',
+        );
+      } catch (error) {
+        setMessage(errorAlert, describeClientError(error));
+      } finally {
+        if (submit) {
+          submit.disabled = false;
+          submit.textContent = 'Enviar solicitud';
+        }
+      }
+    });
+  </script>
+</PortalLayout>

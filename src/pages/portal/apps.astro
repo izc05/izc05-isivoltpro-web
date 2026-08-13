@@ -1,0 +1,235 @@
+---
+import PortalLayout from '../../layouts/PortalLayout.astro';
+---
+
+<PortalLayout
+  title="Mis aplicaciones"
+  description="Panel privado con las aplicaciones autorizadas de IsiVoltPro."
+  section="Mi espacio de trabajo"
+>
+  <section class="portal-shell" aria-labelledby="apps-title">
+    <header class="portal-shell-header">
+      <div>
+        <p class="portal-eyebrow">Ecosistema privado</p>
+        <h1 id="apps-title">Mis aplicaciones</h1>
+        <p id="organization-summary">Comprobando cuenta, empresa y permisos…</p>
+      </div>
+      <div class="portal-user-chip">
+        <span id="user-avatar" class="portal-user-chip__avatar" aria-hidden="true">IV</span>
+        <span>
+          <strong id="user-name">Cargando…</strong>
+          <small id="user-email"></small>
+        </span>
+        <button id="sign-out" class="portal-button portal-button--ghost portal-button--small" type="button">
+          Salir
+        </button>
+      </div>
+    </header>
+
+    <div id="apps-alert" class="portal-alert portal-alert--error" role="alert"></div>
+
+    <section id="apps-loading" class="portal-loading" aria-live="polite">
+      <div>
+        <div class="portal-spinner" aria-hidden="true"></div>
+        <p>Validando permisos…</p>
+      </div>
+    </section>
+
+    <section id="apps-grid" class="portal-dashboard-grid" aria-live="polite" hidden></section>
+
+    <section id="apps-empty" class="portal-empty" hidden>
+      <h2>Tu cuenta todavía no tiene aplicaciones</h2>
+      <p>
+        La cuenta es válida, pero no se ha concedido ningún módulo. Un administrador debe
+        asignarte una empresa, una aplicación y un rol.
+      </p>
+    </section>
+
+    <section id="owner-actions" class="portal-card" hidden>
+      <div class="portal-card__header-row">
+        <div>
+          <p class="portal-eyebrow">Propietario de plataforma · MFA verificado</p>
+          <h2 style="margin:0">Administración central</h2>
+          <p style="margin:.45rem 0 0;color:#66758d">Revisa solicitudes, usuarios, permisos y auditoría.</p>
+        </div>
+        <a class="portal-button portal-button--secondary" href="../admin/">Abrir administración</a>
+      </div>
+    </section>
+  </section>
+
+  <script>
+    import {
+      describeClientError,
+      getCurrentUser,
+      getMyApplications,
+      isPlatformOwner,
+      signOut,
+      withBase,
+      type PlatformApplication,
+    } from '../../lib/platformClient';
+    import {
+      getMfaState,
+      platformRequiresMfa,
+    } from '../../lib/platformMfaClient';
+
+    const descriptions: Record<string, string> = {
+      ot: 'Clientes, instalaciones, técnicos, planificación y órdenes de trabajo.',
+      preinspecciones_bt: 'Preinspecciones eléctricas, evidencias, informes y cierre presencial.',
+      herramientas_qr: 'Inventario, asignaciones, QR/NFC, fotografías e historial de movimientos.',
+    };
+    const icons: Record<string, string> = {
+      ot: 'OT',
+      preinspecciones_bt: 'BT',
+      herramientas_qr: 'QR',
+    };
+
+    const loading = document.querySelector<HTMLElement>('#apps-loading');
+    const grid = document.querySelector<HTMLElement>('#apps-grid');
+    const empty = document.querySelector<HTMLElement>('#apps-empty');
+    const alert = document.querySelector<HTMLElement>('#apps-alert');
+    const ownerActions = document.querySelector<HTMLElement>('#owner-actions');
+    const userName = document.querySelector<HTMLElement>('#user-name');
+    const userEmail = document.querySelector<HTMLElement>('#user-email');
+    const userAvatar = document.querySelector<HTMLElement>('#user-avatar');
+    const organizationSummary = document.querySelector<HTMLElement>('#organization-summary');
+
+    function showError(message: string) {
+      if (!alert) return;
+      alert.textContent = message;
+      alert.dataset.visible = message ? 'true' : 'false';
+    }
+
+    function labelStatus(application: PlatformApplication): { label: string; className: string } {
+      if (application.permission_status !== 'active') {
+        return { label: 'Sin acceso', className: 'portal-status--blocked' };
+      }
+      if (application.application_status === 'beta') {
+        return { label: 'Beta', className: 'portal-status--beta' };
+      }
+      return { label: 'Activa', className: 'portal-status--active' };
+    }
+
+    function createButton(label: string, href: string, style = 'primary'): HTMLAnchorElement {
+      const link = document.createElement('a');
+      link.className = `portal-button portal-button--${style} portal-button--small`;
+      link.href = href;
+      link.textContent = label;
+      return link;
+    }
+
+    function createApplicationCard(application: PlatformApplication): HTMLElement {
+      const card = document.createElement('article');
+      card.className = 'portal-app-card';
+
+      const top = document.createElement('div');
+      top.className = 'portal-app-card__top';
+      const icon = document.createElement('span');
+      icon.className = 'portal-app-icon';
+      icon.textContent = icons[application.application_code] || 'IV';
+      const status = document.createElement('span');
+      const statusInfo = labelStatus(application);
+      status.className = `portal-status ${statusInfo.className}`;
+      status.textContent = statusInfo.label;
+      top.append(icon, status);
+
+      const title = document.createElement('h2');
+      title.textContent = application.application_name;
+      const description = document.createElement('p');
+      description.textContent = descriptions[application.application_code] || 'Aplicación privada IsiVoltPro.';
+
+      const meta = document.createElement('div');
+      meta.className = 'portal-app-meta';
+      const organization = document.createElement('span');
+      organization.textContent = `Empresa: ${application.organization_name}`;
+      const role = document.createElement('span');
+      role.textContent = `Rol: ${application.role_code.replaceAll('_', ' ')}`;
+      meta.append(organization, role);
+
+      const actions = document.createElement('div');
+      actions.className = 'portal-app-card__actions';
+      if (application.permission_status !== 'active') {
+        const message = document.createElement('span');
+        message.style.cssText = 'font-size:.8rem;color:#8c2620';
+        message.textContent = 'El permiso está pendiente, suspendido o revocado.';
+        actions.append(message);
+      } else if (application.consent_required) {
+        actions.append(createButton(
+          'Revisar datos y aceptar',
+          `${withBase('portal/privacidad/')}?app=${encodeURIComponent(application.application_code)}`,
+          'secondary',
+        ));
+      } else if (application.can_launch) {
+        actions.append(createButton('Abrir aplicación', application.launch_url));
+      } else {
+        actions.append(createButton('Verificar sesión con MFA', withBase('portal/mfa/'), 'secondary'));
+      }
+
+      card.append(top, title, description, meta, actions);
+      return card;
+    }
+
+    async function loadWorkspace() {
+      showError('');
+      try {
+        const [requiresMfa, mfaState] = await Promise.all([
+          platformRequiresMfa(),
+          getMfaState(),
+        ]);
+        if (requiresMfa && mfaState.currentLevel !== 'aal2') {
+          window.location.replace(withBase('portal/mfa/'));
+          return;
+        }
+
+        const [user, applications, owner] = await Promise.all([
+          getCurrentUser(),
+          getMyApplications(),
+          isPlatformOwner(),
+        ]);
+
+        const displayName = String(
+          user.user_metadata?.display_name || user.user_metadata?.full_name || user.email || 'Usuario',
+        );
+        if (userName) userName.textContent = displayName;
+        if (userEmail) userEmail.textContent = user.email || '';
+        if (userAvatar) {
+          userAvatar.textContent = displayName
+            .split(/\s+/)
+            .filter(Boolean)
+            .slice(0, 2)
+            .map((part) => part[0]?.toUpperCase())
+            .join('') || 'IV';
+        }
+
+        const organizations = [...new Set(applications.map((item) => item.organization_name))];
+        if (organizationSummary) {
+          organizationSummary.textContent = organizations.length
+            ? `Acceso concedido en ${organizations.join(', ')}.`
+            : 'Cuenta activa sin permisos de aplicación.';
+        }
+
+        if (grid) {
+          grid.replaceChildren(...applications.map(createApplicationCard));
+          grid.hidden = applications.length === 0;
+        }
+        if (empty) empty.hidden = applications.length !== 0;
+        if (ownerActions) ownerActions.hidden = !owner;
+      } catch (error) {
+        const message = describeClientError(error);
+        if (error instanceof Error && 'status' in error && Number((error as { status?: number }).status) === 401) {
+          window.location.replace(withBase('portal/'));
+          return;
+        }
+        showError(message);
+      } finally {
+        if (loading) loading.hidden = true;
+      }
+    }
+
+    document.querySelector('#sign-out')?.addEventListener('click', async () => {
+      await signOut().catch(() => undefined);
+      window.location.replace(withBase('portal/'));
+    });
+
+    void loadWorkspace();
+  </script>
+</PortalLayout>

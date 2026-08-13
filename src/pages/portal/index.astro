@@ -1,0 +1,126 @@
+---
+import PortalLayout from '../../layouts/PortalLayout.astro';
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => `${base}${href.replace(/^\/+/, '')}`;
+---
+
+<PortalLayout
+  title="Acceso seguro"
+  description="Inicio de sesión único para las aplicaciones privadas del ecosistema IsiVoltPro."
+  compact
+>
+  <section class="portal-auth-grid" aria-labelledby="portal-login-title">
+    <article class="portal-hero-panel">
+      <p class="portal-eyebrow">Identidad única IsiVoltPro</p>
+      <h1>Una cuenta.<br />Todo tu trabajo técnico.</h1>
+      <p>
+        Accede a las aplicaciones que tengas autorizadas sin gestionar contraseñas distintas.
+        La cuenta, la empresa y los permisos se validan antes de abrir cada módulo.
+      </p>
+      <ul class="portal-security-list">
+        <li><span>✓</span><div><strong>Acceso por invitación</strong><br />No existe registro libre ni alta automática.</div></li>
+        <li><span>✓</span><div><strong>Permisos por aplicación</strong><br />Tener cuenta no concede acceso a todos los módulos.</div></li>
+        <li><span>✓</span><div><strong>Suspensión central</strong><br />Una cuenta puede bloquearse sin borrar expedientes ni evidencias.</div></li>
+      </ul>
+      <div class="portal-hero-metric">
+        <strong>Sesión temporal segura</strong>
+        <small>Se cierra al cerrar el navegador</small>
+      </div>
+    </article>
+
+    <article class="portal-card">
+      <header class="portal-card__header">
+        <p class="portal-eyebrow">Portal privado</p>
+        <h1 id="portal-login-title">Iniciar sesión</h1>
+        <p>Utiliza el correo autorizado y tu contraseña personal.</p>
+      </header>
+
+      <div id="login-alert" class="portal-alert portal-alert--error" role="alert"></div>
+      <div id="config-alert" class="portal-alert portal-alert--info" role="status"></div>
+
+      <form id="login-form" class="portal-form" novalidate>
+        <div class="portal-field">
+          <label for="email">Correo electrónico</label>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="username" required maxlength="320" />
+        </div>
+        <div class="portal-field">
+          <label for="password">Contraseña</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required minlength="8" maxlength="200" />
+        </div>
+        <button id="login-submit" class="portal-button portal-button--primary" type="submit">
+          Entrar en IsiVoltPro
+        </button>
+      </form>
+
+      <div class="portal-links">
+        <a href={withBase('portal/recuperar/')}>He olvidado mi contraseña</a>
+        <a href={withBase('portal/solicitar-acceso/')}>Solicitar acceso</a>
+      </div>
+
+      <div class="portal-divider">Seguridad</div>
+      <p style="margin:0;color:#66758d;font-size:.8rem;line-height:1.55">
+        IsiVoltPro nunca te pedirá la contraseña por correo, teléfono o mensajería. Los
+        administradores tampoco pueden verla.
+      </p>
+    </article>
+  </section>
+
+  <script>
+    import {
+      describeClientError,
+      getStoredSession,
+      isPlatformConfigured,
+      requireSession,
+      signInWithPassword,
+      withBase,
+    } from '../../lib/platformClient';
+
+    const form = document.querySelector<HTMLFormElement>('#login-form');
+    const submit = document.querySelector<HTMLButtonElement>('#login-submit');
+    const alert = document.querySelector<HTMLElement>('#login-alert');
+    const configAlert = document.querySelector<HTMLElement>('#config-alert');
+
+    function showAlert(message: string) {
+      if (!alert) return;
+      alert.textContent = message;
+      alert.dataset.visible = message ? 'true' : 'false';
+    }
+
+    if (!isPlatformConfigured() && configAlert) {
+      configAlert.textContent = 'Vista de desarrollo: falta configurar PUBLIC_SUPABASE_URL y PUBLIC_SUPABASE_ANON_KEY.';
+      configAlert.dataset.visible = 'true';
+      if (submit) submit.disabled = true;
+    } else if (getStoredSession()) {
+      requireSession()
+        .then(() => window.location.replace(withBase('portal/apps/')))
+        .catch(() => undefined);
+    }
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      showAlert('');
+      if (!form.reportValidity()) return;
+
+      const data = new FormData(form);
+      const email = String(data.get('email') || '');
+      const password = String(data.get('password') || '');
+
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = 'Comprobando acceso…';
+      }
+
+      try {
+        await signInWithPassword(email, password);
+        window.location.replace(withBase('portal/apps/'));
+      } catch (error) {
+        showAlert(describeClientError(error));
+        if (submit) {
+          submit.disabled = false;
+          submit.textContent = 'Entrar en IsiVoltPro';
+        }
+      }
+    });
+  </script>
+</PortalLayout>

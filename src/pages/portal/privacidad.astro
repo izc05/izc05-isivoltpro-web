@@ -1,0 +1,144 @@
+---
+import PortalLayout from '../../layouts/PortalLayout.astro';
+---
+
+<PortalLayout
+  title="Privacidad de la aplicación"
+  description="Información y consentimiento de privacidad por aplicación IsiVoltPro."
+  section="Privacidad y datos"
+>
+  <section class="portal-disclosure" aria-labelledby="privacy-title">
+    <article class="portal-card">
+      <header class="portal-card__header">
+        <p class="portal-eyebrow">Consentimiento por aplicación</p>
+        <h1 id="privacy-title">Revisando información…</h1>
+        <p id="privacy-description">Comprobando el módulo y la versión vigente.</p>
+      </header>
+
+      <div id="privacy-error" class="portal-alert portal-alert--error" role="alert"></div>
+      <div id="privacy-success" class="portal-alert portal-alert--success" role="status"></div>
+
+      <section id="privacy-content" hidden>
+        <h2 style="font-size:1.05rem">Para qué se utilizarán los datos</h2>
+        <p id="privacy-summary" style="color:#536a83;line-height:1.65"></p>
+
+        <h2 style="font-size:1.05rem;margin-top:1.5rem">Categorías de datos</h2>
+        <ul id="privacy-categories" class="portal-data-list"></ul>
+
+        <label class="portal-consent-check" style="margin-top:1.5rem">
+          <input id="privacy-accept-check" type="checkbox" />
+          <span>
+            He leído esta información y acepto el uso indicado para esta aplicación.
+            Podré retirar el consentimiento, aunque ello impedirá abrir el módulo.
+          </span>
+        </label>
+
+        <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.2rem">
+          <button id="privacy-accept" class="portal-button portal-button--primary" type="button" disabled>
+            Aceptar y continuar
+          </button>
+          <a class="portal-button portal-button--ghost" href="../apps/">Volver sin aceptar</a>
+        </div>
+      </section>
+    </article>
+
+    <aside class="portal-card">
+      <div class="portal-summary-box">
+        <h3>Control del usuario</h3>
+        <p>
+          El permiso para una aplicación y el consentimiento son controles distintos.
+          Aunque tengas permiso, el módulo no se abrirá hasta aceptar su versión vigente.
+        </p>
+      </div>
+      <div class="portal-summary-box" style="margin-top:1rem">
+        <h3>Seguridad</h3>
+        <p>
+          La aplicación debe aplicar además sus propias reglas de empresa, rol, expedientes,
+          archivos y operaciones sensibles en el servidor.
+        </p>
+      </div>
+      <p id="privacy-version" style="margin:1rem 0 0;color:#66758d;font-size:.78rem"></p>
+    </aside>
+  </section>
+
+  <script>
+    import {
+      acceptApplicationConsent,
+      describeClientError,
+      getApplicationDisclosure,
+      withBase,
+    } from '../../lib/platformClient';
+
+    const params = new URLSearchParams(window.location.search);
+    const appCode = params.get('app') || '';
+    const title = document.querySelector<HTMLElement>('#privacy-title');
+    const description = document.querySelector<HTMLElement>('#privacy-description');
+    const summary = document.querySelector<HTMLElement>('#privacy-summary');
+    const categories = document.querySelector<HTMLElement>('#privacy-categories');
+    const version = document.querySelector<HTMLElement>('#privacy-version');
+    const content = document.querySelector<HTMLElement>('#privacy-content');
+    const errorAlert = document.querySelector<HTMLElement>('#privacy-error');
+    const successAlert = document.querySelector<HTMLElement>('#privacy-success');
+    const checkbox = document.querySelector<HTMLInputElement>('#privacy-accept-check');
+    const accept = document.querySelector<HTMLButtonElement>('#privacy-accept');
+    let disclosure: Awaited<ReturnType<typeof getApplicationDisclosure>> | null = null;
+
+    function setMessage(element: HTMLElement | null, message: string) {
+      if (!element) return;
+      element.textContent = message;
+      element.dataset.visible = message ? 'true' : 'false';
+    }
+
+    checkbox?.addEventListener('change', () => {
+      if (accept) accept.disabled = !checkbox.checked;
+    });
+
+    async function loadDisclosure() {
+      if (!appCode) {
+        setMessage(errorAlert, 'No se ha indicado ninguna aplicación.');
+        return;
+      }
+      try {
+        disclosure = await getApplicationDisclosure(appCode);
+        if (title) title.textContent = disclosure.name;
+        if (description) description.textContent = disclosure.description;
+        if (summary) summary.textContent = disclosure.data_use_summary;
+        if (version) {
+          version.textContent = `Versión de privacidad ${disclosure.privacy_version} · Nivel mínimo ${disclosure.min_aal.toUpperCase()}`;
+        }
+        if (categories) {
+          categories.replaceChildren(...disclosure.data_categories.map((category) => {
+            const item = document.createElement('li');
+            item.textContent = category.replaceAll('_', ' ');
+            return item;
+          }));
+        }
+        if (content) content.hidden = false;
+      } catch (error) {
+        if (error instanceof Error && 'status' in error && Number((error as { status?: number }).status) === 401) {
+          window.location.replace(withBase('portal/'));
+          return;
+        }
+        setMessage(errorAlert, describeClientError(error));
+      }
+    }
+
+    accept?.addEventListener('click', async () => {
+      if (!disclosure || !checkbox?.checked) return;
+      setMessage(errorAlert, '');
+      accept.disabled = true;
+      accept.textContent = 'Guardando aceptación…';
+      try {
+        await acceptApplicationConsent(disclosure.code, disclosure.privacy_version);
+        setMessage(successAlert, 'Aceptación registrada. Ya puedes abrir la aplicación desde tu panel.');
+        window.setTimeout(() => window.location.replace(withBase('portal/apps/')), 900);
+      } catch (error) {
+        setMessage(errorAlert, describeClientError(error));
+        accept.disabled = false;
+        accept.textContent = 'Aceptar y continuar';
+      }
+    });
+
+    void loadDisclosure();
+  </script>
+</PortalLayout>

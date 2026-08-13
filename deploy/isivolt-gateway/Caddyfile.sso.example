@@ -1,0 +1,86 @@
+# Plantilla de referencia. No copiar en producción sin ajustar puertos,
+# bases de compilación, servicios y pruebas de recuperación.
+
+(app_security_headers) {
+  header {
+    X-Content-Type-Options nosniff
+    Referrer-Policy strict-origin-when-cross-origin
+    Permissions-Policy "camera=(self), geolocation=(self), microphone=()"
+    Cross-Origin-Opener-Policy same-origin
+    X-Permitted-Cross-Domain-Policies none
+    -Server
+  }
+}
+
+app.isivoltpro.com {
+  import app_security_headers
+  encode zstd gzip
+
+  # El navegador utiliza PUBLIC_SUPABASE_URL=https://app.isivoltpro.com/api.
+  # handle_path elimina /api antes de enviar a Kong:
+  # /api/auth/v1/*      -> /auth/v1/*
+  # /api/rest/v1/*      -> /rest/v1/*
+  # /api/functions/v1/* -> /functions/v1/*
+  handle_path /api/* {
+    reverse_proxy 127.0.0.1:54321
+  }
+
+  # Cada módulo conserva su contenedor y se compila con su ruta base.
+  handle /ot/* {
+    reverse_proxy 127.0.0.1:8082
+  }
+
+  handle /preinspecciones/* {
+    reverse_proxy 127.0.0.1:8083
+  }
+
+  handle /herramientas/* {
+    reverse_proxy 127.0.0.1:8084
+  }
+
+  # Portal estático. Sus assets compartidos se sirven desde /assets/.
+  handle /portal/* {
+    reverse_proxy 127.0.0.1:8085
+  }
+  handle /assets/* {
+    reverse_proxy 127.0.0.1:8085
+  }
+  handle /favicon.svg {
+    reverse_proxy 127.0.0.1:8085
+  }
+
+  @app_root path /
+  redir @app_root /portal/ 302
+
+  handle {
+    respond "Ruta privada no disponible" 404
+  }
+
+  log {
+    output file /var/log/caddy/isivoltpro-app-access.log {
+      roll_size 20mb
+      roll_keep 10
+      roll_keep_for 720h
+    }
+    format filter {
+      wrap json
+      fields {
+        request>headers>Authorization delete
+        request>headers>Cookie delete
+        response>headers>Set-Cookie delete
+      }
+    }
+  }
+}
+
+ot.isivoltpro.com {
+  redir https://app.isivoltpro.com/ot{uri} 308
+}
+
+bt.isivoltpro.com {
+  redir https://app.isivoltpro.com/preinspecciones{uri} 308
+}
+
+qr.isivoltpro.com {
+  redir https://app.isivoltpro.com/herramientas{uri} 308
+}
